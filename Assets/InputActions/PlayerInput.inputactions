@@ -1,0 +1,54 @@
+{
+    "name": "PlayerInput",
+    "maps": [
+        {
+            "name": "PlayerSkillActionMap",
+            "id": "f44d4954-4d8f-4ec8-95f4-e06d08d449df",
+            "actions": [
+                {
+                    "name": "ChangeSkill",
+                    "type": "Button",
+                    "id": "b37e0844-e59f-4916-8079-f0a9f2bd78e0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Scroll",
+                    "type": "Value",
+                    "id": "33d64fee-373f-4901-98bf-b3363006105c",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "20ac0d84-2e1d-4cec-9df8-6fd4fe69cfa7",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ChangeSkill",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4f7e2a0a-faec-413c-a24c-e63f4bfea13c",
+                    "path": "<Mouse>/scroll/y",
+                    "interactions": "MultiTap",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Scroll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
