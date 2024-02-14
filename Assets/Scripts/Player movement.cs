@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
     {
         float horizontalMovement = Input.GetAxis("Horizontal");
         float verticalMovement = Input.GetAxis("Vertical");
-        if (doMovementVertical == true)
+        if (doMovementVertical == true && verticalMovement != 0)
         {
             transform.Translate(walkSpeed * Time.deltaTime * Vector2.up * verticalMovement);
             transform.Translate(walkSpeed * Time.deltaTime * Vector2.right * horizontalMovement);
