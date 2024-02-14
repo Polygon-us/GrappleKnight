@@ -4,43 +4,99 @@ public class PlayerController : MonoBehaviour
 {
     public float walkSpeed = 5f;
     public float jumpForce = 10f;
+    public float raycastLength = 1.1f;
+    public bool doMovementVertical = false;
+    public float climbingSpeed = 3f;
+    public float gravityValue;
+    private Vector2 input;
 
-    private Rigidbody2D _rb;
+    [SerializeField] private LayerMask checkFloor;
+    public RaycastHit2D hit;
+    private Transform _myTransform;
+    private Rigidbody2D _myrygidbody;
 
     private void Start()
     {
-        _rb = GetComponent<Rigidbody2D>();
+        _myrygidbody = GetComponent<Rigidbody2D>();
+        _myTransform = GetComponent<Transform>();
+        gravityValue = _myrygidbody.gravityScale;
     }
 
     private void Update()
     {
-        BasicMovement();
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            DoJump();
-        }
+        Movement();
+        OnGround();
     }
 
-    private void BasicMovement()
+
+    private void Movement()
     {
         float horizontalMovement = Input.GetAxis("Horizontal");
         float verticalMovement = Input.GetAxis("Vertical");
+        if (doMovementVertical == true && verticalMovement != 0)
+        {
+            transform.Translate(walkSpeed * Time.deltaTime * Vector2.up * verticalMovement);
+            transform.Translate(walkSpeed * Time.deltaTime * Vector2.right * horizontalMovement);
+            Climbing();
+        }
+        else 
+        {
+            transform.Translate(walkSpeed * Time.deltaTime * Vector2.right * horizontalMovement);
+            _myrygidbody.gravityScale = 1f;;        
+        }
 
-        Vector2 movement = new Vector2(horizontalMovement, verticalMovement) * walkSpeed;
-        _rb.velocity = new Vector2(movement.x, _rb.velocity.y); 
     }
 
     private void DoJump()
-    {
-        if (IsGrounded())
         {
-            _rb.velocity = new Vector2(_rb.velocity.x, jumpForce);
+            if (Input.GetKey(KeyCode.Space))
+                {
+                  _myrygidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            
+                }
+        }
+
+    public void OnGround() 
+        {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, raycastLength, checkFloor);
+
+        if (hit.collider != null)
+        {
+            DoJump();
+        }
+
+        Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down * 1.1f), Color.red);
+        }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Stair"))
+        {
+            doMovementVertical = true;
+            Debug.Log("entre");
         }
     }
 
-    private bool IsGrounded()
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.1f);
-        return hit.collider != null;
+        doMovementVertical = false;
+        Debug.Log("sali");
+    }
+
+    public void Climbing()
+    {
+        Vector2 climbingVelocity = new Vector2(_myrygidbody.velocity.x, input.y * climbingSpeed);
+        _myrygidbody.velocity = climbingVelocity;
+        if (doMovementVertical == true)
+        {
+            _myrygidbody.gravityScale = 0;
+            Debug.Log("cero gravedad");
+        }
+        else if (doMovementVertical == false) 
+        {
+            _myrygidbody.gravityScale = 1f;
+            Debug.Log("gravedad");
+
+        }
     }
 }
+

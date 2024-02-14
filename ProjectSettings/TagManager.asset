@@ -8,10 +8,10 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Stair
+  - 
   - Water
   - UI
-  - Hook
+  - 
   - 
   - 
   - 
@@ -40,10 +40,4 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: World
-    uniqueID: 271204007
-    locked: 0
-  - name: Boss
-    uniqueID: 721979407
     locked: 0
