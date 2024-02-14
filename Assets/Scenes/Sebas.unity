@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 16221858}
   - component: {fileID: 16221859}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -217,7 +217,7 @@ GameObject:
   m_Component:
   - component: {fileID: 22487001}
   - component: {fileID: 22487002}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -301,7 +301,7 @@ GameObject:
   m_Component:
   - component: {fileID: 106642511}
   - component: {fileID: 106642512}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -385,7 +385,7 @@ GameObject:
   m_Component:
   - component: {fileID: 122350417}
   - component: {fileID: 122350418}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -469,7 +469,7 @@ GameObject:
   m_Component:
   - component: {fileID: 164784271}
   - component: {fileID: 164784272}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -553,7 +553,7 @@ GameObject:
   m_Component:
   - component: {fileID: 215780194}
   - component: {fileID: 215780195}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -718,10 +718,6 @@ Transform:
   - {fileID: 950708133}
   - {fileID: 979706183}
   - {fileID: 661171894}
-  - {fileID: 482461206}
-  - {fileID: 998100459}
-  - {fileID: 500619553}
-  - {fileID: 2086175567}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &263988908
@@ -779,7 +775,7 @@ GameObject:
   m_Component:
   - component: {fileID: 279072753}
   - component: {fileID: 279072754}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -863,7 +859,7 @@ GameObject:
   m_Component:
   - component: {fileID: 360014116}
   - component: {fileID: 360014117}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -947,7 +943,7 @@ GameObject:
   m_Component:
   - component: {fileID: 360796891}
   - component: {fileID: 360796892}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1161,7 +1157,7 @@ GameObject:
   m_Component:
   - component: {fileID: 430820967}
   - component: {fileID: 430820968}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1245,7 +1241,7 @@ GameObject:
   m_Component:
   - component: {fileID: 460508984}
   - component: {fileID: 460508985}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1329,7 +1325,8 @@ GameObject:
   m_Component:
   - component: {fileID: 482461206}
   - component: {fileID: 482461207}
-  m_Layer: 6
+  - component: {fileID: 482461208}
+  m_Layer: 3
   m_Name: Stair
   m_TagString: Stair
   m_Icon: {fileID: 0}
@@ -1345,7 +1342,7 @@ Transform:
   m_GameObject: {fileID: 482461205}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.9, y: -5.66, z: 0.22015281}
+  m_LocalPosition: {x: 1.8856335, y: -8.3928, z: -0.042157933}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1360,7 +1357,7 @@ Transform:
   - {fileID: 2058539701}
   - {fileID: 1842953643}
   - {fileID: 122350417}
-  m_Father: {fileID: 263988907}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &482461207
 BoxCollider2D:
@@ -1407,6 +1404,58 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 4.0249953}
   m_EdgeRadius: 0
+--- !u!212 &482461208
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 482461205}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: -1314661063
+  m_SortingLayer: 3
+  m_SortingOrder: -1
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &486256295
 GameObject:
   m_ObjectHideFlags: 0
@@ -1417,7 +1466,7 @@ GameObject:
   m_Component:
   - component: {fileID: 486256296}
   - component: {fileID: 486256297}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1501,7 +1550,8 @@ GameObject:
   m_Component:
   - component: {fileID: 500619553}
   - component: {fileID: 500619554}
-  m_Layer: 6
+  - component: {fileID: 500619555}
+  m_Layer: 3
   m_Name: Stair (3)
   m_TagString: Stair
   m_Icon: {fileID: 0}
@@ -1517,7 +1567,7 @@ Transform:
   m_GameObject: {fileID: 500619552}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.62, y: 6.33, z: 0.22015281}
+  m_LocalPosition: {x: -4.3943663, y: 3.5971997, z: -0.042157933}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1532,7 +1582,7 @@ Transform:
   - {fileID: 1424372032}
   - {fileID: 600774111}
   - {fileID: 784952392}
-  m_Father: {fileID: 263988907}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &500619554
 BoxCollider2D:
@@ -1579,6 +1629,58 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 4.0249953}
   m_EdgeRadius: 0
+--- !u!212 &500619555
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500619552}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: -1314661063
+  m_SortingLayer: 3
+  m_SortingOrder: -1
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1681,7 +1783,7 @@ GameObject:
   m_Component:
   - component: {fileID: 523608297}
   - component: {fileID: 523608298}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1765,7 +1867,7 @@ GameObject:
   m_Component:
   - component: {fileID: 597568418}
   - component: {fileID: 597568419}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1849,7 +1951,7 @@ GameObject:
   m_Component:
   - component: {fileID: 600567586}
   - component: {fileID: 600567587}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1933,7 +2035,7 @@ GameObject:
   m_Component:
   - component: {fileID: 600774111}
   - component: {fileID: 600774112}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2017,7 +2119,7 @@ GameObject:
   m_Component:
   - component: {fileID: 623540431}
   - component: {fileID: 623540432}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2231,7 +2333,7 @@ GameObject:
   m_Component:
   - component: {fileID: 699542722}
   - component: {fileID: 699542723}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2575,7 +2677,7 @@ GameObject:
   m_Component:
   - component: {fileID: 779843937}
   - component: {fileID: 779843938}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2659,7 +2761,7 @@ GameObject:
   m_Component:
   - component: {fileID: 784952392}
   - component: {fileID: 784952393}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2743,7 +2845,7 @@ GameObject:
   m_Component:
   - component: {fileID: 817593714}
   - component: {fileID: 817593715}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2827,7 +2929,7 @@ GameObject:
   m_Component:
   - component: {fileID: 838072839}
   - component: {fileID: 838072840}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2911,7 +3013,7 @@ GameObject:
   m_Component:
   - component: {fileID: 898610949}
   - component: {fileID: 898610950}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2995,7 +3097,7 @@ GameObject:
   m_Component:
   - component: {fileID: 929186085}
   - component: {fileID: 929186086}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3339,7 +3441,7 @@ GameObject:
   m_Component:
   - component: {fileID: 995155261}
   - component: {fileID: 995155262}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3423,7 +3525,8 @@ GameObject:
   m_Component:
   - component: {fileID: 998100459}
   - component: {fileID: 998100460}
-  m_Layer: 6
+  - component: {fileID: 998100461}
+  m_Layer: 3
   m_Name: Stair (2)
   m_TagString: Stair
   m_Icon: {fileID: 0}
@@ -3439,7 +3542,7 @@ Transform:
   m_GameObject: {fileID: 998100458}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.13, y: 2.33, z: 0.22015281}
+  m_LocalPosition: {x: 2.115634, y: -0.40280032, z: -0.042157933}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3454,7 +3557,7 @@ Transform:
   - {fileID: 1043698662}
   - {fileID: 16221858}
   - {fileID: 1808547421}
-  m_Father: {fileID: 263988907}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &998100460
 BoxCollider2D:
@@ -3501,6 +3604,58 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 4.0249953}
   m_EdgeRadius: 0
+--- !u!212 &998100461
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998100458}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: -1314661063
+  m_SortingLayer: 3
+  m_SortingOrder: -1
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &1043698661
 GameObject:
   m_ObjectHideFlags: 0
@@ -3511,7 +3666,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1043698662}
   - component: {fileID: 1043698663}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3595,7 +3750,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1059516861}
   - component: {fileID: 1059516862}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3809,7 +3964,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1273299152}
   - component: {fileID: 1273299153}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3893,7 +4048,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1312300341}
   - component: {fileID: 1312300342}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3977,7 +4132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1390996880}
   - component: {fileID: 1390996881}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4061,7 +4216,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1424372032}
   - component: {fileID: 1424372033}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4275,7 +4430,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1545400770}
   - component: {fileID: 1545400771}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4359,7 +4514,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1614145791}
   - component: {fileID: 1614145792}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4443,7 +4598,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1696273129}
   - component: {fileID: 1696273130}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4527,7 +4682,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1808547421}
   - component: {fileID: 1808547422}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4611,7 +4766,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1813813791}
   - component: {fileID: 1813813792}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4695,7 +4850,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1842953643}
   - component: {fileID: 1842953644}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4779,7 +4934,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1855411490}
   - component: {fileID: 1855411491}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4863,7 +5018,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1940051540}
   - component: {fileID: 1940051541}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4947,7 +5102,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1957616739}
   - component: {fileID: 1957616740}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5031,7 +5186,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1960775225}
   - component: {fileID: 1960775226}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5199,7 +5354,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1985267466}
   - component: {fileID: 1985267467}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5283,7 +5438,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2022486918}
   - component: {fileID: 2022486919}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5390,9 +5545,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 5
-  jumpForce: 300
+  jumpForce: 10
   raycastLength: 1.1
   doMovementVertical: 0
+  climbingSpeed: 3
+  gravityValue: 0
   checkFloor:
     serializedVersion: 2
     m_Bits: 64
@@ -5535,7 +5692,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2058539701}
   - component: {fileID: 2058539702}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5619,7 +5776,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2086175567}
   - component: {fileID: 2086175568}
-  m_Layer: 6
+  - component: {fileID: 2086175569}
+  m_Layer: 3
   m_Name: Stair (1)
   m_TagString: Stair
   m_Icon: {fileID: 0}
@@ -5635,7 +5793,7 @@ Transform:
   m_GameObject: {fileID: 2086175566}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.95, y: -1.74, z: 0.22015281}
+  m_LocalPosition: {x: -8.964366, y: -4.4728003, z: -0.042157933}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5650,7 +5808,7 @@ Transform:
   - {fileID: 22487001}
   - {fileID: 106642511}
   - {fileID: 1696273129}
-  m_Father: {fileID: 263988907}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &2086175568
 BoxCollider2D:
@@ -5697,6 +5855,58 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 4.0249953}
   m_EdgeRadius: 0
+--- !u!212 &2086175569
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2086175566}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: -1314661063
+  m_SortingLayer: 3
+  m_SortingOrder: -1
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -5705,3 +5915,7 @@ SceneRoots:
   - {fileID: 2043213919}
   - {fileID: 263988907}
   - {fileID: 1975704559}
+  - {fileID: 482461206}
+  - {fileID: 998100459}
+  - {fileID: 500619553}
+  - {fileID: 2086175567}

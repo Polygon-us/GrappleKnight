@@ -48,3 +48,6 @@ TagManager:
   - name: Boss
     uniqueID: 721979407
     locked: 0
+  - name: Stair
+    uniqueID: 2980306233
+    locked: 0
