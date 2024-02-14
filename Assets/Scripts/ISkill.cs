@@ -1,4 +1,5 @@
 ﻿public interface ISkill
 {
-    void DoSkill();
+    bool DoSkill();
+    void UndoSkill();
 }

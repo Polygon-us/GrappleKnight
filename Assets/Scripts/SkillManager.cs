@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SkillManager
 {
     private List<ISkill> _skillContainer = new List<ISkill>();
     private int _currentSkillIndex;
-    
+
+    // private float _changeSkillMaxTime = 1;
+    // private float _currentTime;
     public void AddSkill(ISkill skill)
     {
         _skillContainer.Add(skill);

@@ -44,6 +44,15 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ThrowSkill"",
+                    ""type"": ""Button"",
+                    ""id"": ""b5a47de5-4339-4014-86a0-997656096809"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -68,6 +77,17 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""Scroll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9331ab7b-5ba2-426e-885f-208f0d2f02f4"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ThrowSkill"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -78,6 +98,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_PlayerSkillActionMap = asset.FindActionMap("PlayerSkillActionMap", throwIfNotFound: true);
         m_PlayerSkillActionMap_ChangeSkill = m_PlayerSkillActionMap.FindAction("ChangeSkill", throwIfNotFound: true);
         m_PlayerSkillActionMap_Scroll = m_PlayerSkillActionMap.FindAction("Scroll", throwIfNotFound: true);
+        m_PlayerSkillActionMap_ThrowSkill = m_PlayerSkillActionMap.FindAction("ThrowSkill", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -141,12 +162,14 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private List<IPlayerSkillActionMapActions> m_PlayerSkillActionMapActionsCallbackInterfaces = new List<IPlayerSkillActionMapActions>();
     private readonly InputAction m_PlayerSkillActionMap_ChangeSkill;
     private readonly InputAction m_PlayerSkillActionMap_Scroll;
+    private readonly InputAction m_PlayerSkillActionMap_ThrowSkill;
     public struct PlayerSkillActionMapActions
     {
         private @PlayerInputAction m_Wrapper;
         public PlayerSkillActionMapActions(@PlayerInputAction wrapper) { m_Wrapper = wrapper; }
         public InputAction @ChangeSkill => m_Wrapper.m_PlayerSkillActionMap_ChangeSkill;
         public InputAction @Scroll => m_Wrapper.m_PlayerSkillActionMap_Scroll;
+        public InputAction @ThrowSkill => m_Wrapper.m_PlayerSkillActionMap_ThrowSkill;
         public InputActionMap Get() { return m_Wrapper.m_PlayerSkillActionMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -162,6 +185,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Scroll.started += instance.OnScroll;
             @Scroll.performed += instance.OnScroll;
             @Scroll.canceled += instance.OnScroll;
+            @ThrowSkill.started += instance.OnThrowSkill;
+            @ThrowSkill.performed += instance.OnThrowSkill;
+            @ThrowSkill.canceled += instance.OnThrowSkill;
         }
 
         private void UnregisterCallbacks(IPlayerSkillActionMapActions instance)
@@ -172,6 +198,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Scroll.started -= instance.OnScroll;
             @Scroll.performed -= instance.OnScroll;
             @Scroll.canceled -= instance.OnScroll;
+            @ThrowSkill.started -= instance.OnThrowSkill;
+            @ThrowSkill.performed -= instance.OnThrowSkill;
+            @ThrowSkill.canceled -= instance.OnThrowSkill;
         }
 
         public void RemoveCallbacks(IPlayerSkillActionMapActions instance)
@@ -193,5 +222,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     {
         void OnChangeSkill(InputAction.CallbackContext context);
         void OnScroll(InputAction.CallbackContext context);
+        void OnThrowSkill(InputAction.CallbackContext context);
     }
 }
