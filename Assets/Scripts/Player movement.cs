@@ -2,16 +2,14 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float walkSpeed = 5f;
-    public float jumpForce = 10f;
-    public float raycastLength = 1.1f;
-    public bool doMovementVertical = false;
-    public float climbingSpeed = 3f;
-    public float gravityValue;
-    private Vector2 input;
-
+    [SerializeField] private float walkSpeed = 9f;
+    [SerializeField] private float jumpForce = 300f;
+    [SerializeField] private float raycastLength = 1.01f;
+    [SerializeField] private bool doMovementVertical = false;
+    [SerializeField] private float climbingSpeed = 7f;
     [SerializeField] private LayerMask checkFloor;
-    public RaycastHit2D hit;
+
+    private Vector2 input;
     private Transform _myTransform;
     private Rigidbody2D _myrygidbody;
 
@@ -19,13 +17,15 @@ public class PlayerController : MonoBehaviour
     {
         _myrygidbody = GetComponent<Rigidbody2D>();
         _myTransform = GetComponent<Transform>();
-        gravityValue = _myrygidbody.gravityScale;
     }
+    private void FixedUpdate()
+    {
 
+    }
     private void Update()
     {
         Movement();
-        OnGround();
+        JumpIfOnGround();
     }
 
 
@@ -35,38 +35,28 @@ public class PlayerController : MonoBehaviour
         float verticalMovement = Input.GetAxis("Vertical");
         if (doMovementVertical)
         {
-            transform.Translate(walkSpeed * Time.deltaTime * Vector2.up * verticalMovement);
+            transform.Translate(climbingSpeed * Time.deltaTime * Vector2.up * verticalMovement);
             transform.Translate(walkSpeed * Time.deltaTime * Vector2.right * horizontalMovement);
             Climbing();
         }
-        else 
+        else
         {
             transform.Translate(walkSpeed * Time.deltaTime * Vector2.right * horizontalMovement);
-            _myrygidbody.gravityScale = 1f;;        
+            _myrygidbody.gravityScale = 1f; 
         }
 
     }
-
-    private void DoJump()
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-                {
-                  _myrygidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            
-                }
-        }
-
-    public void OnGround() 
-        {
+    public void JumpIfOnGround()
+    {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, raycastLength, checkFloor);
 
-        if (hit.collider != null)
+        if (hit.collider != null && Input.GetKeyDown(KeyCode.Space))
         {
-            DoJump();
+            _myrygidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
-
         Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down * 1.1f), Color.red);
-        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Stair"))
@@ -84,11 +74,12 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 climbingVelocity = new Vector2(_myrygidbody.velocity.x, input.y * climbingSpeed);
         _myrygidbody.velocity = climbingVelocity;
+
         if (doMovementVertical == true)
         {
-            _myrygidbody.gravityScale = 0f;
+            _myrygidbody.gravityScale = 0;
         }
-        else if (doMovementVertical == false) 
+        else if (doMovementVertical == false)
         {
             _myrygidbody.gravityScale = 1f;
 
