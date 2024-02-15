@@ -7,20 +7,21 @@ public class BoomerangSkill : ISkill
     private Transform _transform;
 
     private Vector3 _newPosition;
+    private Vector3 _createPosition;
     private Vector3 _positionOnThrow;
     
-    private float _maxDistanceBoomerang;
+    private float _boomerangMaxDistance;
     
     private Camera _mainCamera;
     private Mouse _mousePosition;
 
-    private float? _skillDuration = null;
+    private float? _skillDuration;
     private bool _isReturn;
-    public BoomerangSkill(Transform transform, Transform boomerangTransform, float maxDistanceBoomerang)
+    public BoomerangSkill(Transform transform, Transform boomerangTransform, float boomerangMaxDistance)
     {
         _transform = transform;
         _boomerangTransform = boomerangTransform;
-        _maxDistanceBoomerang = maxDistanceBoomerang;
+        _boomerangMaxDistance = boomerangMaxDistance;
         _mainCamera = Camera.main;
         _mousePosition = Mouse.current;
     }
@@ -31,37 +32,45 @@ public class BoomerangSkill : ISkill
         {
             _newPosition = _mousePosition.position.ReadValue();
             _newPosition = _mainCamera.ScreenToWorldPoint(_newPosition);
-            _newPosition.z = 0;
 
-            _positionOnThrow = _transform.position;
+            _newPosition.z = 0;
             
-            _skillDuration ??= 0;
+            _positionOnThrow = _transform.position;
+
+            Vector3 restPositions = _newPosition - _positionOnThrow;
+            restPositions = restPositions.normalized*_boomerangMaxDistance;
+            _newPosition = _positionOnThrow + restPositions;
+            
+            _skillDuration ??= -1;
             _isReturn = false;
         }
-        if (!_isReturn)
-        {
-            _skillDuration += Time.deltaTime;
-            _boomerangTransform.position = Vector3.Lerp(_positionOnThrow,_newPosition,(float)_skillDuration);
-            if (_skillDuration>=1)
-            {
-                _isReturn = true;
-            }
-        }
-        else
-        {
-            _skillDuration -= Time.deltaTime;
-            _boomerangTransform.position = Vector3.Lerp(_transform.position,_newPosition,(float)_skillDuration);
-        }
-        if (_skillDuration<=0)
+        _skillDuration += Time.deltaTime;
+        float t = -((float)_skillDuration * (float)_skillDuration) + 1;
+        _boomerangTransform.position = Vector3.Lerp(_positionOnThrow, _newPosition, t);
+        // if (!_isReturn)
+        // {
+        //     _skillDuration += Time.deltaTime;
+        //     
+        //     _boomerangTransform.position = Vector3.Lerp(_positionOnThrow, _newPosition, (float)_skillDuration);
+        //     if (_skillDuration>=1)
+        //     {
+        //         _isReturn = true;
+        //     }
+        // }
+        // else
+        // {
+        //     _skillDuration -= Time.deltaTime;
+        //     _boomerangTransform.position = Vector3.Lerp(_transform.position, _newPosition, (float)_skillDuration);
+        // }
+        if (t<0)
         {
             _boomerangTransform.localPosition = Vector3.zero;
             _skillDuration = null;
             return false;
         }
-        Debug.Log("Lanzar boomerang");
         return true;
     }
-
+    
     public void UndoSkill()
     {
        

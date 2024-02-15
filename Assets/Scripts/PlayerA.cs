@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
+
 
 public class PlayerA : MonoBehaviour
 {
@@ -12,6 +12,7 @@ public class PlayerA : MonoBehaviour
     private SpringJoint2D _springJoint2D;
 
     private const float _hookMaxDistance = 10;
+    private const float _boomerangMaxDistance = 4;
 
     private InputManager _inputManager;
     private PlayerInputAction _playerInputAction;
@@ -40,7 +41,7 @@ public class PlayerA : MonoBehaviour
     private void FillSkillStateManager()
     {
         _skillStateManager.AddSkill(new HookSkill(transform,_hookEnd,_hookBegin,_springJoint2D,_hookMaxDistance,_hookLayerMask));
-        _skillStateManager.AddSkill(new BoomerangSkill(transform,_Boomerang,4));
+        _skillStateManager.AddSkill(new BoomerangSkill(transform,_Boomerang,_boomerangMaxDistance));
     }
 
 

@@ -9,7 +9,6 @@ public class PlayerSkillController : MonoBehaviour
     {
         if (_isSkillReady)
         {
-            Debug.Log("KKKKK");
             if (!_currentSkill.DoSkill())
             {
                 _isSkillReady = false;
@@ -33,7 +32,6 @@ public class PlayerSkillController : MonoBehaviour
             _currentSkill.UndoSkill();
         }
         _currentSkill = skill;
-        Debug.Log(_currentSkill);
     }
    
 }
