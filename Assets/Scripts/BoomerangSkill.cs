@@ -47,21 +47,6 @@ public class BoomerangSkill : ISkill
         _skillDuration += Time.deltaTime;
         float t = -((float)_skillDuration * (float)_skillDuration) + 1;
         _boomerangTransform.position = Vector3.Lerp(_positionOnThrow, _newPosition, t);
-        // if (!_isReturn)
-        // {
-        //     _skillDuration += Time.deltaTime;
-        //     
-        //     _boomerangTransform.position = Vector3.Lerp(_positionOnThrow, _newPosition, (float)_skillDuration);
-        //     if (_skillDuration>=1)
-        //     {
-        //         _isReturn = true;
-        //     }
-        // }
-        // else
-        // {
-        //     _skillDuration -= Time.deltaTime;
-        //     _boomerangTransform.position = Vector3.Lerp(_transform.position, _newPosition, (float)_skillDuration);
-        // }
         if (t<0)
         {
             _boomerangTransform.localPosition = Vector3.zero;
