@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
     {
         float horizontalMovement = Input.GetAxis("Horizontal");
         float verticalMovement = Input.GetAxis("Vertical");
-        if (doMovementVertical == true && verticalMovement != 0)
+        if (doMovementVertical)
         {
             transform.Translate(walkSpeed * Time.deltaTime * Vector2.up * verticalMovement);
             transform.Translate(walkSpeed * Time.deltaTime * Vector2.right * horizontalMovement);
@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
 
     private void DoJump()
         {
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space))
                 {
                   _myrygidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             
@@ -72,14 +72,12 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("Stair"))
         {
             doMovementVertical = true;
-            Debug.Log("entre");
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         doMovementVertical = false;
-        Debug.Log("sali");
     }
 
     public void Climbing()
@@ -88,13 +86,11 @@ public class PlayerController : MonoBehaviour
         _myrygidbody.velocity = climbingVelocity;
         if (doMovementVertical == true)
         {
-            _myrygidbody.gravityScale = 0;
-            Debug.Log("cero gravedad");
+            _myrygidbody.gravityScale = 0f;
         }
         else if (doMovementVertical == false) 
         {
             _myrygidbody.gravityScale = 1f;
-            Debug.Log("gravedad");
 
         }
     }
