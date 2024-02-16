@@ -26,4 +26,12 @@ public class SkillManager
         _currentSkillIndex = (_currentSkillIndex + 1) % _skillContainer.Count;
         return _skillContainer[index];
     }
+
+    public void UnsubscribeActions()
+    {
+        foreach (ISkill item in _skillContainer)
+        {
+            item.UnsubscribeActions();
+        }
+    }
 }
