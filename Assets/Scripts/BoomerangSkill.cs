@@ -11,17 +11,18 @@ public class BoomerangSkill : ISkill
     private Vector3 _positionOnThrow;
     
     private float _boomerangMaxDistance;
+    private float _boomerangSpeed;
     
     private Camera _mainCamera;
     private Mouse _mousePosition;
 
     private float? _skillDuration;
-    private bool _isReturn;
-    public BoomerangSkill(Transform transform, Transform boomerangTransform, float boomerangMaxDistance)
+    public BoomerangSkill(Transform transform, Transform boomerangTransform, float boomerangMaxDistance, float boomerangSpeed)
     {
         _transform = transform;
         _boomerangTransform = boomerangTransform;
         _boomerangMaxDistance = boomerangMaxDistance;
+        _boomerangSpeed = boomerangSpeed;
         _mainCamera = Camera.main;
         _mousePosition = Mouse.current;
     }
@@ -42,9 +43,8 @@ public class BoomerangSkill : ISkill
             _newPosition = _positionOnThrow + restPositions;
             
             _skillDuration ??= -1;
-            _isReturn = false;
         }
-        _skillDuration += Time.deltaTime;
+        _skillDuration += _boomerangSpeed*Time.deltaTime;
         float t = -((float)_skillDuration * (float)_skillDuration) + 1;
         _boomerangTransform.position = Vector3.Lerp(_positionOnThrow, _newPosition, t);
         if (t<0)
