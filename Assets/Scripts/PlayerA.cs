@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 
 public class PlayerA : MonoBehaviour
@@ -7,13 +8,14 @@ public class PlayerA : MonoBehaviour
     [SerializeField] private Transform _hookBegin;
     [SerializeField] private Transform _hookEnd;
     [SerializeField] private Transform _Boomerang;
-
-    [SerializeField] private LayerMask _hookLayerMask;
+    [SerializeField] private GameObject _rope;
+    
     private SpringJoint2D _springJoint2D;
 
     private const float _hookMaxDistance = 10;
+    
     private const float _boomerangMaxDistance = 4;
-    private const float _boomerangSpeed = 4;
+    private const float _boomerangSpeed = 4f;
     
     private InputManager _inputManager;
     private PlayerInputAction _playerInputAction;
@@ -21,6 +23,7 @@ public class PlayerA : MonoBehaviour
     private SkillManager _skillStateManager;
 
     private PlayerSkillController _playerSkillController;
+    
     
     private void Awake()
     {
@@ -41,7 +44,7 @@ public class PlayerA : MonoBehaviour
 
     private void FillSkillStateManager()
     {
-        _skillStateManager.AddSkill(new HookSkill(transform,_hookEnd,_hookBegin,_springJoint2D,_hookMaxDistance,_hookLayerMask));
+        _skillStateManager.AddSkill(new HookSkill(transform,_hookEnd,_hookBegin,_springJoint2D,_hookMaxDistance,_rope));
         _skillStateManager.AddSkill(new BoomerangSkill(transform,_Boomerang,_boomerangMaxDistance,_boomerangSpeed));
     }
 

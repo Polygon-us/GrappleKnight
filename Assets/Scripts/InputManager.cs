@@ -24,17 +24,17 @@ public class InputManager
    {
       _scrollInputAction = _playerInputAction.PlayerSkillActionMap.ChangeSkill;
       _throwSkillnputAction = _playerInputAction.PlayerSkillActionMap.ThrowSkill;
-      _scrollInputAction.performed += _changeSkillReceiver;
+      _scrollInputAction.started += _changeSkillReceiver;
       _scrollInputAction.Enable();
-      _throwSkillnputAction.performed += _throwSkillReceiver;
+      _throwSkillnputAction.started += _throwSkillReceiver;
       _throwSkillnputAction.canceled += _cancelSkillReceiver;
       _throwSkillnputAction.Enable();
    } 
    public void UnsuscribeActions()
    {
-      _scrollInputAction.performed -= _changeSkillReceiver;
+      _scrollInputAction.started -= _changeSkillReceiver;
       _scrollInputAction.Disable();
-      _throwSkillnputAction.performed -= _throwSkillReceiver;
+      _throwSkillnputAction.started -= _throwSkillReceiver;
       _throwSkillnputAction.canceled -= _cancelSkillReceiver;
       _throwSkillnputAction.Disable();
 
