@@ -3,4 +3,6 @@
     void InitSkill();
     bool DoSkill();
     void UndoSkill();
+
+    void UnsubscribeActions();
 }

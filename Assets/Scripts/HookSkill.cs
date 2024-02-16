@@ -41,7 +41,7 @@ public class HookSkill : ISkill
         _springJoint2D.anchor = hookBegin.localPosition;
         InitMesh();
     }
-
+    
     public void InitSkill()
     {
         Vector3 newPosition = _mousePosition.position.ReadValue();
@@ -108,5 +108,10 @@ public class HookSkill : ISkill
         _rope.SetActive(false);
         _springJoint2D.enabled = false;
         _onHook = false;
+    }
+
+    public void UnsubscribeActions()
+    {
+        
     }
 }

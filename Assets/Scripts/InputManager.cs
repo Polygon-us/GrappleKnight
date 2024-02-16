@@ -30,7 +30,7 @@ public class InputManager
       _throwSkillnputAction.canceled += _cancelSkillReceiver;
       _throwSkillnputAction.Enable();
    } 
-   public void UnsuscribeActions()
+   public void UnsubscribeActions()
    {
       _scrollInputAction.started -= _changeSkillReceiver;
       _scrollInputAction.Disable();

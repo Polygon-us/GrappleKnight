@@ -69,6 +69,7 @@ public class PlayerA : MonoBehaviour
     
     private void OnDestroy()
     {
-        _inputManager.UnsuscribeActions();
+        _inputManager.UnsubscribeActions();
+        _skillStateManager.UnsubscribeActions();
     }
 }
