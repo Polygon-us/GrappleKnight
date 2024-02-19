@@ -78,6 +78,14 @@ public class PlayerController : MonoBehaviour
         
         Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down * raycastLength), Color.red);
     }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Stair"))
+        {
+            _platformEffector = other.transform.Find("StairTop").GetComponent<PlatformEffector2D>();
+            _boxColliderStairStop = other.transform.Find("StairTop").GetComponent<BoxCollider2D>();
+        }
+    }
     public void Climbing()
     {
         if ((verticalMovement.y != 0 || isClimbing) && (_myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Stair"))))
