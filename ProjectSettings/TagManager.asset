@@ -15,8 +15,8 @@ TagManager:
   - 
   - 
   - Hook
-  - 
-  - 
+  - StairStop
+  - Stair
   - 
   - 
   - 
@@ -39,9 +39,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: New Layer 1
+  - name: Stair
     uniqueID: 3823778057
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: World
+    uniqueID: 1102219559
+    locked: 0
+  - name: 
+    uniqueID: 392809871
     locked: 0

@@ -1,4 +1,3 @@
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -42,11 +41,11 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         HorizontalMovement();
-        Climbing();
         VerticalMovement();
     }
     private void Update()
     {
+        Climbing();
         Jump();
         OnGround();
     }
@@ -88,7 +87,9 @@ public class PlayerController : MonoBehaviour
                 _myrygidbody.gravityScale = 0;
                 isClimbing = true;
                 Debug.Log(" Estoy Escalando");
-            
+
+
+
         }
          
         else 

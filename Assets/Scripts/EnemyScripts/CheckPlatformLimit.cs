@@ -1,0 +1,55 @@
+using System.Collections;
+using UnityEngine;
+
+public class VerifyPlataform : MonoBehaviour
+{
+
+
+    [Header("Raycast")]
+
+    [SerializeField] private RaycastHit2D _platformDetector;
+    [SerializeField] private float _raycastLegth;
+    [SerializeField] private LayerMask _floorMask;
+
+    [Header("References")]
+
+    [SerializeField] private Transform _targetToPlatform;
+    [SerializeField] private Transform _myTransform;
+    void Start()
+    {
+        _myTransform = GetComponent<Transform>();
+    }
+    private void FixedUpdate()
+    {
+        DetecPlatform();
+    }
+    void Update()
+    {
+        IfNotDetectPlatform();
+    }
+
+    public void DetecPlatform()
+    {
+        _platformDetector = Physics2D.Raycast(_targetToPlatform.position, Vector2.down, _raycastLegth, _floorMask);
+        Debug.DrawRay(_targetToPlatform.position, _targetToPlatform.TransformDirection(Vector3.down * _raycastLegth), Color.red);
+    }
+    public void IfNotDetectPlatform() 
+    {
+        if (!_platformDetector)
+        {   
+            //StartCoroutine("TimeToTurn");   
+        RotateDireccion();
+        }
+    }
+
+    public void RotateDireccion () 
+    {
+        _myTransform.eulerAngles = new Vector3(0, transform.eulerAngles.y + 180, 0);
+    }
+
+    public IEnumerator TimeToTurn()
+    {
+        yield return new WaitForSeconds(2f);
+        Debug.Log("rote");
+    }
+}
