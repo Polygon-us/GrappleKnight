@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 public class PlayerA : MonoBehaviour
 {
@@ -13,10 +12,12 @@ public class PlayerA : MonoBehaviour
     private Rigidbody2D _rigidbody2D;
 
     [SerializeField]private float _hookMaxDistance = 10;
+    [SerializeField]private float _angleOfShut;
     [SerializeField]private float _boomerangMaxDistance = 4;
     [SerializeField]private float _boomerangSpeed = 4f;
     [SerializeField]private Vector2 _swingSpeed = new Vector2(0.01f, 0.1f);
-    [FormerlySerializedAs("_mask")] [SerializeField] private LayerMask _hookMask;
+    [SerializeField]private LayerMask _hookMask;
+    
     
     private InputManager _inputManager;
     private PlayerInputAction _playerInputAction;
@@ -55,7 +56,7 @@ public class PlayerA : MonoBehaviour
     private void FillSkillManager()
     {
         _skillManager.AddSkill(new HookSkill(transform,_hookEnd,_hookBegin,_springJoint2D,
-            _hookMaxDistance,_rope,_hookMask));
+            _hookMaxDistance,_angleOfShut,_rope,_hookMask));
         _skillManager.AddSkill(new BoomerangSkill(transform,_Boomerang,
             _boomerangMaxDistance,_boomerangSpeed));
     }

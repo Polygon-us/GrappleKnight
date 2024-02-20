@@ -16,7 +16,7 @@ public class HookSkill : ISkill
     private SpringJoint2D _springJoint2D;
 
     private float _hookMaxDistance;
-
+    private float _angleOfShut;
     private LayerMask _hookMask;
     private Mesh _ropeMesh;
     private Vector3[] _ropeMeshVertices = new Vector3[4];
@@ -25,12 +25,13 @@ public class HookSkill : ISkill
     
     private bool _onHook;
     public HookSkill(Transform transform,Transform hookEnd,Transform hookBegin, SpringJoint2D springJoint2D
-        ,float hookMaxDistance, GameObject rope, LayerMask hookMask)
+        ,float hookMaxDistance, float angleOfShut,GameObject rope, LayerMask hookMask)
     {
         _transform = transform;
         _hookBegin = hookBegin;
         _hookEnd = hookEnd;
         _hookMaxDistance = hookMaxDistance;
+        _angleOfShut = angleOfShut;
         _mainCamera = Camera.main;
         _mousePosition = Mouse.current;
         _ropeMesh = new Mesh();
@@ -49,21 +50,33 @@ public class HookSkill : ISkill
         newPosition.z = 0;
         
         Vector3 createPosition = newPosition - _hookBegin.position;
-        
-        RaycastHit2D hit = Physics2D.Raycast(_hookBegin.position, createPosition, _hookMaxDistance,_hookMask);
-        
-        if (hit.collider != null)
+
+        float angle = Vector3.SignedAngle(createPosition, Vector3.right, -Vector3.forward);
+        if (angle<0)
         {
-            _hookEnd.parent = null;
-            _hookEnd.gameObject.SetActive(true);
-            _rope.SetActive(true);
-            _springJoint2D.enabled = true;
-            _hookEnd.position = hit.point;
-            _springJoint2D.distance = Vector3.Distance(_hookBegin.position,_hookEnd.position);
-            _onHook = true;
+            angle += 360;
+        }
+        float _startAngle = 90 - (_angleOfShut / 2f);
+        float _endAngle = _startAngle + _angleOfShut;
+        _startAngle = 360-(_startAngle*-1);
+        if (angle<=_endAngle || angle>=_startAngle)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(_hookBegin.position, createPosition, 
+                _hookMaxDistance,_hookMask);
+            
+            if (hit.collider != null)
+            {
+                _hookEnd.parent = null;
+                _hookEnd.gameObject.SetActive(true);
+                _rope.SetActive(true);
+                _springJoint2D.enabled = true;
+                _hookEnd.position = hit.point;
+                _springJoint2D.distance = Vector3.Distance(_hookBegin.position,_hookEnd.position);
+                _onHook = true;
+            }
         }
     }
-
+    
     private void InitMesh()
     {
         _ropeMeshUV[0] = new Vector2(0, 0);
