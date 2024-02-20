@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.dentedpixel.leantween": {
+      "version": "https://github.com/ModernWestern/unity.dentedpixel-leantween-package.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "a401883ecccacf839e9b3b03c062a7760e82a899"
+    },
     "com.unity.2d.animation": {
       "version": "9.0.4",
       "depth": 1,

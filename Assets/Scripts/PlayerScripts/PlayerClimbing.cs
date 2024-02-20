@@ -4,23 +4,23 @@ public class PlayerClimbing : MonoBehaviour
 {
     [Header("Climbing")]
 
-    [SerializeField] private float climbingSpeed = 3f;
+    [SerializeField] private float climbingSpeed = 4f;
     [SerializeField] private bool isClimbing;
     [SerializeField] private bool stopClimbing;
-    [SerializeField] private float walkVerticalSpeed = 7f;
     [SerializeField] private LayerMask checkLimitStair;
+
     private float _inicialGravity;
     private RaycastHit2D _checkStairLimit;
     private Vector2 verticalMovement;
 
-    public PlatformEffector2D _platformEffector;
-    public BoxCollider2D _boxColliderStairStop;
 
     [Header("References")]
 
     private Transform _myTransform;
     private Rigidbody2D _myrygidbody;
     private CapsuleCollider2D _myCapsuleCollider;
+    private PlatformEffector2D _platformEffector;
+    private BoxCollider2D _boxColliderStairStop;
     private void Start()
     {
         _myrygidbody = GetComponent<Rigidbody2D>();
@@ -28,35 +28,47 @@ public class PlayerClimbing : MonoBehaviour
         _myCapsuleCollider = GetComponent<CapsuleCollider2D>();
         _inicialGravity = _myrygidbody.gravityScale;
     }
-
+    private void FixedUpdate()
+    {
+        Climbing();
+        VerticalMovement();
+        
+    }
     void Update()
     {
-        
+    }
+    private void VerticalMovement()
+    {
+        verticalMovement.y = Input.GetAxis("Vertical");
+        if ((_myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Stair"))))
+        {
+            transform.Translate(climbingSpeed * Time.fixedDeltaTime * Vector2.up * verticalMovement);
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Stair"))
+        {
+            _platformEffector = other.transform.Find("StairTop").GetComponent<PlatformEffector2D>();
+            _boxColliderStairStop = other.transform.Find("StairTop").GetComponent<BoxCollider2D>();
+        }
     }
     public void Climbing()
     {
         if ((verticalMovement.y != 0 || isClimbing) && (_myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Stair"))))
         {
-            Vector2 climbingVelocity = new Vector2(_myrygidbody.velocity.x, verticalMovement.y * climbingSpeed);
-            _myrygidbody.velocity = climbingVelocity;
             _myrygidbody.gravityScale = 0;
             isClimbing = true;
-            Debug.Log(" Estoy Escalando");
-
         }
-
         else
         {
             _myrygidbody.gravityScale = _inicialGravity;
             isClimbing = false;
-            Debug.Log("no estoy escalando");
-
         }
         if ((verticalMovement.y < 0) && (_myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("StairStop"))))
         {
             _platformEffector.enabled = false;
             _boxColliderStairStop.enabled = false;
-            Debug.Log("estoy entrando");
         }
         else if ((_myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Floor"))))
         {
