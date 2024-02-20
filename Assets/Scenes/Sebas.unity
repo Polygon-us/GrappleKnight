@@ -6921,7 +6921,6 @@ MonoBehaviour:
   _floorMask:
     serializedVersion: 2
     m_Bits: 8
-  walkHorizontalSpeed: 4
   _targetToPlatform: {fileID: 822587583}
   _myTransform: {fileID: 1977577463}
 --- !u!1 &1991362255
@@ -7194,6 +7193,7 @@ GameObject:
   - component: {fileID: 2043213921}
   - component: {fileID: 2043213920}
   - component: {fileID: 2043213922}
+  - component: {fileID: 2043213927}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -7351,7 +7351,7 @@ SpringJoint2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2043213916}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_EnableCollision: 0
   m_ConnectedRigidBody: {fileID: 445081094}
@@ -7361,7 +7361,7 @@ SpringJoint2D:
   m_AutoConfigureConnectedAnchor: 0
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
-  m_AutoConfigureDistance: 1
+  m_AutoConfigureDistance: 0
   m_Distance: 0.005
   m_DampingRatio: 0
   m_Frequency: 0
@@ -7393,6 +7393,14 @@ MonoBehaviour:
   _hookEnd: {fileID: 445081096}
   _Boomerang: {fileID: 616470208}
   _rope: {fileID: 991267974}
+  _hookMaxDistance: 10
+  _angleOfShut: 180
+  _boomerangMaxDistance: 4
+  _boomerangSpeed: 4
+  _swingSpeed: {x: 0.01, y: 0.1}
+  _hookMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!114 &2043213925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7428,6 +7436,18 @@ MonoBehaviour:
   checkFloorMask:
     serializedVersion: 2
     m_Bits: 8
+--- !u!114 &2043213927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2043213916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f490af918e7a0f4da3279fa4e3531d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2044922682
 GameObject:
   m_ObjectHideFlags: 0

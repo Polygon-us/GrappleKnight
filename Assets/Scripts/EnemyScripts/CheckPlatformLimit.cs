@@ -10,7 +10,6 @@ public class VerifyPlataform : MonoBehaviour
     [SerializeField] private RaycastHit2D _platformDetector;
     [SerializeField] private float _raycastLegth;
     [SerializeField] private LayerMask _floorMask;
-    [SerializeField] private float walkHorizontalSpeed = 4f;
 
     [Header("References")]
 
