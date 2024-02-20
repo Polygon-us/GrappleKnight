@@ -37,8 +37,7 @@ public class VerifyPlataform : MonoBehaviour
     {
         if (!_platformDetector)
         {   
-            //StartCoroutine("TimeToTurn");   
-        RotateDireccion();
+            RotateDireccion();
         }
     }
 
@@ -47,9 +46,5 @@ public class VerifyPlataform : MonoBehaviour
         _myTransform.eulerAngles = new Vector3(0, transform.eulerAngles.y + 180, 0);
     }
 
-    public IEnumerator TimeToTurn()
-    {
-        yield return new WaitForSeconds(2f);
-        Debug.Log("rote");
-    }
+    
 }
