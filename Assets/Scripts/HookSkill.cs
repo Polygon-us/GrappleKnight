@@ -16,17 +16,16 @@ public class HookSkill : ISkill
     private SpringJoint2D _springJoint2D;
 
     private float _hookMaxDistance;
-    
 
+    private LayerMask _hookMask;
     private Mesh _ropeMesh;
     private Vector3[] _ropeMeshVertices = new Vector3[4];
     private Vector2[] _ropeMeshUV = new Vector2[4];
     private int[] _ropeMeshTriangles = new int[6];
     
-    
     private bool _onHook;
     public HookSkill(Transform transform,Transform hookEnd,Transform hookBegin, SpringJoint2D springJoint2D
-        ,float hookMaxDistance, GameObject rope)
+        ,float hookMaxDistance, GameObject rope, LayerMask hookMask)
     {
         _transform = transform;
         _hookBegin = hookBegin;
@@ -35,6 +34,7 @@ public class HookSkill : ISkill
         _mainCamera = Camera.main;
         _mousePosition = Mouse.current;
         _ropeMesh = new Mesh();
+        _hookMask = hookMask;
         _rope = rope;
         _ropeMeshFilter = _rope.GetComponent<MeshFilter>();
         _springJoint2D = springJoint2D;
@@ -50,8 +50,7 @@ public class HookSkill : ISkill
         
         Vector3 createPosition = newPosition - _hookBegin.position;
         
-        RaycastHit2D hit = Physics2D.Raycast(_hookBegin.position, createPosition, _hookMaxDistance);
-        Physics2D.Raycast( _hookBegin.position, createPosition, _hookMaxDistance);
+        RaycastHit2D hit = Physics2D.Raycast(_hookBegin.position, createPosition, _hookMaxDistance,_hookMask);
         
         if (hit.collider != null)
         {

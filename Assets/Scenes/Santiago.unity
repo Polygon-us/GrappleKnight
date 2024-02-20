@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 396340085}
   - component: {fileID: 396340084}
   - component: {fileID: 396340083}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: w
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -284,7 +284,7 @@ GameObject:
   - component: {fileID: 480529150}
   - component: {fileID: 480529149}
   - component: {fileID: 480529148}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -419,7 +419,7 @@ GameObject:
   - component: {fileID: 653828549}
   - component: {fileID: 653828554}
   - component: {fileID: 653828556}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -442,6 +442,13 @@ MonoBehaviour:
   _hookEnd: {fileID: 426264940}
   _Boomerang: {fileID: 1205980001}
   _rope: {fileID: 7895640317974165328}
+  _mask:
+    serializedVersion: 2
+    m_Bits: 8
+  _hookMaxDistance: 10
+  _boomerangMaxDistance: 6
+  _boomerangSpeed: 5
+  _swingSpeed: {x: 0.05, y: 0.1}
 --- !u!212 &653828550
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -725,7 +732,7 @@ GameObject:
   - component: {fileID: 1281671238}
   - component: {fileID: 1281671237}
   - component: {fileID: 1281671236}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -855,7 +862,7 @@ GameObject:
   - component: {fileID: 1631821296}
   - component: {fileID: 1631821295}
   - component: {fileID: 1631821297}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
