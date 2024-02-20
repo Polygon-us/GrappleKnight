@@ -6,8 +6,9 @@ public class PlayerClimbing : MonoBehaviour
 
     [SerializeField] private float climbingSpeed = 4f;
     [SerializeField] private bool isClimbing;
-    [SerializeField] private bool stopClimbing;
     [SerializeField] private LayerMask checkLimitStair;
+    [SerializeField] private CapsuleCollider2D _myCapsuleCollider;
+    [SerializeField] private PlatformEffector2D _platformEffector;
 
     private float _inicialGravity;
     private RaycastHit2D _checkStairLimit;
@@ -18,8 +19,6 @@ public class PlayerClimbing : MonoBehaviour
 
     private Transform _myTransform;
     private Rigidbody2D _myrygidbody;
-    private CapsuleCollider2D _myCapsuleCollider;
-    private PlatformEffector2D _platformEffector;
     private BoxCollider2D _boxColliderStairStop;
     private void Start()
     {
@@ -59,6 +58,7 @@ public class PlayerClimbing : MonoBehaviour
         {
             _myrygidbody.gravityScale = 0;
             isClimbing = true;
+            Debug.Log("cero gravedad");
         }
         else
         {
@@ -67,6 +67,7 @@ public class PlayerClimbing : MonoBehaviour
         }
         if ((verticalMovement.y < 0) && (_myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("StairStop"))))
         {
+
             _platformEffector.enabled = false;
             _boxColliderStairStop.enabled = false;
         }
@@ -75,5 +76,6 @@ public class PlayerClimbing : MonoBehaviour
             _platformEffector.enabled = true;
             _boxColliderStairStop.enabled = true;
         }
+       
     }
 }

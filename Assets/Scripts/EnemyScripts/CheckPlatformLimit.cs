@@ -10,6 +10,7 @@ public class VerifyPlataform : MonoBehaviour
     [SerializeField] private RaycastHit2D _platformDetector;
     [SerializeField] private float _raycastLegth;
     [SerializeField] private LayerMask _floorMask;
+    [SerializeField] private float walkHorizontalSpeed = 4f;
 
     [Header("References")]
 
@@ -26,6 +27,7 @@ public class VerifyPlataform : MonoBehaviour
     void Update()
     {
         IfNotDetectPlatform();
+
     }
 
     public void DetecPlatform()
@@ -46,5 +48,4 @@ public class VerifyPlataform : MonoBehaviour
         _myTransform.eulerAngles = new Vector3(0, transform.eulerAngles.y + 180, 0);
     }
 
-    
 }

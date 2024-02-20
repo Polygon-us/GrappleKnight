@@ -5,7 +5,6 @@ public class PatrolEnemyMovement : MonoBehaviour
     [Header("Movement")]
 
     [SerializeField] private float walkHorizontalSpeed = 4f;
-
     void Start()
     {
         
@@ -21,6 +20,10 @@ public class PatrolEnemyMovement : MonoBehaviour
     }
     private void HorizontalMovement()
     {
+
         transform.Translate(walkHorizontalSpeed * Time.fixedDeltaTime * Vector2.right);
+        
     }
+
+    
 }
