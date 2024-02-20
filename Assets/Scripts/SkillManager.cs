@@ -1,7 +1,4 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.InputSystem;
-
 public class SkillManager
 {
     private List<ISkill> _skillContainer = new List<ISkill>();
@@ -14,7 +11,7 @@ public class SkillManager
         _skillContainer.Add(skill);
     }
 
-    public ISkill GetNextSkill()
+    public ISkill GetNextSkill(out PlayerMovementTypeEnum playerMovementTypeEnum)
     {
         //_currentSkillIndex = (_currentSkillIndex + ((_skillContainer.Count + (int)Mathf.Sign(Input.mouseScrollDelta.y)*(2- _skillContainer.Count)) / 2))%_skillContainer.Count;
         // if (_skillContainer[_currentSkillIndex] != actualGun && _skillContainer[_currentSkillIndex] != null)
@@ -24,7 +21,9 @@ public class SkillManager
         // }
         int index = _currentSkillIndex;
         _currentSkillIndex = (_currentSkillIndex + 1) % _skillContainer.Count;
-        return _skillContainer[index];
+        ISkill currentSkill = _skillContainer[index];
+        playerMovementTypeEnum = currentSkill.SendActionMapTypeEnum();
+        return currentSkill;
     }
 
     public void UnsubscribeActions()
