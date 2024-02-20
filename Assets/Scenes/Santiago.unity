@@ -418,6 +418,7 @@ GameObject:
   - component: {fileID: 653828552}
   - component: {fileID: 653828549}
   - component: {fileID: 653828554}
+  - component: {fileID: 653828556}
   m_Layer: 2
   m_Name: Player
   m_TagString: Untagged
@@ -526,7 +527,7 @@ SpringJoint2D:
   m_AutoConfigureConnectedAnchor: 0
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
-  m_AutoConfigureDistance: 1
+  m_AutoConfigureDistance: 0
   m_Distance: 0.005
   m_DampingRatio: 0
   m_Frequency: 0
@@ -604,6 +605,18 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 2}
   m_Direction: 0
+--- !u!114 &653828556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653828548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f490af918e7a0f4da3279fa4e3531d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1194408309
 GameObject:
   m_ObjectHideFlags: 0
@@ -977,6 +990,10 @@ PrefabInstance:
     - target: {fileID: 4945083063990620091, guid: 7a27832d2e2f4ba4b910b015aad1bb23, type: 3}
       propertyPath: m_Name
       value: Skills
+      objectReference: {fileID: 0}
+    - target: {fileID: 5538607950225765246, guid: 7a27832d2e2f4ba4b910b015aad1bb23, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6971863824727203697, guid: 7a27832d2e2f4ba4b910b015aad1bb23, type: 3}
       propertyPath: m_LocalPosition.x

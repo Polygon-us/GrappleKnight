@@ -60,8 +60,7 @@ public class HookSkill : ISkill
             _rope.SetActive(true);
             _springJoint2D.enabled = true;
             _hookEnd.position = hit.point;
-            //_springJoint2D.distance = 5;
-            //_springJoint2D.autoConfigureDistance = false;
+            _springJoint2D.distance = Vector3.Distance(_hookBegin.position,_hookEnd.position);
             _onHook = true;
         }
     }
@@ -110,8 +109,14 @@ public class HookSkill : ISkill
         _onHook = false;
     }
 
+    public PlayerMovementTypeEnum SendActionMapTypeEnum()
+    {
+        return PlayerMovementTypeEnum.HookMovement;
+    }
+
     public void UnsubscribeActions()
     {
         
     }
+    
 }

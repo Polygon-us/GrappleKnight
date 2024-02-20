@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class BoomerangSkill : ISkill
 {
+ 
     private Transform _boomerangTransform;
     private ObjectBoomerang _objectBoomerang;
     private Transform _transform;
@@ -21,6 +22,7 @@ public class BoomerangSkill : ISkill
     private float _skillDuration;
     public BoomerangSkill(Transform transform, Transform boomerangTransform, float boomerangMaxDistance, float boomerangSpeed)
     {
+        
         _transform = transform;
         _boomerangTransform = boomerangTransform;
         _boomerangMaxDistance = boomerangMaxDistance;
@@ -38,7 +40,10 @@ public class BoomerangSkill : ISkill
 
     private void BoomerangCollision()
     {
-        _skillDuration *= -1;
+        if (_skillDuration<0)
+        {
+            _skillDuration *= -1;
+        }
     }
     public void InitSkill()
     {
@@ -55,6 +60,7 @@ public class BoomerangSkill : ISkill
         _initialPosition = _positionOnThrow;
         _skillDuration = -1;
         _boomerangTransform.localPosition = Vector3.zero;
+        _boomerangTransform.gameObject.SetActive(true);
     }
 
     public bool DoSkill()
@@ -68,6 +74,7 @@ public class BoomerangSkill : ISkill
         }
         if (t<0)
         {
+            _boomerangTransform.gameObject.SetActive(false);
             return false;
         }
         return true;
@@ -78,8 +85,14 @@ public class BoomerangSkill : ISkill
        
     }
 
+    public PlayerMovementTypeEnum SendActionMapTypeEnum()
+    {
+        return PlayerMovementTypeEnum.None;
+    }
+
     public void UnsubscribeActions()
     {
         _objectBoomerang.UnsubscribeAction();
     }
+    
 }
