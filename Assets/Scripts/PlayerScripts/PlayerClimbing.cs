@@ -18,8 +18,8 @@ public class PlayerClimbing : MonoBehaviour
     [Header("References")]
 
     private Transform _myTransform;
-    private Rigidbody2D _myrygidbody;
-    private BoxCollider2D _boxColliderStairStop;
+    [SerializeField] private Rigidbody2D _myrygidbody;
+    [SerializeField] private BoxCollider2D _boxColliderStairStop;
     private void Start()
     {
         _myrygidbody = GetComponent<Rigidbody2D>();
