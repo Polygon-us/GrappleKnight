@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerMover : IMovable
 {
     private Transform _playerTransform;
-    private float _horizontalSpeed;
+    private float _horizontalSpeed = 1;
 
     [SerializeField] private float jumpForce = 300f;
     [SerializeField] private LayerMask checkFloorMask;
@@ -15,8 +15,11 @@ public class PlayerMover : IMovable
     private Rigidbody2D _myrygidbody;
     
     private Vector2 _moveAxis;
+    
+    private InputAction _inputAxisMovement;
 
-    private Dictionary<PlayerInputTypeEnum, Action<InputAction.CallbackContext>> _inputActions;
+    private Dictionary<PlayerInputTypeEnum, Action<InputAction.CallbackContext>> _inputActions = 
+        new Dictionary<PlayerInputTypeEnum, Action<InputAction.CallbackContext>>();
 
     private void FillInputAction()
     {
@@ -30,8 +33,16 @@ public class PlayerMover : IMovable
         FillInputAction();
     }
 
-    public void DoMove(InputAction inputActionMovement)
+    public void DoMove()
     {
+        if (_inputAxisMovement != null && _inputAxisMovement.inProgress)
+        {
+            _moveAxis = _inputAxisMovement.ReadValue<Vector2>();
+        }
+        else
+        {
+            _moveAxis = Vector2.zero;
+        }
         HorizontalMovement();
         Jump();
         OnGround();
@@ -45,6 +56,7 @@ public class PlayerMover : IMovable
 
     private void HorizontalMovement()
     {
+        Debug.Log($"movement: {_moveAxis}");
         _playerTransform.Translate(new Vector2(_moveAxis.x,0) * Time.fixedDeltaTime * _horizontalSpeed);
     }
     public void Jump()
@@ -64,7 +76,7 @@ public class PlayerMover : IMovable
     
     public void HorizontalInput(InputAction.CallbackContext callbackContext)
     {
-        callbackContext.ReadValue<Vector2>();
+        _inputAxisMovement = callbackContext.action;
     }
 
     public void JumpInput(InputAction.CallbackContext callbackContext)

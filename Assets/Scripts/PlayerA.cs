@@ -33,7 +33,7 @@ public class PlayerA : MonoBehaviour
         FillMovementManager();
         ChangeSkill();
         _playerMovementController.ChangeCurrentMovement(
-            _playerMovementManager.GetMovable(PlayerMovementTypeEnum.HookMovement));
+            _playerMovementManager.GetMovable(PlayerMovementTypeEnum.PlayerMovement));
         _playerMovementController.StarMovement();
     }
 
@@ -60,11 +60,14 @@ public class PlayerA : MonoBehaviour
      {
          IMovable currentMovable = new HookMover(_rigidbody2D, _springJoint2D, _swingSpeed);
         _playerMovementManager.AddMovable(PlayerMovementTypeEnum.HookMovement,currentMovable);
-        currentMovable = new PlayerMover(transform,2);
-        _playerMovementManager.AddMovable(PlayerMovementTypeEnum.HookMovement, currentMovable);
-        
         _inputManager.SubscribePerformedAction(PlayerInputTypeEnum.Movement,
             currentMovable.GetAction(PlayerInputTypeEnum.Movement));
+        
+        currentMovable = new PlayerMover(transform,2);
+        _playerMovementManager.AddMovable(PlayerMovementTypeEnum.PlayerMovement, currentMovable);
+        _inputManager.SubscribePerformedAction(PlayerInputTypeEnum.Movement,
+            currentMovable.GetAction(PlayerInputTypeEnum.Movement));
+        
         _inputManager.SubscribePerformedAction(PlayerInputTypeEnum.ChangeSkill,ChangeSkill);
         _inputManager.SubscribeStartedAction(PlayerInputTypeEnum.ThrowSkill,ThrowSkill);
         _inputManager.SubscribeCanceledAction(PlayerInputTypeEnum.ThrowSkill,CancelSkill);

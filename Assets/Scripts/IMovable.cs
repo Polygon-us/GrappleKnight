@@ -3,6 +3,6 @@ using UnityEngine.InputSystem;
 
 public interface IMovable
 {
-    void DoMove(InputAction inputActionMovement);
+    void DoMove();
     Action<InputAction.CallbackContext> GetAction(PlayerInputTypeEnum playerInputTypeEnum);
 }
