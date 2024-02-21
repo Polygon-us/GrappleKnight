@@ -92,7 +92,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""PlayerHookMovement"",
+            ""name"": ""PlayerMovement"",
             ""id"": ""b1c31cfe-835b-4ed7-9d98-a2827bcfa28f"",
             ""actions"": [
                 {
@@ -103,6 +103,15 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""85c6a2af-7b1d-4bf8-ac17-6cf495ae23d6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -160,6 +169,17 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d0a53a89-613f-4d8b-872e-b7867ba0f876"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -171,9 +191,10 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_PlayerSkillActionMap_ChangeSkill = m_PlayerSkillActionMap.FindAction("ChangeSkill", throwIfNotFound: true);
         m_PlayerSkillActionMap_Scroll = m_PlayerSkillActionMap.FindAction("Scroll", throwIfNotFound: true);
         m_PlayerSkillActionMap_ThrowSkill = m_PlayerSkillActionMap.FindAction("ThrowSkill", throwIfNotFound: true);
-        // PlayerHookMovement
-        m_PlayerHookMovement = asset.FindActionMap("PlayerHookMovement", throwIfNotFound: true);
-        m_PlayerHookMovement_Movement = m_PlayerHookMovement.FindAction("Movement", throwIfNotFound: true);
+        // PlayerMovement
+        m_PlayerMovement = asset.FindActionMap("PlayerMovement", throwIfNotFound: true);
+        m_PlayerMovement_Movement = m_PlayerMovement.FindAction("Movement", throwIfNotFound: true);
+        m_PlayerMovement_Jump = m_PlayerMovement.FindAction("Jump", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -294,59 +315,68 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     }
     public PlayerSkillActionMapActions @PlayerSkillActionMap => new PlayerSkillActionMapActions(this);
 
-    // PlayerHookMovement
-    private readonly InputActionMap m_PlayerHookMovement;
-    private List<IPlayerHookMovementActions> m_PlayerHookMovementActionsCallbackInterfaces = new List<IPlayerHookMovementActions>();
-    private readonly InputAction m_PlayerHookMovement_Movement;
-    public struct PlayerHookMovementActions
+    // PlayerMovement
+    private readonly InputActionMap m_PlayerMovement;
+    private List<IPlayerMovementActions> m_PlayerMovementActionsCallbackInterfaces = new List<IPlayerMovementActions>();
+    private readonly InputAction m_PlayerMovement_Movement;
+    private readonly InputAction m_PlayerMovement_Jump;
+    public struct PlayerMovementActions
     {
         private @PlayerInputAction m_Wrapper;
-        public PlayerHookMovementActions(@PlayerInputAction wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Movement => m_Wrapper.m_PlayerHookMovement_Movement;
-        public InputActionMap Get() { return m_Wrapper.m_PlayerHookMovement; }
+        public PlayerMovementActions(@PlayerInputAction wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Movement => m_Wrapper.m_PlayerMovement_Movement;
+        public InputAction @Jump => m_Wrapper.m_PlayerMovement_Jump;
+        public InputActionMap Get() { return m_Wrapper.m_PlayerMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PlayerHookMovementActions set) { return set.Get(); }
-        public void AddCallbacks(IPlayerHookMovementActions instance)
+        public static implicit operator InputActionMap(PlayerMovementActions set) { return set.Get(); }
+        public void AddCallbacks(IPlayerMovementActions instance)
         {
-            if (instance == null || m_Wrapper.m_PlayerHookMovementActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PlayerHookMovementActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_PlayerMovementActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PlayerMovementActionsCallbackInterfaces.Add(instance);
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
         }
 
-        private void UnregisterCallbacks(IPlayerHookMovementActions instance)
+        private void UnregisterCallbacks(IPlayerMovementActions instance)
         {
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
         }
 
-        public void RemoveCallbacks(IPlayerHookMovementActions instance)
+        public void RemoveCallbacks(IPlayerMovementActions instance)
         {
-            if (m_Wrapper.m_PlayerHookMovementActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_PlayerMovementActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IPlayerHookMovementActions instance)
+        public void SetCallbacks(IPlayerMovementActions instance)
         {
-            foreach (var item in m_Wrapper.m_PlayerHookMovementActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_PlayerMovementActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_PlayerHookMovementActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_PlayerMovementActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public PlayerHookMovementActions @PlayerHookMovement => new PlayerHookMovementActions(this);
+    public PlayerMovementActions @PlayerMovement => new PlayerMovementActions(this);
     public interface IPlayerSkillActionMapActions
     {
         void OnChangeSkill(InputAction.CallbackContext context);
         void OnScroll(InputAction.CallbackContext context);
         void OnThrowSkill(InputAction.CallbackContext context);
     }
-    public interface IPlayerHookMovementActions
+    public interface IPlayerMovementActions
     {
         void OnMovement(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
     }
 }

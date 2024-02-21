@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class HookMover : IMovable
@@ -29,5 +30,10 @@ public class HookMover : IMovable
                 _springJoint2D.distance += -1*direction.y * _swingSpeed.y;
             }
         }
+    }
+
+    public Action<InputAction.CallbackContext> GetAction(PlayerInputTypeEnum playerInputTypeEnum)
+    {
+        return null;
     }
 }

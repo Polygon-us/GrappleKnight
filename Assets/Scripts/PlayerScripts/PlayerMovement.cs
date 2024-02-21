@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     [Header("HorizontalMovement")]
 
@@ -18,12 +18,7 @@ public class PlayerController : MonoBehaviour
     {
         HorizontalMovement();
     }
-
-    private void Update()
-    {
-        
-    }
-
+    
     private void HorizontalMovement()
     {
         horizontalMovement.x = Input.GetAxis("Horizontal");
