@@ -12,18 +12,13 @@ public class PatrolEnemyMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        HorizontalMovement();
+        
     }
     void Update()
     {
         
     }
-    private void HorizontalMovement()
-    {
-
-        transform.Translate(walkHorizontalSpeed * Time.fixedDeltaTime * Vector2.right);
-        
-    }
+  
 
     
 }

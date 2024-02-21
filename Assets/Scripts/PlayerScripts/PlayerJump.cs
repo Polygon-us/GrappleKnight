@@ -36,4 +36,5 @@ public class PlayerJump : MonoBehaviour
 
         Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down * raycastLength), Color.red);
     }
+
 }

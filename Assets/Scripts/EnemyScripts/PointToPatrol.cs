@@ -1,62 +1,78 @@
-using Unity.Mathematics;
 using UnityEngine;
 
 public class PointToPatrol : MonoBehaviour
 {
     [Header("PointToPatrol")]
-
-    [SerializeField] private RaycastHit2D _pointToPatrolA;
-    [SerializeField] private RaycastHit2D _pointToPatrolB;
-    [SerializeField] private float _raycastLength = 0.045f;
-    [SerializeField] private Vector2 point = Vector2.down;
-    [SerializeField] private LayerMask _floorLayer;
-
+    [SerializeField] private float waitTime = 1f; 
 
     [Header("Movement")]
-
-    [SerializeField] private float walkHorizontalSpeed = 4f;
+    [SerializeField] private float walkHorizontalSpeed = 2f;
+    [SerializeField] private float minDistance = 0.1f; 
+    [SerializeField] private float slowdownDistance = 1f; 
+    private bool isWaiting = false; 
 
     [Header("References")]
+    [SerializeField] private Transform pointA;
+    [SerializeField] private Transform pointB;
 
-    [SerializeField] private Transform _transformA;
-    [SerializeField] private Transform _transformB;
+    private Transform targetPoint;
 
     void Start()
     {
+        SetTargetPoint(pointA);
     }
 
     void Update()
     {
-        LaunchPatrolPointA();
-        LaunchPatrolPointB();
+        if (isWaiting)
+            return;
+
+        MoveToTargetPoint();
     }
 
-    private void HorizontalMovement()
+    void SetTargetPoint(Transform newTargetPoint)
     {
-
-        transform.Translate(walkHorizontalSpeed * Time.fixedDeltaTime * Vector2.right);
-
+        targetPoint = newTargetPoint;
     }
 
-    public void LaunchPatrolPointA()
+    void MoveToTargetPoint()
     {
-        _pointToPatrolA = Physics2D.Raycast(_transformA.position, point, _raycastLength, _floorLayer);
-        if (_pointToPatrolA.collider)
+        Vector2 moveDirection = (targetPoint.position - transform.position).normalized;
+
+        float distanceToTarget = Vector2.Distance(transform.position, targetPoint.position);
+
+        float currentSpeed = (distanceToTarget > slowdownDistance) ? walkHorizontalSpeed :
+            Mathf.Lerp(0, walkHorizontalSpeed, distanceToTarget / slowdownDistance);
+
+        transform.Translate(moveDirection * currentSpeed * Time.deltaTime);
+
+        if (distanceToTarget < minDistance)
         {
-            Vector2 collisionPoint = _pointToPatrolA.point;
-            Debug.Log("PUNTO A " + collisionPoint);
+            StartWaitingForNextPoint();
         }
-        Debug.DrawRay(_transformA.position, _transformA.TransformDirection(point * _raycastLength), Color.red);
     }
-    public void LaunchPatrolPointB()
+
+    void StartWaitingForNextPoint()
     {
-        _pointToPatrolB = Physics2D.Raycast(_transformB.position, point, _raycastLength);
-        
-        if (_pointToPatrolB.collider)
-        {
-            Vector2 collisionPoint = _pointToPatrolB.point;
-            Debug.Log("PUNTO B " + collisionPoint);
-        }
-        Debug.DrawRay(_transformB.position, _transformB.TransformDirection(point * _raycastLength), Color.red);
+        isWaiting = true;
+
+        StartCoroutine(WaitBeforeNextPoint());
+    }
+
+    System.Collections.IEnumerator WaitBeforeNextPoint()
+    {
+        yield return new WaitForSeconds(waitTime);
+
+        SetTargetPoint((targetPoint == pointA) ? pointB : pointA);
+
+        isWaiting = false;
     }
 }
+
+
+
+
+
+
+
+
