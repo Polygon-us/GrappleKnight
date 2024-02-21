@@ -18,9 +18,7 @@ public class PlayerA : MonoBehaviour
     [SerializeField]private Vector2 _swingSpeed = new Vector2(0.01f, 0.1f);
     [SerializeField]private LayerMask _hookMask;
     
-    
     private InputManager _inputManager;
-    private PlayerInputAction _playerInputAction;
     
     private SkillManager _skillManager;
     private PlayerSkillController _playerSkillController;
@@ -41,11 +39,10 @@ public class PlayerA : MonoBehaviour
 
     private void AssignModules()
     {
-        _playerInputAction = new PlayerInputAction();
         _playerMovementController = GetComponent<PlayerMovementController>();
         _playerMovementManager = new PlayerMovementManager();
         _rigidbody2D = GetComponent<Rigidbody2D>();
-        _inputManager = new InputManager(_playerInputAction,ChangeSkill,ThrowSkill,CancelSkill,
+        _inputManager = new InputManager(new PlayerInputAction(),ChangeSkill,ThrowSkill,CancelSkill,
             _playerMovementController.InputActionMovement);
         _inputManager.Configure();
         _skillManager = new SkillManager();
