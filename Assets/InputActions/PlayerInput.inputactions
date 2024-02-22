@@ -70,7 +70,7 @@
             ]
         },
         {
-            "name": "PlayerHookMovement",
+            "name": "PlayerMovement",
             "id": "b1c31cfe-835b-4ed7-9d98-a2827bcfa28f",
             "actions": [
                 {
@@ -81,6 +81,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "85c6a2af-7b1d-4bf8-ac17-6cf495ae23d6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -138,6 +147,17 @@
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "d0a53a89-613f-4d8b-872e-b7867ba0f876",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

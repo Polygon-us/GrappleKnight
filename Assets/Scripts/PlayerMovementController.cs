@@ -3,8 +3,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovementController : MonoBehaviour
 {
-    private InputAction _movementInputAction;
-
     private IMovable _currentMovement;
 
     private IMovable _lastMovement;
@@ -13,9 +11,9 @@ public class PlayerMovementController : MonoBehaviour
     private bool _isReadyToMove;
     private void FixedUpdate()
     {
-        if (_isReadyToMove && _movementInputAction != null)
+        if (_isReadyToMove)
         {
-            _currentMovement.DoMove(_movementInputAction);
+            _currentMovement.DoMove();
         }
     }
 
@@ -23,13 +21,19 @@ public class PlayerMovementController : MonoBehaviour
     {
         _currentMovement = movement;
     }
-    public void ChangeCurrentMovement()
+    public void ChangeCurrentMovement(bool isSkillOn)
     {
         if (_queueMovement!=null)
         {
-            _lastMovement = _currentMovement;
-            _currentMovement = _queueMovement;
-            _queueMovement = null;
+            if (isSkillOn)
+            {
+                _lastMovement = _currentMovement;
+                _currentMovement = _queueMovement;
+            }
+            else
+            {
+                _currentMovement = _lastMovement;
+            }
         }
         else
         {
@@ -37,6 +41,7 @@ public class PlayerMovementController : MonoBehaviour
         }
     }
 
+    
     public void QueueMovement(IMovable movement)
     {
         _queueMovement = movement;
@@ -46,9 +51,4 @@ public class PlayerMovementController : MonoBehaviour
     {
         _isReadyToMove = true;
     }
-    public void InputActionMovement(InputAction.CallbackContext callbackContext)
-    {
-        _movementInputAction = callbackContext.action;
-    }
-    
 }
