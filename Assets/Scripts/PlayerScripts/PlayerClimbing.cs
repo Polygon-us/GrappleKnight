@@ -76,6 +76,6 @@ public class PlayerClimbing : MonoBehaviour
             _platformEffector.enabled = true;
             _boxColliderStairStop.enabled = true;
         }
-       
+
     }
 }

@@ -1,20 +1,21 @@
 using UnityEngine;
-
+using System.Collections;
 public class PointToPatrol : MonoBehaviour
 {
     [Header("PointToPatrol")]
-    [SerializeField] private float waitTime = 1f; 
-
-    [Header("Movement")]
-    [SerializeField] private float walkHorizontalSpeed = 2f;
+    [SerializeField] private float waitTime = 1f;
     [SerializeField] private float minDistance = 0.1f; 
     [SerializeField] private float slowdownDistance = 1f; 
-    private bool isWaiting = false; 
 
+    [Space]
+    [Header("Movement")]
+    [SerializeField] private float walkHorizontalSpeed = 2f;
+    private bool isWaiting = false;
+
+    [Space]
     [Header("References")]
     [SerializeField] private Transform pointA;
     [SerializeField] private Transform pointB;
-
     private Transform targetPoint;
 
     void Start()
@@ -59,7 +60,7 @@ public class PointToPatrol : MonoBehaviour
         StartCoroutine(WaitBeforeNextPoint());
     }
 
-    System.Collections.IEnumerator WaitBeforeNextPoint()
+    IEnumerator WaitBeforeNextPoint()
     {
         yield return new WaitForSeconds(waitTime);
 

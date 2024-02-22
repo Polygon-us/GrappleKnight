@@ -1,10 +1,10 @@
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 public class PlayerJump : MonoBehaviour
 {
     [Header("Jump")]
 
-    [SerializeField] private float jumpForce = 300f;
+    [SerializeField] private float jumpForce = 5f;
     [SerializeField] private LayerMask checkFloorMask;
     private float raycastLength = 1.01f;
     private RaycastHit2D _checkFloor;
@@ -19,15 +19,15 @@ public class PlayerJump : MonoBehaviour
 
     void Update()
     {
-        Jump();
         OnGround();
     }
-    public void Jump()
+    public void Jump(InputAction.CallbackContext callbackContext)
     {
-        if (_checkFloor.collider != null && Input.GetKeyDown(KeyCode.Space))
+        if (_checkFloor.collider != null && callbackContext.performed)
         {
-
             _myrygidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+
+            Debug.Log(callbackContext.phase);
         }
     }
     public void OnGround()

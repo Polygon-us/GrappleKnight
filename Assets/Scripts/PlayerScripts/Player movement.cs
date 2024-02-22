@@ -1,17 +1,24 @@
 using UnityEngine;
+using UnityEngine.Animations;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Composites;
+using UnityEngine.InputSystem.Controls;
 
 public class PlayerMovement : MonoBehaviour
 {
     [Header("HorizontalMovement")]
 
-    [SerializeField] private float walkHorizontalSpeed = 9f;
+    [SerializeField] private float force = 10f;
     private Vector2 horizontalMovement;
 
  
-    private CapsuleCollider2D _myCapsuleCollider;
+    private Rigidbody2D _myrigidbody;
+    private PlayerInput _moveAction;
+    private float input;
     private void Start()
     {
-        _myCapsuleCollider = GetComponent<CapsuleCollider2D>();
+        _myrigidbody = GetComponent<Rigidbody2D>();
+        _moveAction = GetComponent<PlayerInput>();
     }
 
     private void FixedUpdate()
@@ -21,13 +28,21 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        
+        CaptureMovementInput();
     }
-
     private void HorizontalMovement()
     {
-        horizontalMovement.x = Input.GetAxis("Horizontal");
-        transform.Translate(walkHorizontalSpeed * Time.fixedDeltaTime * Vector2.right * horizontalMovement);
+        if (Mathf.Abs(_myrigidbody.velocity.x) <= 2f)
+        {
+            _myrigidbody.AddForce(force * new Vector2(input, 0f), ForceMode2D.Force);
+        }
+    }
+
+    public void CaptureMovementInput()
+    {
+         input = _moveAction.actions["Move"].ReadValue<float>();
+        Debug.Log("Input Value: " + input);
+
     }
 }
 

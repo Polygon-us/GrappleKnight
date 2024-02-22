@@ -1476,7 +1476,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 417101578}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 190ddb3c91e144b4a969e6f76e1bdec3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1852,7 +1852,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 482461205}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 190ddb3c91e144b4a969e6f76e1bdec3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2533,7 +2533,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 661171893}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 190ddb3c91e144b4a969e6f76e1bdec3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2700,7 +2700,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 700914193}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 190ddb3c91e144b4a969e6f76e1bdec3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2989,7 +2989,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 709439434}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 190ddb3c91e144b4a969e6f76e1bdec3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -3570,7 +3570,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 950708132}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 190ddb3c91e144b4a969e6f76e1bdec3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -3700,7 +3700,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 979706182}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 190ddb3c91e144b4a969e6f76e1bdec3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -4578,9 +4578,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitTime: 1
-  walkHorizontalSpeed: 2
   minDistance: 0.2
   slowdownDistance: 1
+  walkHorizontalSpeed: 2
   pointA: {fileID: 1732343741}
   pointB: {fileID: 763309737}
 --- !u!50 &1151399490
@@ -4954,7 +4954,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1211506992}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 190ddb3c91e144b4a969e6f76e1bdec3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -5556,9 +5556,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitTime: 1
-  walkHorizontalSpeed: 2
   minDistance: 0.2
   slowdownDistance: 1
+  walkHorizontalSpeed: 2
   pointA: {fileID: 1732366054}
   pointB: {fileID: 270664401}
 --- !u!50 &1438341643
@@ -5866,7 +5866,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1531594337}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 190ddb3c91e144b4a969e6f76e1bdec3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -7485,9 +7485,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitTime: 1
-  walkHorizontalSpeed: 2
   minDistance: 0.2
   slowdownDistance: 1
+  walkHorizontalSpeed: 2
   pointA: {fileID: 1035153133}
   pointB: {fileID: 268272339}
 --- !u!114 &1977577467
@@ -7686,10 +7686,11 @@ GameObject:
   - component: {fileID: 2043213926}
   - component: {fileID: 2043213924}
   - component: {fileID: 2043213923}
+  - component: {fileID: 2043213927}
   - component: {fileID: 2043213921}
   - component: {fileID: 2043213920}
   - component: {fileID: 2043213922}
-  - component: {fileID: 2043213927}
+  - component: {fileID: 2043213928}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -7709,7 +7710,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94c01c09d6e49e74196300234371acfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkHorizontalSpeed: 9
+  force: 200
 --- !u!212 &2043213918
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7790,7 +7791,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 60
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -7909,7 +7910,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86a2747e8b99d604f8df7e2b3338192c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  climbingSpeed: 4
+  climbingSpeed: 2
   isClimbing: 0
   checkLimitStair:
     serializedVersion: 2
@@ -7930,7 +7931,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00ed4239072557746a8916fc66d74c74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 300
+  jumpForce: 5
   checkFloorMask:
     serializedVersion: 2
     m_Bits: 8
@@ -7946,6 +7947,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f490af918e7a0f4da3279fa4e3531d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2043213928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2043213916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: ec639ccefc756da4881f8a23b33b7dfd, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2043213926}
+        m_TargetAssemblyTypeName: PlayerJump, Assembly-CSharp
+        m_MethodName: Jump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 92f3afec-6a5c-471a-924c-6d83cd10526c
+    m_ActionName: Player/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9eb717b7-8bf8-476e-b7c3-d00089b0de47
+    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &2044922682
 GameObject:
   m_ObjectHideFlags: 0
