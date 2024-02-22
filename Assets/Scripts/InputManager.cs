@@ -11,8 +11,8 @@ public class InputManager
       new Dictionary<PlayerInputTypeEnum, InputAction>();
    private Dictionary<InputAction, List<Action<InputAction.CallbackContext>>> _receiverActionsContainer =
        new Dictionary<InputAction, List<Action<InputAction.CallbackContext>>>();
-   private Dictionary<Action<InputAction.CallbackContext>,List<int>> _statesActionsContainer =
-       new Dictionary<Action<InputAction.CallbackContext>,List<int>>();
+   private Dictionary<Action<InputAction.CallbackContext>,Vector3> _actionStatusContainer =
+       new Dictionary<Action<InputAction.CallbackContext>,Vector3>();
 
    private Action<InputAction, Action<InputAction.CallbackContext>>[] _unsubscribeActionsContainer =
       new Action<InputAction, Action<InputAction.CallbackContext>>[3]; 
@@ -48,24 +48,24 @@ public class InputManager
    
    public void SubscribeStartedAction(PlayerInputTypeEnum playerInputTypeEnum,Action<InputAction.CallbackContext> action)
    {
-      FillContainers(_inputActionsContainer[playerInputTypeEnum], action,1);
+      FillContainers(_inputActionsContainer[playerInputTypeEnum], action,Vector3.right);
       _inputActionsContainer[playerInputTypeEnum].started += action;
       EnableInputAction(playerInputTypeEnum);
    }
    public void SubscribePerformedAction(PlayerInputTypeEnum playerInputTypeEnum,Action<InputAction.CallbackContext> action)
    {
-      FillContainers(_inputActionsContainer[playerInputTypeEnum], action,2);
+      FillContainers(_inputActionsContainer[playerInputTypeEnum], action,Vector3.up);
       _inputActionsContainer[playerInputTypeEnum].performed += action;
       EnableInputAction(playerInputTypeEnum);
    }
    public void SubscribeCanceledAction(PlayerInputTypeEnum playerInputTypeEnum,Action<InputAction.CallbackContext> action)
    {
-      FillContainers(_inputActionsContainer[playerInputTypeEnum], action,3);
+      FillContainers(_inputActionsContainer[playerInputTypeEnum], action,Vector3.forward);
       _inputActionsContainer[playerInputTypeEnum].canceled += action;
       EnableInputAction(playerInputTypeEnum);
    }
    
-   private void FillContainers(InputAction currentInputAction, Action<InputAction.CallbackContext> action, int stateNum)
+   private void FillContainers(InputAction currentInputAction, Action<InputAction.CallbackContext> action, Vector3 status)
    {
       if (_receiverActionsContainer.TryAdd(currentInputAction,new List<Action<InputAction.CallbackContext>>()))
       {
@@ -75,13 +75,13 @@ public class InputManager
       {
          _receiverActionsContainer[currentInputAction].Add(action);
       }
-      if (_statesActionsContainer.TryAdd(action,new List<int>()))
+      if (_actionStatusContainer.ContainsKey(action))
       {
-         _statesActionsContainer[action].Add(stateNum);
+         _actionStatusContainer[action] += status;
       }
       else
       {
-         _statesActionsContainer[action].Add(stateNum);
+         _actionStatusContainer.Add(action,status);
       }
    }
    private void UnsubscribeStartedAction(InputAction inputAction,Action<InputAction.CallbackContext> action)
@@ -98,13 +98,21 @@ public class InputManager
    }
    public void UnsubscribeActions()
    {
-      foreach (var item in _inputActionsContainer.Values)
+      foreach (InputAction item in _inputActionsContainer.Values)
       {
-         foreach (var a in _receiverActionsContainer[item])
+         foreach (Action<InputAction.CallbackContext>  jtem in _receiverActionsContainer[item])
          {
-            for (int i = 0; i < _statesActionsContainer[a][0]; i++)
+            if (_actionStatusContainer[jtem].x==1)
             {
-               _unsubscribeActionsContainer[i](item,a);
+               UnsubscribeStartedAction(item,jtem);
+            } 
+            if (_actionStatusContainer[jtem].y==1)
+            {
+               UnsubscribePerformedAction(item,jtem);
+            } 
+            if (_actionStatusContainer[jtem].z==1)
+            {
+               UnsubscribeCanceledAction(item,jtem);
             }
          }
          item.Disable();
