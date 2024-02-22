@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     {
         CaptureMovementInput();
     }
+
     private void HorizontalMovement()
     {
         if (Mathf.Abs(_myrigidbody.velocity.x) <= 2f)
