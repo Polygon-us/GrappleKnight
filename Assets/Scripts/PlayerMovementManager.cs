@@ -13,7 +13,12 @@ public class PlayerMovementManager
 
     public IMovable GetMovable(PlayerMovementTypeEnum playerMovementTypeEnum)
     {
-        IMovable currentMovable = _MovableContainer[playerMovementTypeEnum];
-        return currentMovable;
+        if (playerMovementTypeEnum!=PlayerMovementTypeEnum.None)
+        {
+            IMovable currentMovable = _MovableContainer[playerMovementTypeEnum];
+            return currentMovable;
+        }
+
+        return null;
     }
 }

@@ -6,13 +6,13 @@ using UnityEngine.InputSystem;
 public class PlayerMover : IMovable
 {
     private Transform _playerTransform;
-    private float _horizontalSpeed = 1;
-
-    [SerializeField] private float jumpForce = 300f;
-    [SerializeField] private LayerMask checkFloorMask;
-    private float raycastLength = 1.01f;
-    private RaycastHit2D _checkFloor;
+    private float _horizontalSpeed;
+    private float _jumpForce;
+    private LayerMask _checkFloorMask;
+    private float _raycastLength;
     private Rigidbody2D _myrygidbody;
+    
+    private RaycastHit2D _checkFloor;
     
     private Vector2 _moveAxis;
     
@@ -21,16 +21,21 @@ public class PlayerMover : IMovable
     private Dictionary<PlayerInputTypeEnum, Action<InputAction.CallbackContext>> _inputActions = 
         new Dictionary<PlayerInputTypeEnum, Action<InputAction.CallbackContext>>();
 
+    public PlayerMover(Transform playerTransform,Rigidbody2D myrygidbody,float horizontalSpeed,float jumpForce,float raycastLength ,LayerMask checkFloorMask)
+    {
+        _playerTransform = playerTransform;
+        _myrygidbody = myrygidbody;
+        _horizontalSpeed = horizontalSpeed;
+        _jumpForce = jumpForce;
+        _raycastLength = raycastLength;
+        _checkFloorMask = checkFloorMask;
+        FillInputAction();
+    }
+    
     private void FillInputAction()
     {
         _inputActions.Add(PlayerInputTypeEnum.Movement,HorizontalInput);
-        _inputActions.Add(PlayerInputTypeEnum.Jump,JumpInput);
-    }
-    public PlayerMover(Transform playerTransform, float horizontalSpeed)
-    {
-        _playerTransform = playerTransform;
-        _horizontalSpeed = horizontalSpeed;
-        FillInputAction();
+        _inputActions.Add(PlayerInputTypeEnum.Jump,Jump);
     }
 
     public void DoMove()
@@ -44,8 +49,6 @@ public class PlayerMover : IMovable
             _moveAxis = Vector2.zero;
         }
         HorizontalMovement();
-        Jump();
-        OnGround();
     }
 
     public Action<InputAction.CallbackContext> GetAction(PlayerInputTypeEnum playerInputTypeEnum)
@@ -56,32 +59,31 @@ public class PlayerMover : IMovable
 
     private void HorizontalMovement()
     {
-        Debug.Log($"movement: {_moveAxis}");
-        _playerTransform.Translate(new Vector2(_moveAxis.x,0) * Time.fixedDeltaTime * _horizontalSpeed);
+        _myrygidbody.AddForce(new Vector2(_moveAxis.x,0) * _horizontalSpeed, ForceMode2D.Impulse);
+        //a_playerTransform.Translate(new Vector2(_moveAxis.x,0) * Time.fixedDeltaTime * _horizontalSpeed);
     }
-    public void Jump()
+    private void Jump(InputAction.CallbackContext callbackContext)
     {
-        if (_checkFloor.collider != null && Input.GetKeyDown(KeyCode.Space))
+        if (OnGround())
         {
-
-            _myrygidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            _myrygidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
         }
     }
-    public void OnGround()
+    private bool OnGround()
     {
-        _checkFloor = Physics2D.Raycast(_playerTransform.position, Vector2.down, raycastLength, checkFloorMask);
+        _checkFloor = Physics2D.Raycast(_playerTransform.position, Vector2.down, _raycastLength, _checkFloorMask);
+        Debug.DrawRay(_playerTransform.position, -_playerTransform.up*_raycastLength, Color.red);
+        if (_checkFloor.collider != null)
+        {
+            return true;
+        }
 
-        Debug.DrawRay(_playerTransform.position, _playerTransform.TransformDirection(Vector3.down * raycastLength), Color.red);
+        return false;
     }
     
-    public void HorizontalInput(InputAction.CallbackContext callbackContext)
+    private void HorizontalInput(InputAction.CallbackContext callbackContext)
     {
         _inputAxisMovement = callbackContext.action;
-    }
-
-    public void JumpInput(InputAction.CallbackContext callbackContext)
-    {
-        
     }
     
 }

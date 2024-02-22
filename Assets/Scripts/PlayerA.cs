@@ -18,6 +18,11 @@ public class PlayerA : MonoBehaviour
     [SerializeField]private Vector2 _swingSpeed = new Vector2(0.01f, 0.1f);
     [SerializeField]private LayerMask _hookMask;
     
+    [SerializeField]private LayerMask _checkFloorMask;
+    [SerializeField]private float _horizontalSpeed = 1;
+    [SerializeField]private float _jumpForce = 5f;
+    [SerializeField]private float _raycastLength = 1.01f;
+    
     private InputManager _inputManager;
     
     private SkillManager _skillManager;
@@ -63,10 +68,12 @@ public class PlayerA : MonoBehaviour
         _inputManager.SubscribePerformedAction(PlayerInputTypeEnum.Movement,
             currentMovable.GetAction(PlayerInputTypeEnum.Movement));
         
-        currentMovable = new PlayerMover(transform,2);
+        currentMovable = new PlayerMover(transform,_rigidbody2D,_horizontalSpeed,_jumpForce,_raycastLength,_checkFloorMask);
         _playerMovementManager.AddMovable(PlayerMovementTypeEnum.PlayerMovement, currentMovable);
         _inputManager.SubscribePerformedAction(PlayerInputTypeEnum.Movement,
             currentMovable.GetAction(PlayerInputTypeEnum.Movement));
+        _inputManager.SubscribePerformedAction(PlayerInputTypeEnum.Jump,
+            currentMovable.GetAction(PlayerInputTypeEnum.Jump));
         
         _inputManager.SubscribePerformedAction(PlayerInputTypeEnum.ChangeSkill,ChangeSkill);
         _inputManager.SubscribeStartedAction(PlayerInputTypeEnum.ThrowSkill,ThrowSkill);
@@ -91,13 +98,13 @@ public class PlayerA : MonoBehaviour
     private void ThrowSkill(InputAction.CallbackContext callbackContext)
     {
         _playerSkillController.StartSkill();
-        _playerMovementController.ChangeCurrentMovement();
+        _playerMovementController.ChangeCurrentMovement(true);
     }
 
     private void CancelSkill(InputAction.CallbackContext callbackContext)
     {
         _playerSkillController.StopSkill();
-        _playerMovementController.ChangeCurrentMovement();
+        _playerMovementController.ChangeCurrentMovement(false);
     }
     
     private void OnDestroy()

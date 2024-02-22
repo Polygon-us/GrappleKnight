@@ -21,13 +21,19 @@ public class PlayerMovementController : MonoBehaviour
     {
         _currentMovement = movement;
     }
-    public void ChangeCurrentMovement()
+    public void ChangeCurrentMovement(bool isSkillOn)
     {
         if (_queueMovement!=null)
         {
-            _lastMovement = _currentMovement;
-            _currentMovement = _queueMovement;
-            _queueMovement = null;
+            if (isSkillOn)
+            {
+                _lastMovement = _currentMovement;
+                _currentMovement = _queueMovement;
+            }
+            else
+            {
+                _currentMovement = _lastMovement;
+            }
         }
         else
         {
@@ -35,6 +41,7 @@ public class PlayerMovementController : MonoBehaviour
         }
     }
 
+    
     public void QueueMovement(IMovable movement)
     {
         _queueMovement = movement;

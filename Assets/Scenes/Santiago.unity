@@ -479,6 +479,12 @@ MonoBehaviour:
   _hookMask:
     serializedVersion: 2
     m_Bits: 8
+  _checkFloorMask:
+    serializedVersion: 2
+    m_Bits: 8
+  _horizontalSpeed: 1
+  _jumpForce: 5
+  _raycastLength: 1.01
 --- !u!212 &653828550
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer;
+using UnityEngine;
+
 public class SkillManager
 {
     private List<ISkill> _skillContainer = new List<ISkill>();

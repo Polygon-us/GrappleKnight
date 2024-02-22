@@ -28,6 +28,7 @@ public class InputManager
       _inputActionsContainer.Add(PlayerInputTypeEnum.ChangeSkill,_playerInputAction.PlayerSkillActionMap.ChangeSkill);
       _inputActionsContainer.Add(PlayerInputTypeEnum.ThrowSkill,_playerInputAction.PlayerSkillActionMap.ThrowSkill);
       _inputActionsContainer.Add(PlayerInputTypeEnum.Movement,_playerInputAction.PlayerMovement.Movement);
+      _inputActionsContainer.Add(PlayerInputTypeEnum.Jump,_playerInputAction.PlayerMovement.Jump);
    }
    
    public void Configure()
