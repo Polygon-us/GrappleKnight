@@ -92,9 +92,9 @@ public class HookSkill : ISkill
         _onHook = false;
     }
 
-    public PlayerMovementTypeEnum SendActionMapTypeEnum()
+    public PlayerMovementEnum SendActionMapTypeEnum()
     {
-        return PlayerMovementTypeEnum.HookMovement;
+        return PlayerMovementEnum.HookMovement;
     }
 
     public void UnsubscribeActions()

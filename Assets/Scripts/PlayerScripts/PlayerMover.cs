@@ -18,8 +18,8 @@ public class PlayerMover : IMovable
     
     private InputAction _inputAxisMovement;
 
-    private Dictionary<PlayerInputTypeEnum, Action<InputAction.CallbackContext>> _inputActions = 
-        new Dictionary<PlayerInputTypeEnum, Action<InputAction.CallbackContext>>();
+    private Dictionary<PlayerInputEnum, Action<InputAction.CallbackContext>> _inputActions = 
+        new Dictionary<PlayerInputEnum, Action<InputAction.CallbackContext>>();
 
     public PlayerMover(Transform playerTransform,Rigidbody2D myrygidbody,float horizontalSpeed,float jumpForce,float raycastLength ,LayerMask checkFloorMask)
     {
@@ -34,8 +34,8 @@ public class PlayerMover : IMovable
     
     private void FillInputAction()
     {
-        _inputActions.Add(PlayerInputTypeEnum.Movement,HorizontalInput);
-        _inputActions.Add(PlayerInputTypeEnum.Jump,Jump);
+        _inputActions.Add(PlayerInputEnum.Movement,HorizontalInput);
+        _inputActions.Add(PlayerInputEnum.Jump,Jump);
     }
 
     public void DoMove()
@@ -51,9 +51,9 @@ public class PlayerMover : IMovable
         HorizontalMovement();
     }
 
-    public Action<InputAction.CallbackContext> GetAction(PlayerInputTypeEnum playerInputTypeEnum)
+    public Action<InputAction.CallbackContext> GetAction(PlayerInputEnum playerInputEnum)
     {
-        Action<InputAction.CallbackContext> inputAction = _inputActions[playerInputTypeEnum];
+        Action<InputAction.CallbackContext> inputAction = _inputActions[playerInputEnum];
         return inputAction;
     }
 

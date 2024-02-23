@@ -6,7 +6,7 @@ public interface ISkill
     bool DoSkill();
     void UndoSkill();
 
-    PlayerMovementTypeEnum SendActionMapTypeEnum();
+    PlayerMovementEnum SendActionMapTypeEnum();
     void UnsubscribeActions();
 
 }

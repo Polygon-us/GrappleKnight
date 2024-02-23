@@ -14,7 +14,7 @@ public class SkillManager
         _skillContainer.Add(skill);
     }
 
-    public ISkill GetNextSkill(out PlayerMovementTypeEnum playerMovementTypeEnum)
+    public ISkill GetNextSkill(out PlayerMovementEnum playerMovementEnum)
     {
         //_currentSkillIndex = (_currentSkillIndex + ((_skillContainer.Count + (int)Mathf.Sign(Input.mouseScrollDelta.y)*(2- _skillContainer.Count)) / 2))%_skillContainer.Count;
         // if (_skillContainer[_currentSkillIndex] != actualGun && _skillContainer[_currentSkillIndex] != null)
@@ -25,7 +25,7 @@ public class SkillManager
         int index = _currentSkillIndex;
         _currentSkillIndex = (_currentSkillIndex + 1) % _skillContainer.Count;
         ISkill currentSkill = _skillContainer[index];
-        playerMovementTypeEnum = currentSkill.SendActionMapTypeEnum();
+        playerMovementEnum = currentSkill.SendActionMapTypeEnum();
         return currentSkill;
     }
 

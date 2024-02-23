@@ -4,5 +4,5 @@ using UnityEngine.InputSystem;
 public interface IMovable
 {
     void DoMove();
-    Action<InputAction.CallbackContext> GetAction(PlayerInputTypeEnum playerInputTypeEnum);
+    Action<InputAction.CallbackContext> GetAction(PlayerInputEnum playerInputEnum);
 }

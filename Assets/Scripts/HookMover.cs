@@ -15,8 +15,8 @@ public class HookMover : IMovable
 
     private InputAction _inputAxisMovement;
     
-    private Dictionary<PlayerInputTypeEnum, Action<InputAction.CallbackContext>> _inputActions = 
-        new Dictionary<PlayerInputTypeEnum, Action<InputAction.CallbackContext>>();
+    private Dictionary<PlayerInputEnum, Action<InputAction.CallbackContext>> _inputActions = 
+        new Dictionary<PlayerInputEnum, Action<InputAction.CallbackContext>>();
     public HookMover(Rigidbody2D rigidbody2D, SpringJoint2D springJoint2D, Vector2 swingSpeed)
     {
         _rigidbody2D = rigidbody2D;
@@ -56,12 +56,12 @@ public class HookMover : IMovable
 
     private void FillInputAction()
     {
-        _inputActions.Add(PlayerInputTypeEnum.Movement,HorizontalAndVerticalInput);
+        _inputActions.Add(PlayerInputEnum.Movement,HorizontalAndVerticalInput);
     }
 
-    public Action<InputAction.CallbackContext> GetAction(PlayerInputTypeEnum playerInputTypeEnum)
+    public Action<InputAction.CallbackContext> GetAction(PlayerInputEnum playerInputEnum)
     {
-        Action<InputAction.CallbackContext> inputAction = _inputActions[playerInputTypeEnum];
+        Action<InputAction.CallbackContext> inputAction = _inputActions[playerInputEnum];
         return inputAction;
     }
 }

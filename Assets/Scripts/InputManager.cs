@@ -7,8 +7,8 @@ public class InputManager
 {
    private PlayerInputAction _playerInputAction;
 
-   private Dictionary<PlayerInputTypeEnum, InputAction> _inputActionsContainer =
-      new Dictionary<PlayerInputTypeEnum, InputAction>();
+   private Dictionary<PlayerInputEnum, InputAction> _inputActionsContainer =
+      new Dictionary<PlayerInputEnum, InputAction>();
    private Dictionary<InputAction, List<Action<InputAction.CallbackContext>>> _receiverActionsContainer =
        new Dictionary<InputAction, List<Action<InputAction.CallbackContext>>>();
    private Dictionary<Action<InputAction.CallbackContext>,Vector3> _actionStatusContainer =
@@ -25,10 +25,10 @@ public class InputManager
 
    private void FillInputActionsContainer()
    {
-      _inputActionsContainer.Add(PlayerInputTypeEnum.ChangeSkill,_playerInputAction.PlayerSkillActionMap.ChangeSkill);
-      _inputActionsContainer.Add(PlayerInputTypeEnum.ThrowSkill,_playerInputAction.PlayerSkillActionMap.ThrowSkill);
-      _inputActionsContainer.Add(PlayerInputTypeEnum.Movement,_playerInputAction.PlayerMovement.Movement);
-      _inputActionsContainer.Add(PlayerInputTypeEnum.Jump,_playerInputAction.PlayerMovement.Jump);
+      _inputActionsContainer.Add(PlayerInputEnum.ChangeSkill,_playerInputAction.PlayerSkillActionMap.ChangeSkill);
+      _inputActionsContainer.Add(PlayerInputEnum.ThrowSkill,_playerInputAction.PlayerSkillActionMap.ThrowSkill);
+      _inputActionsContainer.Add(PlayerInputEnum.Movement,_playerInputAction.PlayerMovement.Movement);
+      _inputActionsContainer.Add(PlayerInputEnum.Jump,_playerInputAction.PlayerMovement.Jump);
    }
    
    public void Configure()
@@ -38,31 +38,31 @@ public class InputManager
       _unsubscribeActionsContainer[2] = UnsubscribeCanceledAction;
    }
 
-   private void EnableInputAction(PlayerInputTypeEnum playerInputTypeEnum)
+   private void EnableInputAction(PlayerInputEnum playerInputEnum)
    {
-      if (!_inputActionsContainer[playerInputTypeEnum].enabled)
+      if (!_inputActionsContainer[playerInputEnum].enabled)
       {
-         _inputActionsContainer[playerInputTypeEnum].Enable();
+         _inputActionsContainer[playerInputEnum].Enable();
       }
    }
    
-   public void SubscribeStartedAction(PlayerInputTypeEnum playerInputTypeEnum,Action<InputAction.CallbackContext> action)
+   public void SubscribeStartedAction(PlayerInputEnum playerInputEnum,Action<InputAction.CallbackContext> action)
    {
-      FillContainers(_inputActionsContainer[playerInputTypeEnum], action,Vector3.right);
-      _inputActionsContainer[playerInputTypeEnum].started += action;
-      EnableInputAction(playerInputTypeEnum);
+      FillContainers(_inputActionsContainer[playerInputEnum], action,Vector3.right);
+      _inputActionsContainer[playerInputEnum].started += action;
+      EnableInputAction(playerInputEnum);
    }
-   public void SubscribePerformedAction(PlayerInputTypeEnum playerInputTypeEnum,Action<InputAction.CallbackContext> action)
+   public void SubscribePerformedAction(PlayerInputEnum playerInputEnum,Action<InputAction.CallbackContext> action)
    {
-      FillContainers(_inputActionsContainer[playerInputTypeEnum], action,Vector3.up);
-      _inputActionsContainer[playerInputTypeEnum].performed += action;
-      EnableInputAction(playerInputTypeEnum);
+      FillContainers(_inputActionsContainer[playerInputEnum], action,Vector3.up);
+      _inputActionsContainer[playerInputEnum].performed += action;
+      EnableInputAction(playerInputEnum);
    }
-   public void SubscribeCanceledAction(PlayerInputTypeEnum playerInputTypeEnum,Action<InputAction.CallbackContext> action)
+   public void SubscribeCanceledAction(PlayerInputEnum playerInputEnum,Action<InputAction.CallbackContext> action)
    {
-      FillContainers(_inputActionsContainer[playerInputTypeEnum], action,Vector3.forward);
-      _inputActionsContainer[playerInputTypeEnum].canceled += action;
-      EnableInputAction(playerInputTypeEnum);
+      FillContainers(_inputActionsContainer[playerInputEnum], action,Vector3.forward);
+      _inputActionsContainer[playerInputEnum].canceled += action;
+      EnableInputAction(playerInputEnum);
    }
    
    private void FillContainers(InputAction currentInputAction, Action<InputAction.CallbackContext> action, Vector3 status)

@@ -38,7 +38,7 @@ public class PlayerA : MonoBehaviour
         FillMovementManager();
         ChangeSkill();
         _playerMovementController.ChangeCurrentMovement(
-            _playerMovementManager.GetMovable(PlayerMovementTypeEnum.PlayerMovement));
+            _playerMovementManager.GetMovable(PlayerMovementEnum.PlayerMovement));
         _playerMovementController.StarMovement();
     }
 
@@ -64,26 +64,26 @@ public class PlayerA : MonoBehaviour
      private void FillMovementManager()
      {
          IMovable currentMovable = new HookMover(_rigidbody2D, _springJoint2D, _swingSpeed);
-        _playerMovementManager.AddMovable(PlayerMovementTypeEnum.HookMovement,currentMovable);
-        _inputManager.SubscribePerformedAction(PlayerInputTypeEnum.Movement,
-            currentMovable.GetAction(PlayerInputTypeEnum.Movement));
+        _playerMovementManager.AddMovable(PlayerMovementEnum.HookMovement,currentMovable);
+        _inputManager.SubscribePerformedAction(PlayerInputEnum.Movement,
+            currentMovable.GetAction(PlayerInputEnum.Movement));
         
         currentMovable = new PlayerMover(transform,_rigidbody2D,_horizontalSpeed,_jumpForce,_raycastLength,_checkFloorMask);
-        _playerMovementManager.AddMovable(PlayerMovementTypeEnum.PlayerMovement, currentMovable);
-        _inputManager.SubscribePerformedAction(PlayerInputTypeEnum.Movement,
-            currentMovable.GetAction(PlayerInputTypeEnum.Movement));
-        _inputManager.SubscribePerformedAction(PlayerInputTypeEnum.Jump,
-            currentMovable.GetAction(PlayerInputTypeEnum.Jump));
+        _playerMovementManager.AddMovable(PlayerMovementEnum.PlayerMovement, currentMovable);
+        _inputManager.SubscribePerformedAction(PlayerInputEnum.Movement,
+            currentMovable.GetAction(PlayerInputEnum.Movement));
+        _inputManager.SubscribePerformedAction(PlayerInputEnum.Jump,
+            currentMovable.GetAction(PlayerInputEnum.Jump));
         
-        _inputManager.SubscribePerformedAction(PlayerInputTypeEnum.ChangeSkill,ChangeSkill);
-        _inputManager.SubscribeStartedAction(PlayerInputTypeEnum.ThrowSkill,ThrowSkill);
-        _inputManager.SubscribeCanceledAction(PlayerInputTypeEnum.ThrowSkill,CancelSkill);
+        _inputManager.SubscribePerformedAction(PlayerInputEnum.ChangeSkill,ChangeSkill);
+        _inputManager.SubscribeStartedAction(PlayerInputEnum.ThrowSkill,ThrowSkill);
+        _inputManager.SubscribeCanceledAction(PlayerInputEnum.ThrowSkill,CancelSkill);
     }
     
     private void ChangeSkill(InputAction.CallbackContext callbackContext)
     {
         _playerSkillController.ChangeCurrentSkill(_skillManager.GetNextSkill(
-            out PlayerMovementTypeEnum playerMovementTypeEnum));
+            out PlayerMovementEnum playerMovementTypeEnum));
         _playerMovementController.QueueMovement(
             _playerMovementManager.GetMovable(playerMovementTypeEnum));
         
@@ -91,7 +91,7 @@ public class PlayerA : MonoBehaviour
     private void ChangeSkill()
     {
         _playerSkillController.ChangeCurrentSkill(_skillManager.GetNextSkill(
-            out PlayerMovementTypeEnum playerMovementTypeEnum));
+            out PlayerMovementEnum playerMovementTypeEnum));
         _playerMovementController.QueueMovement(
             _playerMovementManager.GetMovable(playerMovementTypeEnum));
     }

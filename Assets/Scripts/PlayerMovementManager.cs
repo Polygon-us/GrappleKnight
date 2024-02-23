@@ -3,19 +3,19 @@
 public class PlayerMovementManager
 {
 
-    private Dictionary<PlayerMovementTypeEnum, IMovable> _MovableContainer =
-        new Dictionary<PlayerMovementTypeEnum, IMovable>();
+    private Dictionary<PlayerMovementEnum, IMovable> _MovableContainer =
+        new Dictionary<PlayerMovementEnum, IMovable>();
     
-    public void AddMovable(PlayerMovementTypeEnum playerMovementTypeEnum,IMovable movable)
+    public void AddMovable(PlayerMovementEnum playerMovementEnum,IMovable movable)
     {
-        _MovableContainer.Add(playerMovementTypeEnum,movable);
+        _MovableContainer.Add(playerMovementEnum,movable);
     }
 
-    public IMovable GetMovable(PlayerMovementTypeEnum playerMovementTypeEnum)
+    public IMovable GetMovable(PlayerMovementEnum playerMovementEnum)
     {
-        if (playerMovementTypeEnum!=PlayerMovementTypeEnum.None)
+        if (playerMovementEnum!=PlayerMovementEnum.None)
         {
-            IMovable currentMovable = _MovableContainer[playerMovementTypeEnum];
+            IMovable currentMovable = _MovableContainer[playerMovementEnum];
             return currentMovable;
         }
 

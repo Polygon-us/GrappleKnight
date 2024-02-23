@@ -85,9 +85,9 @@ public class BoomerangSkill : ISkill
        
     }
 
-    public PlayerMovementTypeEnum SendActionMapTypeEnum()
+    public PlayerMovementEnum SendActionMapTypeEnum()
     {
-        return PlayerMovementTypeEnum.None;
+        return PlayerMovementEnum.None;
     }
 
     public void UnsubscribeActions()
