@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections;
-public class PointToPatrol : MonoBehaviour
+public class EnemyPatrolState : MonoBehaviour, IState
 {
-    [Header("PointToPatrol")]
+    [Header("EnemyPatrolState")]
     [SerializeField] private float waitTime = 1f;
     [SerializeField] private float minDistance = 0.1f; 
     [SerializeField] private float slowdownDistance = 1f; 
@@ -16,21 +16,29 @@ public class PointToPatrol : MonoBehaviour
     [Header("References")]
     [SerializeField] private Transform pointA;
     [SerializeField] private Transform pointB;
+    [SerializeField] private Rigidbody2D _enemyRigidbody;
     private Transform targetPoint;
 
     void Start()
     {
+        _enemyRigidbody = GetComponent<Rigidbody2D>();
         SetTargetPoint(pointA);
     }
-
-    void Update()
+    public bool DoState()
     {
         if (isWaiting)
-            return;
+            return false;
 
         MoveToTargetPoint();
+        return true;
     }
+    void FixedUpdate() 
+    {
+        //if (isWaiting)
+        //   return;
 
+        // MoveToTargetPoint();
+    }
     void SetTargetPoint(Transform newTargetPoint)
     {
         targetPoint = newTargetPoint;
@@ -44,15 +52,14 @@ public class PointToPatrol : MonoBehaviour
 
         float currentSpeed = (distanceToTarget > slowdownDistance) ? walkHorizontalSpeed :
             Mathf.Lerp(0, walkHorizontalSpeed, distanceToTarget / slowdownDistance);
-
-        transform.Translate(moveDirection * currentSpeed * Time.deltaTime);
+        _enemyRigidbody.velocity = moveDirection * currentSpeed;
 
         if (distanceToTarget < minDistance)
         {
             StartWaitingForNextPoint();
         }
     }
-
+  
     void StartWaitingForNextPoint()
     {
         isWaiting = true;

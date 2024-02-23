@@ -11,9 +11,11 @@
 public enum EnemyStateEnum
 {
     Idle,
-    AttackOne,
-    AttackTwo,
-    AttackThree
+    Patrol,
+    Hunt,
+    JumpAttack,
+    ChargeImpact,
+    BlastWave
 }
 
 public enum PlayerMovementEnum

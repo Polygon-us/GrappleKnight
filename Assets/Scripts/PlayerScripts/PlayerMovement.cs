@@ -8,7 +8,9 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("HorizontalMovement")]
 
-    [SerializeField] private float force = 10f;
+    [SerializeField] private float speed = 10f;
+    [SerializeField] private float maxSpeed = 10f;
+    [SerializeField] private float inertiaMultiplier = 10f;
     private Vector2 horizontalMovement;
 
  
@@ -33,10 +35,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void HorizontalMovement()
     {
-        if (Mathf.Abs(_myrigidbody.velocity.x) <= 2f)
-        {
-            _myrigidbody.AddForce(force * new Vector2(input, 0f), ForceMode2D.Force);
-        }
+        // Calcula la velocidad del movimiento
+        Vector2 targetVelocity = new Vector2(input * speed, _myrigidbody.velocity.y);
+
+        // Aplica la velocidad limitada
+        targetVelocity.x = Mathf.Clamp(targetVelocity.x, -maxSpeed, maxSpeed);
+        targetVelocity.y = _myrigidbody.velocity.y; // Mantén la velocidad vertical
+
+        // Calcula el cambio en la velocidad
+        Vector2 velocityChange = targetVelocity - _myrigidbody.velocity;
+
+        // Aplica una fuerza para mantener la velocidad actual
+        _myrigidbody.AddForce(velocityChange * inertiaMultiplier, ForceMode2D.Force);
     }
 
     public void CaptureMovementInput()
