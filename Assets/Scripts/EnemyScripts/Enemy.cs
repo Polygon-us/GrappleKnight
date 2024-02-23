@@ -1,4 +1,5 @@
 using UnityEngine;
+
 public class Enemy : MonoBehaviour
 {
     private EnemyLife _enemyLife;
@@ -7,10 +8,13 @@ public class Enemy : MonoBehaviour
     {
         _enemyLife = new EnemyLife(gameObject,_maxLife);
     }
-
+    
     public void ReduceEnemyLife(int amount)
     {
-        _enemyLife.ReduceLife(amount);
+        if (_enemyLife.ReduceLife(amount))
+        {
+            _enemyLife.DeactivateEnemy();
+        }
     }
     
 }
