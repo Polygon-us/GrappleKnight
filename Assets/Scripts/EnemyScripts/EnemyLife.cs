@@ -15,16 +15,25 @@ public class EnemyLife
         _currentLife = maxlife;
     }
     
-    public void ReduceLife(int amount)
+    public bool ReduceLife(int amount)
     {
         _currentLife -= amount;
         if (_currentLife<=0)
         {
-            _enemyGameObject.SetActive(false);
+            return true;
         }
+        
         Debug.Log(_currentLife);
+        return false;
     }
     
-    
+    public void ActivateEnemy()
+    {
+        _enemyGameObject.SetActive(true);
+    }
+    public void DeactivateEnemy()
+    {
+        _enemyGameObject.SetActive(false);
+    }
 }
 

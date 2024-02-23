@@ -10,10 +10,10 @@
 
 public enum EnemyStateEnum
 {
-    Idle,
+    //Idle,
     AttackOne,
-    AttackTwo,
-    AttackThree
+    //AttackTwo,
+    //AttackThree
 }
 
 public enum PlayerMovementEnum

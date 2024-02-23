@@ -1,9 +1,10 @@
-
+using System;
 using System.Collections.Generic;
+using Random = UnityEngine.Random;
 
 public class EnemyStateManager
 {
-    private Dictionary<EnemyStateEnum,IState> _enemyStatesContainer = new Dictionary<EnemyStateEnum, IState>();
+    private Dictionary<EnemyStateEnum,IState> _enemyStatesContainer = new();
 
     public void FillStatesContainer(EnemyStateEnum enemyStateEnum, IState state)
     {
@@ -12,7 +13,10 @@ public class EnemyStateManager
 
     public IState GetNextState()
     {
-        //EnemyStateEnum.
-        return null;
+        List<EnemyStateEnum> enumValues = new List<EnemyStateEnum>(_enemyStatesContainer.Keys);
+        int randomEnemyStateEnum = Random.Range(0, enumValues.Count);
+        EnemyStateEnum enemyStateEnum = enumValues[randomEnemyStateEnum];
+        IState enemyState = _enemyStatesContainer[enemyStateEnum];
+        return enemyState;
     }
 }
