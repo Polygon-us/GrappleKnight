@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class BlastWaveAttackState : IState
 {
-    public bool DoState()
+ 
+    public bool DoState(out EnemyStateEnum enemyStateEnum)
     {
         throw new System.NotImplementedException();
     }

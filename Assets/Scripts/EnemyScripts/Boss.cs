@@ -22,7 +22,7 @@ public class Boss : MonoBehaviour
     }
     private void AddStates()
     {
-        _enemyStateManager.FillStatesContainer(EnemyStateEnum.AttackOne, new JumpOnPlayerAttackState(_rigidbody2D,_jumpHeight));
+        //_enemyStateManager.FillStatesContainer(EnemyStateEnum.AttackOne, new JumpOnPlayerAttackState(_rigidbody2D,_jumpHeight));
         //_enemyStateManager.FillStatesContainer(EnemyStateEnum.AttackTwo, new ChargeImpactAttackState());
     }
     private void InitialState()

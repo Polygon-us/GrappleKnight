@@ -1,4 +1,5 @@
 ﻿public interface IState
 {
-    bool DoState();
+    bool DoState(out EnemyStateEnum enemyStateEnum);
+
 }

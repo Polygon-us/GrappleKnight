@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
-public class EnemyPatrolState : MonoBehaviour, IState
+using System;
+public class EnemyPatrolState : IState
 {
     [Header("EnemyPatrolState")]
     [SerializeField] private float waitTime = 1f;
@@ -9,7 +10,7 @@ public class EnemyPatrolState : MonoBehaviour, IState
 
     [Space]
     [Header("Movement")]
-    [SerializeField] private float walkHorizontalSpeed = 2f;
+    [SerializeField] private float walkHorizontalSpeed = 10f;
     private bool isWaiting = false;
 
     [Space]
@@ -17,38 +18,48 @@ public class EnemyPatrolState : MonoBehaviour, IState
     [SerializeField] private Transform pointA;
     [SerializeField] private Transform pointB;
     [SerializeField] private Rigidbody2D _enemyRigidbody;
+    [SerializeField] private Transform _transform;
     private Transform targetPoint;
 
-    void Start()
+    public EnemyPatrolState(Transform pointA, Transform pointB, Rigidbody2D enemyRigidbody, Transform transform)
     {
-        _enemyRigidbody = GetComponent<Rigidbody2D>();
-        SetTargetPoint(pointA);
+        this.pointA = pointA;
+        this.pointB = pointB;
+        _enemyRigidbody = enemyRigidbody;
+        _transform = transform;
+        //SetTargetPoint(pointA);
     }
-    public bool DoState()
+    
+    public bool DoState(out EnemyStateEnum enemyStateEnum)
     {
-        if (isWaiting)
+        Debug.Log("Patrol");
+        //if (isWaiting)
+        //    return false;
+        if (!isWaiting)
+        {
+            SetTargetPoint((targetPoint == pointA) ? pointB : pointA);
+            isWaiting = true;
+        }
+        if (MoveToTargetPoint())
+        {
+            isWaiting = false;
+            enemyStateEnum = EnemyStateEnum.Idle;
             return false;
-
-        MoveToTargetPoint();
+        }
+        enemyStateEnum = EnemyStateEnum.Idle;
         return true;
     }
-    void FixedUpdate() 
-    {
-        //if (isWaiting)
-        //   return;
-
-        // MoveToTargetPoint();
-    }
+   
     void SetTargetPoint(Transform newTargetPoint)
     {
         targetPoint = newTargetPoint;
     }
 
-    void MoveToTargetPoint()
+    bool MoveToTargetPoint()
     {
-        Vector2 moveDirection = (targetPoint.position - transform.position).normalized;
+        Vector2 moveDirection = (targetPoint.position - _transform.position).normalized;
 
-        float distanceToTarget = Vector2.Distance(transform.position, targetPoint.position);
+        float distanceToTarget = Vector2.Distance(_transform.position, targetPoint.position);
 
         float currentSpeed = (distanceToTarget > slowdownDistance) ? walkHorizontalSpeed :
             Mathf.Lerp(0, walkHorizontalSpeed, distanceToTarget / slowdownDistance);
@@ -56,15 +67,17 @@ public class EnemyPatrolState : MonoBehaviour, IState
 
         if (distanceToTarget < minDistance)
         {
-            StartWaitingForNextPoint();
+            return true;
+            //StartWaitingForNextPoint();
         }
+        return false;
     }
   
     void StartWaitingForNextPoint()
     {
         isWaiting = true;
 
-        StartCoroutine(WaitBeforeNextPoint());
+        //StartCoroutine(WaitBeforeNextPoint());
     }
 
     IEnumerator WaitBeforeNextPoint()

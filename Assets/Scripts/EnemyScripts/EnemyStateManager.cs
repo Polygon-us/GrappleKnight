@@ -1,6 +1,9 @@
-using System;
+//using System;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
+//using UnityEngine;
+using System.Collections;
+using UnityEngine;
 
 public class EnemyStateManager
 {
@@ -18,5 +21,12 @@ public class EnemyStateManager
         EnemyStateEnum enemyStateEnum = enumValues[randomEnemyStateEnum];
         IState enemyState = _enemyStatesContainer[enemyStateEnum];
         return enemyState;
+    }
+
+    public IState GetNextState(EnemyStateEnum enemyStateEnum)
+    {
+
+        Debug.Log("NextState");
+        return _enemyStatesContainer[enemyStateEnum];
     }
 }
