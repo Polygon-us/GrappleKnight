@@ -13,13 +13,7 @@ public class JumpOnPlayerAttackState : IState
         throw new System.NotImplementedException();
     }
 }
-public class BlastWaveAttackState : IState
-{
-    public bool DoState()
-    {
-        throw new System.NotImplementedException();
-    }
-}
+
 public class ChargeImpactAttackState : IState
 {
     public bool DoState()
