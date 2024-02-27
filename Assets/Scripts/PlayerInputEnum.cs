@@ -15,7 +15,8 @@ public enum EnemyStateEnum
     Hunt,
     JumpAttack,
     ChargeImpact,
-    BlastWave
+    BlastWave,
+    Random
 }
 
 public enum PlayerMovementEnum

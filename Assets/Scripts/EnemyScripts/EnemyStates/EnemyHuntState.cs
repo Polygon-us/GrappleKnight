@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using System;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class EnemyHuntStatee : IState
 {
@@ -20,5 +17,10 @@ public class EnemyHuntStatee : IState
     public bool DoState(out EnemyStateEnum enemyStateEnum)
     {
         throw new System.NotImplementedException();
+    }
+
+    public Action<Collision2D> CollisionAction()
+    {
+        throw new NotImplementedException();
     }
 }
