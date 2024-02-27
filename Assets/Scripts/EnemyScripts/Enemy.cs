@@ -35,14 +35,13 @@ public class Enemy : MonoBehaviour
     private void AddStates()
     {
         _enemyStateManager.FillStatesContainer(EnemyStateEnum.Patrol, new EnemyPatrolState(_pointA,_pointB,_rigidbody,transform));
-        _enemyStateManager.FillStatesContainer(EnemyStateEnum.Idle, new EnemyIdleState());
         _enemyStateManager.FillStatesContainer(EnemyStateEnum.Hunt, new EnemyHuntState( _persecutorCollider, _rigidbody, transform,  playerTransform,  _isHuntingMode));
-       
+        _enemyStateManager.FillStatesContainer(EnemyStateEnum.Idle, new EnemyIdleState(1,EnemyStateEnum.Patrol));
     }
     private void InitialState()
     {
-        _enemyStateController.ChangeCurrentState(_enemyStateManager.GetNextState(EnemyStateEnum.Patrol));
-        
+        _enemyStateController.ChangeCurrentState(EnemyStateEnum.Patrol);
+
     }
     private void BeginStates()
     {

@@ -48,7 +48,12 @@ public class EnemyPatrolState : IState
         enemyStateEnum = EnemyStateEnum.Idle;
         return true;
     }
-   
+
+    public Action<Collision2D> CollisionAction()
+    {
+        return null;
+    }
+
     void SetTargetPoint(Transform newTargetPoint)
     {
         targetPoint = newTargetPoint;

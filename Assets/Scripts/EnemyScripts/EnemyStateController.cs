@@ -1,63 +1,6 @@
-using Unity.VisualScripting;
+using System;
 using UnityEngine;
 
-public class JumpOnPlayerAttackState : IState
-{
-    private Rigidbody2D _rigidbody2D;
-
-    private float _jumpHeight;
-
-    public JumpOnPlayerAttackState(Rigidbody2D rigidbody2D, float jumpHeight)
-    {
-        _rigidbody2D = rigidbody2D;
-        _jumpHeight = jumpHeight;
-    }
-
-    public bool DoState(out EnemyStateEnum enemyStateEnum)
-    {
-        //float velocity = Mathf.Sqrt(_jumpHeight * (Physics2D.gravity.y * _rigidbody2D.gravityScale)*-2)*_rigidbody2D.mass;
-        //_rigidbody2D.AddForce(Vector2.up*velocity, ForceMode2D.Impulse);
-        //_rigidbody2D.AddForce(Vector2.right*velocity, ForceMode2D.Impulse);
-
-        //return false;
-        throw new System.NotImplementedException();
-    }
-}
-
-public class ChargeImpactAttackState : IState
-{
-    public bool DoState(out EnemyStateEnum enemyStateEnum)
-    {
-        throw new System.NotImplementedException();
-    }
-}
-public class Saltar : ISkill
-{
-    public bool DoSkill()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void InitSkill()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public PlayerMovementEnum SendActionMapTypeEnum()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void UndoSkill()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void UnsubscribeActions()
-    {
-        throw new System.NotImplementedException();
-    }
-}
 public class EnemyStateController : MonoBehaviour
 {
     private IState _currentState;
@@ -65,35 +8,69 @@ public class EnemyStateController : MonoBehaviour
 
     private bool _isOnState;
 
+    private Action<Collision2D> _onCollisionEnter;
+    private Action<Collision2D> _onCollisionReceiver;
+    
+    
     public void Configure(EnemyStateManager enemyStateManager)
     {
         _enemyStateManager = enemyStateManager;
     }
+    
     void FixedUpdate()
     {
         if (_isOnState)
         {
             if (!_currentState.DoState(out EnemyStateEnum enemyStateEnum))
             {
-                //StopStates();
-                
-                _currentState = _enemyStateManager.GetNextState(enemyStateEnum);
+                ChangeCurrentState(enemyStateEnum);
             }
         }
     }
 
-    public void ChangeCurrentState(IState state)
+    public void ChangeCurrentState(EnemyStateEnum state)
     {
-        _currentState = state;
+        UnsubscribeCollisionAction();
+        if (state==EnemyStateEnum.Random)
+        {
+            _currentState = _enemyStateManager.GetNextState();
+        }
+        else
+        {
+            _currentState = _enemyStateManager.GetNextState(state);
+        }
+        SubscribeCollisionAction(_currentState.CollisionAction());
     }
-    
+
+    private void SubscribeCollisionAction(Action<Collision2D> collisionAction)
+    {
+        if (collisionAction!=null)
+        {
+            _onCollisionReceiver = collisionAction;
+            _onCollisionEnter += _onCollisionReceiver;
+        }
+    }
+    public void UnsubscribeCollisionAction()
+    {
+        if (_onCollisionReceiver != null)
+        {
+            _onCollisionEnter -= _onCollisionReceiver;
+        }
+    }
     public void StartStates()
     {
         _isOnState = true;
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        _onCollisionEnter?.Invoke(other);
     }
 
     public void StopStates()
     {
         _isOnState = false;
     }
+    
+    
 }

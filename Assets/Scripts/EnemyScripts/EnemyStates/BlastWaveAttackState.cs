@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
@@ -36,77 +37,87 @@ public class BlastWaveAttackState : IState
         _groundLayer = groundLayer;
         _myCapsuleCollider2D = capsuleCollider2D;
     }
-        bool ExpandWave()
+
+    bool ExpandWave()
+    {
+        if (_expandWave)
         {
-            if (_expandWave)
-            {
 
-                _expandWave = false;
+            _expandWave = false;
 
-                return false;
-            }
-            return true;
+            return false;
         }
+        return true;
+    }
 
-        void Jump()
+    void Jump()
+    {
+        if (!_jumping)
         {
-            if (!_jumping)
-            {
-                _jumping = true;
-                _jumpForce = Mathf.Sqrt(_jumpHeight * (Physics2D.gravity.y * _myRigidbody.gravityScale) * -2) * _myRigidbody.mass;
-                _timeOfJump = -2 * _jumpForce / (Physics2D.gravity.y * _myRigidbody.gravityScale);
-                _myRigidbody.AddForce(_jumpForce * Vector2.up, ForceMode2D.Impulse);
-                Debug.Log($"time of jump : {_timeOfJump}");
-            }
-            else
-            {
-                _currentTime += Time.deltaTime;
-                if (_currentTime >= _timeOfJump)
-                {
-                    _currentTime = 0;
-                }
-            }
-
+            _jumping = true;
+            _jumpForce = Mathf.Sqrt(_jumpHeight * (Physics2D.gravity.y * _myRigidbody.gravityScale) * -2) * _myRigidbody.mass;
+            _timeOfJump = -2 * _jumpForce / (Physics2D.gravity.y * _myRigidbody.gravityScale);
+            _myRigidbody.AddForce(_jumpForce * Vector2.up, ForceMode2D.Impulse);
+            Debug.Log($"time of jump : {_timeOfJump}");
         }
-        void ApplyDownForce()
+        else
         {
-            RaycastHit2D hit = Physics2D.Raycast(_myRigidbody.position, Vector2.down, _groundCheckDistance, _groundLayer);
-            Debug.DrawRay(_myRigidbody.position, Vector2.down * _groundCheckDistance, Color.green);
-
-            if (!hit.collider)
+            _currentTime += Time.deltaTime;
+            if (_currentTime >= _timeOfJump)
             {
-                Debug.Log("fuerza");
-                _myRigidbody.AddForce(Vector2.down * _forceDown, ForceMode2D.Impulse);
-                _appliedDownwardForce = true;
-                _onFloor = true;
-
-
-                if (_onFloor == true && _myCapsuleCollider2D.IsTouchingLayers(LayerMask.GetMask("Floor")))
-                {
-                    Debug.Log("golpe onda");
-                    _expandWave = true;
-                }
-            }
-            else
-            {
-                _onFloor = false;
+                _currentTime = 0;
             }
         }
 
-        public bool DoState(out EnemyStateEnum enemyStateEnum)
+    }
+
+    void ApplyDownForce()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(_myRigidbody.position, Vector2.down, _groundCheckDistance, _groundLayer);
+        Debug.DrawRay(_myRigidbody.position, Vector2.down * _groundCheckDistance, Color.green);
+
+        if (!hit.collider)
         {
-            Jump();
+            Debug.Log("fuerza");
+            _myRigidbody.AddForce(Vector2.down * _forceDown, ForceMode2D.Impulse);
+            _appliedDownwardForce = true;
+            _onFloor = true;
 
-            ApplyDownForce();
 
-
-            if (!ExpandWave())
+            if (_onFloor == true && _myCapsuleCollider2D.IsTouchingLayers(LayerMask.GetMask("Floor")))
             {
-                enemyStateEnum = EnemyStateEnum.BlastWave;
-                return false;
+                Debug.Log("golpe onda");
+                _expandWave = true;
             }
-            enemyStateEnum = EnemyStateEnum.BlastWave;
-            return true;
+        }
+        else
+        {
+            _onFloor = false;
         }
     }
+
+    public bool DoState(out EnemyStateEnum enemyStateEnum)
+    {
+        Jump();
+
+        ApplyDownForce();
+
+
+        if (!ExpandWave())
+        {
+            enemyStateEnum = EnemyStateEnum.BlastWave;
+            return false;
+        }
+        enemyStateEnum = EnemyStateEnum.BlastWave;
+        return true;
+    }
+
+
+
+
+    public Action<Collision2D> CollisionAction()
+    {
+        throw new NotImplementedException();
+    }
+}
 

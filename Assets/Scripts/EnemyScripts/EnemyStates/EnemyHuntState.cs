@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class EnemyHuntState : IState
@@ -47,5 +48,10 @@ public class EnemyHuntState : IState
 
             enemyStateEnum = EnemyStateEnum.Hunt;
             return true;
+    }
+
+    public Action<Collision2D> CollisionAction()
+    {
+        throw new NotImplementedException();
     }
 }
