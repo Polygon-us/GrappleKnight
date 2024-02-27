@@ -60,7 +60,7 @@ public class Enemy : MonoBehaviour
             _isHuntingMode = true;
             if (_isHuntingMode  == true)
             {
-                _enemyStateController.ChangeCurrentState(_enemyStateManager.GetNextState(EnemyStateEnum.Hunt));
+                _enemyStateController.ChangeCurrentState(EnemyStateEnum.Hunt);
 
             }
         }
@@ -73,7 +73,7 @@ public class Enemy : MonoBehaviour
 
             if (_isHuntingMode == false)
             {
-                _enemyStateController.ChangeCurrentState(_enemyStateManager.GetNextState(EnemyStateEnum.Patrol));
+                _enemyStateController.ChangeCurrentState(EnemyStateEnum.Patrol);
 
             }
         }

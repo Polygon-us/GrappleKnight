@@ -42,9 +42,9 @@ public class BlastWaveAttackState : IState
     {
         if (_expandWave)
         {
-
+            Debug.Log("WAVEEE");
             _expandWave = false;
-
+            _jumping = false;
             return false;
         }
         return true;
@@ -56,7 +56,7 @@ public class BlastWaveAttackState : IState
         {
             _jumping = true;
             _jumpForce = Mathf.Sqrt(_jumpHeight * (Physics2D.gravity.y * _myRigidbody.gravityScale) * -2) * _myRigidbody.mass;
-            _timeOfJump = -2 * _jumpForce / (Physics2D.gravity.y * _myRigidbody.gravityScale);
+            _timeOfJump = -1 * _jumpForce / (Physics2D.gravity.y * _myRigidbody.gravityScale);
             _myRigidbody.AddForce(_jumpForce * Vector2.up, ForceMode2D.Impulse);
             Debug.Log($"time of jump : {_timeOfJump}");
         }
@@ -66,6 +66,7 @@ public class BlastWaveAttackState : IState
             if (_currentTime >= _timeOfJump)
             {
                 _currentTime = 0;
+                ApplyDownForce();
             }
         }
 
@@ -73,51 +74,53 @@ public class BlastWaveAttackState : IState
 
     void ApplyDownForce()
     {
-        RaycastHit2D hit = Physics2D.Raycast(_myRigidbody.position, Vector2.down, _groundCheckDistance, _groundLayer);
-        Debug.DrawRay(_myRigidbody.position, Vector2.down * _groundCheckDistance, Color.green);
+        //RaycastHit2D hit = Physics2D.Raycast(_myRigidbody.position, Vector2.down, _groundCheckDistance, _groundLayer);
+        //Debug.DrawRay(_myRigidbody.position, Vector2.down * _groundCheckDistance, Color.green);
 
-        if (!hit.collider)
-        {
-            Debug.Log("fuerza");
+        _onFloor = true;
+        //if (!hit.collider)
+        //{
+        //    Debug.Log("fuerza");
             _myRigidbody.AddForce(Vector2.down * _forceDown, ForceMode2D.Impulse);
-            _appliedDownwardForce = true;
-            _onFloor = true;
 
 
-            if (_onFloor == true && _myCapsuleCollider2D.IsTouchingLayers(LayerMask.GetMask("Floor")))
-            {
-                Debug.Log("golpe onda");
-                _expandWave = true;
-            }
-        }
-        else
-        {
-            _onFloor = false;
-        }
+        //    if (_onFloor == true && _myCapsuleCollider2D.IsTouchingLayers(LayerMask.GetMask("Floor")))
+        //    {
+        //        Debug.Log("golpe onda");
+                
+        //    }
+        //}
+        //else
+        //{
+        //    _onFloor = false;
+        //}
     }
 
     public bool DoState(out EnemyStateEnum enemyStateEnum)
     {
         Jump();
-
-        ApplyDownForce();
-
-
         if (!ExpandWave())
         {
-            enemyStateEnum = EnemyStateEnum.BlastWave;
+            enemyStateEnum = EnemyStateEnum.Idle;
             return false;
         }
-        enemyStateEnum = EnemyStateEnum.BlastWave;
+        enemyStateEnum = EnemyStateEnum.Idle;
         return true;
     }
 
 
-
+    private void CollisionEnter(Collision2D other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Floor") && _onFloor)
+        {
+            _expandWave = true;
+            _onFloor = false;
+        }
+    }
 
     public Action<Collision2D> CollisionAction()
     {
-        throw new NotImplementedException();
+        return CollisionEnter;
     }
 }
 

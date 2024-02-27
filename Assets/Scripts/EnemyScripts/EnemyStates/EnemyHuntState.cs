@@ -52,6 +52,6 @@ public class EnemyHuntState : IState
 
     public Action<Collision2D> CollisionAction()
     {
-        throw new NotImplementedException();
+        return null;
     }
 }

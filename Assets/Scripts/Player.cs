@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerA : MonoBehaviour
+public class Player : MonoBehaviour
 {
     [SerializeField] private Transform _hookBegin;
     [SerializeField] private Transform _hookEnd;

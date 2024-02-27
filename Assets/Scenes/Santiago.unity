@@ -1605,9 +1605,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d69939856084df28e6fb6f0bd554d64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxLife: 10
   _jumpHeight: 5
+  _jumpHeightForBlast: 3
   _playerTransform: {fileID: 653828551}
+  _maxLife: 10
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!114 &1577597087
 MonoBehaviour:
   m_ObjectHideFlags: 0

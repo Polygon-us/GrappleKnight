@@ -55,6 +55,7 @@ public class EnemyStateController : MonoBehaviour
         if (_onCollisionReceiver != null)
         {
             _onCollisionEnter -= _onCollisionReceiver;
+            _onCollisionReceiver = null;
         }
     }
     public void StartStates()
@@ -64,7 +65,10 @@ public class EnemyStateController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        _onCollisionEnter?.Invoke(other);
+        if (_onCollisionReceiver != null)
+        {
+            _onCollisionEnter?.Invoke(other);
+        }
     }
 
     public void StopStates()

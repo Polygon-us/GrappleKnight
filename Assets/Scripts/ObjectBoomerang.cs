@@ -14,7 +14,11 @@ public class ObjectBoomerang : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        _senderAction.Invoke();
+        if (other.isTrigger != true)
+        {
+            _senderAction.Invoke();
+           
+        }
         if (other.TryGetComponent(out Enemy enemy))
         {
             enemy.ReduceEnemyLife(10);

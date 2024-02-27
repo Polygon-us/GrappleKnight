@@ -14,7 +14,7 @@ public class Boss : MonoBehaviour
 
     [SerializeField] private LayerMask groundLayer;
 
-    [SerializeField] private CapsuleCollider2D capsuleCollider2D;
+    private CapsuleCollider2D _capsuleCollider2D;
 
     private Rigidbody2D _rigidbody2D;
 
@@ -32,6 +32,7 @@ public class Boss : MonoBehaviour
         _enemyStateController = GetComponent<EnemyStateController>();
         _enemyStateController.Configure(_enemyStateManager);
         _rigidbody2D = GetComponent<Rigidbody2D>();
+        _capsuleCollider2D = GetComponent<CapsuleCollider2D>();
         AddStates();
         InitialState();
         BeginStates();
@@ -42,6 +43,7 @@ public class Boss : MonoBehaviour
             _jumpHeight,transform,_playerTransform));
         _enemyStateManager.FillStatesContainer(EnemyStateEnum.ChargeImpact, new ChargeImpactAttackState(_rigidbody2D,
             transform, _playerTransform));
+        _enemyStateManager.FillStatesContainer(EnemyStateEnum.BlastWave, new BlastWaveAttackState(_jumpHeightForBlast,_rigidbody2D,groundLayer,_capsuleCollider2D));
         _enemyStateManager.FillStatesContainer(EnemyStateEnum.Idle, new EnemyIdleState(1,EnemyStateEnum.Random));
     }
     private void InitialState()
