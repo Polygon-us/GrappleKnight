@@ -5,12 +5,12 @@ public class EnemyPatrolState : IState
 {
     [Header("EnemyPatrolState")]
     [SerializeField] private float waitTime = 1f;
-    [SerializeField] private float minDistance = 0.1f; 
     [SerializeField] private float slowdownDistance = 1f; 
+     private float minDistance = 0.3f; 
 
     [Space]
     [Header("Movement")]
-    [SerializeField] private float walkHorizontalSpeed = 10f;
+    [SerializeField] private float walkHorizontalSpeed = 4f;
     private bool isWaiting = false;
 
     [Space]
@@ -27,12 +27,11 @@ public class EnemyPatrolState : IState
         this.pointB = pointB;
         _enemyRigidbody = enemyRigidbody;
         _transform = transform;
-        //SetTargetPoint(pointA);
+        //SetTargetPoint(pointB);
     }
     
     public bool DoState(out EnemyStateEnum enemyStateEnum)
     {
-        Debug.Log("Patrol");
         //if (isWaiting)
         //    return false;
         if (!isWaiting)

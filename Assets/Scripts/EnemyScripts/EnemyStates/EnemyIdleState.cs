@@ -10,7 +10,6 @@ public class EnemyIdleState : IState
     private float currentTime;
     public bool DoState(out EnemyStateEnum enemyStateEnum)
     {
-        Debug.Log($"Idle {currentTime}");
         currentTime += Time.deltaTime;
         if (currentTime>=waitTime)
         {

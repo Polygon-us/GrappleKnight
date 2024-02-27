@@ -2,32 +2,43 @@ using System;
 using UnityEngine;
 public class Boss : MonoBehaviour
 {
-    private EnemyLife _enemyLife;
-    [SerializeField]private int _maxLife;
     [SerializeField] private float _jumpHeight;
+    [SerializeField] private float _jumpHeightForBlast;
     
+    [SerializeField]private int _maxLife;
+
+    [SerializeField] private LayerMask groundLayer;
+
+    [SerializeField] private CapsuleCollider2D capsuleCollider2D;
+
     private Rigidbody2D _rigidbody2D;
-    
+
+    private EnemyLife _enemyLife;
     private EnemyStateManager _enemyStateManager;
     private EnemyStateController _enemyStateController;
+
     private void Awake()
     {
+        _rigidbody2D = GetComponent<Rigidbody2D>();
+        _enemyStateController = GetComponent<EnemyStateController>();
+        
         _enemyLife = new EnemyLife(gameObject,_maxLife);
         _enemyStateManager = new EnemyStateManager();
-        _enemyStateController = GetComponent<EnemyStateController>();
-        _rigidbody2D = GetComponent<Rigidbody2D>();
+
+        _enemyStateController.Configure(_enemyStateManager);
+
         AddStates();
         InitialState();
         BeginStates();
     }
     private void AddStates()
     {
-        //_enemyStateManager.FillStatesContainer(EnemyStateEnum.AttackOne, new JumpOnPlayerAttackState(_rigidbody2D,_jumpHeight));
+        _enemyStateManager.FillStatesContainer(EnemyStateEnum.BlastWave, new BlastWaveAttackState(_jumpHeightForBlast,_rigidbody2D, groundLayer,capsuleCollider2D));
         //_enemyStateManager.FillStatesContainer(EnemyStateEnum.AttackTwo, new ChargeImpactAttackState());
     }
     private void InitialState()
     {
-        _enemyStateController.ChangeCurrentState(_enemyStateManager.GetNextState());
+        _enemyStateController.ChangeCurrentState(_enemyStateManager.GetNextState(EnemyStateEnum.BlastWave));
     }
     private void BeginStates()
     {

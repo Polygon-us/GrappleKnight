@@ -4,6 +4,7 @@ using UnityEngine;
 public class JumpOnPlayerAttackState : IState
 {
     private Rigidbody2D _rigidbody2D;
+
     private float _jumpHeight;
 
     public JumpOnPlayerAttackState(Rigidbody2D rigidbody2D, float jumpHeight)
