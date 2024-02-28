@@ -96,6 +96,11 @@ public class BlastWaveAttackState : IState
         //}
     }
 
+    public void StartState()
+    {
+        
+    }
+
     public bool DoState(out EnemyStateEnum enemyStateEnum)
     {
         Jump();

@@ -13,7 +13,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         if (_isReadyToMove)
         {
-            _currentMovement.DoMove();
+           _currentMovement.DoMove();
         }
     }
 

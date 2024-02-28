@@ -13,6 +13,11 @@ public class EnemyIdleState : IState
         _nextEnemyStateEnum = nextEnemyStateEnum;
     }
 
+    public void StartState()
+    {
+        
+    }
+
     public bool DoState(out EnemyStateEnum enemyStateEnum)
     {
         _currentTime += Time.deltaTime;

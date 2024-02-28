@@ -34,10 +34,12 @@ public class EnemyStateController : MonoBehaviour
         if (state==EnemyStateEnum.Random)
         {
             _currentState = _enemyStateManager.GetNextState();
+            StartStates();
         }
         else
         {
             _currentState = _enemyStateManager.GetNextState(state);
+            StartStates();
         }
         SubscribeCollisionAction(_currentState.CollisionAction());
     }
@@ -61,9 +63,10 @@ public class EnemyStateController : MonoBehaviour
     public void StartStates()
     {
         _isOnState = true;
+        _currentState.StartState();
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnCollisionStay2D(Collision2D other)
     {
         if (_onCollisionReceiver != null)
         {

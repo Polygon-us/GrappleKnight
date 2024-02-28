@@ -14,6 +14,10 @@ public class Boss : MonoBehaviour
 
     [SerializeField] private LayerMask groundLayer;
 
+    [SerializeField]private int _chargeMaxNumber;
+    [SerializeField]private float _chargeVelocity;
+    
+    
     private CapsuleCollider2D _capsuleCollider2D;
 
     private Rigidbody2D _rigidbody2D;
@@ -41,9 +45,10 @@ public class Boss : MonoBehaviour
     {
         _enemyStateManager.FillStatesContainer(EnemyStateEnum.JumpAttack, new JumpToPlayerAttackState(_rigidbody2D,
             _jumpHeight,transform,_playerTransform));
+        _enemyStateManager.FillStatesContainer(EnemyStateEnum.BlastWave, new BlastWaveAttackState(_jumpHeightForBlast,
+            _rigidbody2D,groundLayer,_capsuleCollider2D));
         _enemyStateManager.FillStatesContainer(EnemyStateEnum.ChargeImpact, new ChargeImpactAttackState(_rigidbody2D,
-            transform, _playerTransform));
-        _enemyStateManager.FillStatesContainer(EnemyStateEnum.BlastWave, new BlastWaveAttackState(_jumpHeightForBlast,_rigidbody2D,groundLayer,_capsuleCollider2D));
+            transform, _playerTransform,_chargeMaxNumber,_chargeVelocity));
         _enemyStateManager.FillStatesContainer(EnemyStateEnum.Idle, new EnemyIdleState(1,EnemyStateEnum.Random));
     }
     private void InitialState()

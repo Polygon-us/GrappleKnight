@@ -59,8 +59,14 @@ public class PlayerMover : IMovable
 
     private void HorizontalMovement()
     {
-        _myrygidbody.AddForce(new Vector2(_moveAxis.x,0) * _horizontalSpeed, ForceMode2D.Impulse);
-        //a_playerTransform.Translate(new Vector2(_moveAxis.x,0) * Time.fixedDeltaTime * _horizontalSpeed);
+        if (_moveAxis != Vector2.zero)
+        {
+            _myrygidbody.velocity = new Vector2(_moveAxis.x*_horizontalSpeed, _myrygidbody.velocity.y);
+        }
+        else
+        {
+            _myrygidbody.velocity = new Vector2(_myrygidbody.velocity.x, _myrygidbody.velocity.y);
+        }
     }
     private void Jump(InputAction.CallbackContext callbackContext)
     {
