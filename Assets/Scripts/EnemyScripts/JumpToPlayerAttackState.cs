@@ -14,6 +14,8 @@ public class JumpToPlayerAttackState : IState
     private float _timeOfJump;
 
     private bool _isAvailableHurtPlayer;
+
+    private bool _isOnState;
     public JumpToPlayerAttackState(Rigidbody2D rigidbody2D, float jumpHeight, Transform bossTransform ,Transform playerTransform)
     {
         _rigidbody2D = rigidbody2D;
@@ -25,6 +27,9 @@ public class JumpToPlayerAttackState : IState
 
     public void StartState()
     {
+        _bossTransform.gameObject.layer = LayerMask.NameToLayer("Default");
+        _currentTime = 0;
+        _isOnState = true;
         //_playerTransform.gameObject.layer = LayerMask.NameToLayer("Default");
         float direccion = _playerTransform.position.x - _bossTransform.position.x;
         Vector2 _bossPosition = _bossTransform.position;
@@ -43,8 +48,12 @@ public class JumpToPlayerAttackState : IState
     }
     public bool DoState(out EnemyStateEnum enemyStateEnum)
     {
+        if (_currentTime >= _timeOfJump/2 && _bossTransform.position.y <= -0.75)
+        {
+            _bossTransform.gameObject.layer = LayerMask.NameToLayer("Invulnerability");
+        }
         _currentTime += Time.fixedDeltaTime;
-        if (_currentTime>=_timeOfJump)
+        if (!_isOnState)
         {
             _currentTime = 0;
             enemyStateEnum = EnemyStateEnum.Idle;
@@ -57,11 +66,32 @@ public class JumpToPlayerAttackState : IState
 
     private void CollisionEnter(Collision2D other)
     {
-        if (other.transform == _playerTransform && _isAvailableHurtPlayer)
+        if (_isAvailableHurtPlayer)
         {
-            _isAvailableHurtPlayer = false;
-            //other.gameObject.layer = LayerMask.NameToLayer("Invulnerability");
-            Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHAHAHAHAHAHHAHHHHHHHHHHHHH");
+            if (other.transform == _playerTransform )
+            {
+                //_isAvailableHurtPlayer = false;
+                //other.gameObject.layer = LayerMask.NameToLayer("Invulnerability");
+                Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHAHAHAHAHAHHAHHHHHHHHHHHHH");
+            }
+
+            if (other.gameObject.layer == LayerMask.NameToLayer("Floor") && _currentTime >= _timeOfJump)
+            {
+                _currentTime = 0;
+                
+                Collider2D[] colliders = Physics2D.OverlapCircleAll(_bossTransform.transform.position, 2);
+                foreach (Collider2D item in colliders)
+                {
+                    if (item.TryGetComponent<ILife>(out ILife life))
+                    {
+                        Debug.Log("ASD ASD ASD ASD ASD AS DAS D");
+                        life.ReduceLife(1);
+                    }
+                }
+                _bossTransform.gameObject.layer = LayerMask.NameToLayer("Default");
+                _isAvailableHurtPlayer = false;
+                _isOnState = false;
+            }
         }
     }
     public Action<Collision2D> CollisionAction()

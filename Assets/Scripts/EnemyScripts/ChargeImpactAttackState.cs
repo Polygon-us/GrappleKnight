@@ -59,10 +59,11 @@ public class ChargeImpactAttackState : IState
         {
             _lastCollision2D = other.transform;
             _rigidbody2D.velocity = new Vector2(0, 0);
-            if (other.transform == _playerTransform)
+            if (other.transform.TryGetComponent<ILife>(out ILife life))
             {
                 float velocity = (1f / 1f) *_playerTransform.GetComponent<Rigidbody2D>().mass;
                 _playerTransform.GetComponent<Rigidbody2D>().AddForce(Vector2.right*_directionSing*velocity,ForceMode2D.Impulse);
+                life.ReduceLife(1);
             }
             _directionSing = Mathf.Sign(_bossTransform.position.x - other.transform.position.x);
             _chargeCount += 1;

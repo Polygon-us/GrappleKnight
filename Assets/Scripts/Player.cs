@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -28,7 +29,13 @@ public class Player : MonoBehaviour
     //[Header("Climbing")]
     //[SerializeField] private float _climbingSpeed;
 
+    [Header("Life")] 
+    [SerializeField] private int _maxLife;
+    
+
     private InputManager _inputManager;
+
+    private ILife _playerLife;
     
     private SpringJoint2D _springJoint2D;
     private Rigidbody2D _rigidbody2D;
@@ -60,6 +67,8 @@ public class Player : MonoBehaviour
         _skillManager = new SkillManager();
         _playerSkillController = GetComponent<PlayerSkillController>();
         _springJoint2D = GetComponent<SpringJoint2D>();
+        _playerLife = GetComponent<ILife>();
+        _playerLife.Configure(_maxLife);
     }
 
     private void FillSkillManager()
