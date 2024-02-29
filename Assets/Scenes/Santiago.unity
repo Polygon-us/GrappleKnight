@@ -598,22 +598,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hookBegin: {fileID: 88238221}
   _hookEnd: {fileID: 426264940}
-  _Boomerang: {fileID: 1205980001}
   _rope: {fileID: 7895640317974165328}
   _hookMaxDistance: 10
   _angleOfShut: 180
-  _boomerangMaxDistance: 6
-  _boomerangSpeed: 5
-  _swingSpeed: {x: 0.05, y: 0.1}
+  _swingSpeed: {x: 0.07, y: 0.1}
   _hookMask:
     serializedVersion: 2
     m_Bits: 8
+  _Boomerang: {fileID: 1205980001}
+  _boomerangMaxDistance: 6
+  _boomerangSpeed: 5
+  _horizontalSpeed: 6
+  _horizontalForce: 20
+  _jumpForce: 5
+  _raycastLength: 1.01
   _checkFloorMask:
     serializedVersion: 2
     m_Bits: 8
-  _horizontalSpeed: 5
-  _jumpForce: 5
-  _raycastLength: 1.01
 --- !u!212 &653828550
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1463,7 +1464,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!50 &1577597081
 Rigidbody2D:
   serializedVersion: 4
@@ -1613,7 +1614,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   _chargeMaxNumber: 3
-  _chargeVelocity: 5
+  _chargeVelocity: 20
 --- !u!114 &1577597087
 MonoBehaviour:
   m_ObjectHideFlags: 0
