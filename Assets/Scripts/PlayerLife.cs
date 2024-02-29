@@ -22,7 +22,7 @@ public class PlayerLife : MonoBehaviour , ILife
         {
             StartCoroutine(CInvulnerability());
         }
-        Debug.Log(_currentLife);
+        //Debug.Log(_currentLife);
     }
     
     
@@ -39,6 +39,6 @@ public class PlayerLife : MonoBehaviour , ILife
     {
         gameObject.layer = LayerMask.NameToLayer("Invulnerability");
         yield return new WaitForSeconds(1);
-        gameObject.layer = LayerMask.NameToLayer("Default");
+        gameObject.layer = LayerMask.NameToLayer("Player");
     }
 }

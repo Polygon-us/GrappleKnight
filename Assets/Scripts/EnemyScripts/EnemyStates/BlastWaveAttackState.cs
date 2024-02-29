@@ -106,6 +106,8 @@ public class BlastWaveAttackState : IState
             {
                 Debug.Log("me golpeo la onda izquierda");
                 _playerRigidbody.AddForce(-Vector2.right * _waveImpactForce);
+                _playerTransform.GetComponent<ILife>().ReduceLife(1);
+
 
             }
 
@@ -114,7 +116,7 @@ public class BlastWaveAttackState : IState
                 Debug.Log($"me golpeo la onda: {_playerRigidbody}");
 
                 _playerRigidbody.AddForce(Vector2.right * _waveImpactForce);
-
+                _playerTransform.GetComponent<ILife>().ReduceLife(1);
             }
         }
     }
@@ -123,18 +125,25 @@ public class BlastWaveAttackState : IState
         if (!_jumping)
         {
             _jumping = true;
-            _jumpHeight = Mathf.Sqrt(_jumpHeight * (Physics2D.gravity.y * _myRigidbody.gravityScale) * -2) * _myRigidbody.mass;
+            float velocity = Mathf.Sqrt(_jumpHeight * (Physics2D.gravity.y * _myRigidbody.gravityScale) * -2) * _myRigidbody.mass;
             _timeOfJump = -1 * _jumpHeight / (Physics2D.gravity.y * _myRigidbody.gravityScale);
-            _myRigidbody.AddForce(_jumpHeight * Vector2.up, ForceMode2D.Impulse);
+            _myRigidbody.AddForce(velocity * Vector2.up, ForceMode2D.Impulse);
+            _currentTime = Time.deltaTime;
         }
         else
         {
-            _currentTime += Time.deltaTime;
-            if (_currentTime >= _timeOfJump)
+            if (_currentTime!=0)
             {
-                _currentTime = 0;
-                ApplyDownForce();
+                _currentTime += Time.deltaTime;
+                if (_currentTime >= _timeOfJump)
+                {
+ 
+                    _currentTime = 0;
+                    ApplyDownForce();
+                }
+
             }
+          
         }
 
     }
@@ -152,14 +161,14 @@ public class BlastWaveAttackState : IState
 
     public bool DoState(out EnemyStateEnum enemyStateEnum)
     {
-        Jump();
-        WaveStroke();
-
         if (!ExpandWave())
         {
             enemyStateEnum = EnemyStateEnum.Idle;
             return false;
         }
+        Jump();
+        WaveStroke();
+
         enemyStateEnum = EnemyStateEnum.Idle;
         return true;
     }
