@@ -5,19 +5,23 @@ using UnityEngine.InputSystem;
 
 public class PlayerMover : IMovable
 {
-    private Transform _playerTransform;
     private float _horizontalSpeed;
     private float _horizontalForce;
     private float _jumpHeight;
-    private LayerMask _checkFloorMask;
     private float _raycastLength;
-    private Rigidbody2D _myrygidbody;
+    
+
+    private LayerMask _checkFloorMask;
     
     private RaycastHit2D _checkFloor;
     
     private Vector2 _moveAxis;
     
+    private Rigidbody2D _myrygidbody;
+    private Transform _playerTransform;
+    
     private InputAction _inputAxisMovement;
+    
 
     private Dictionary<PlayerInputEnum, Action<InputAction.CallbackContext>> _inputActions = 
         new Dictionary<PlayerInputEnum, Action<InputAction.CallbackContext>>();
@@ -59,14 +63,15 @@ public class PlayerMover : IMovable
         Action<InputAction.CallbackContext> inputAction = _inputActions[playerInputEnum];
         return inputAction;
     }
-
     private void HorizontalMovement()
     {
-        if (_moveAxis != Vector2.zero)
+        
+        if (_moveAxis != Vector2.zero )
         {
             _myrygidbody.AddForce(Vector2.right*_moveAxis.x*_horizontalForce);
             _myrygidbody.velocity = new Vector2(Mathf.Clamp(_myrygidbody.velocity.x,-_horizontalSpeed,
                 _horizontalSpeed), _myrygidbody.velocity.y);
+            
         }
         else
         {

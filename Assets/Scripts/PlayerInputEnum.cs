@@ -23,5 +23,6 @@ public enum PlayerMovementEnum
 {
     PlayerMovement,
     HookMovement,
+    ClimbingMovement,
     None
 }

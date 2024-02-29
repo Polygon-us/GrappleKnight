@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerClimbing : MonoBehaviour
 {
-    [Header("Climbing")]
+    [Header("isClimbing")]
 
     [SerializeField] private float climbingSpeed = 4f;
     [SerializeField] private bool isClimbing;
@@ -10,10 +10,10 @@ public class PlayerClimbing : MonoBehaviour
     [SerializeField] private CapsuleCollider2D _myCapsuleCollider;
     [SerializeField] private PlatformEffector2D _platformEffector;
 
+
     private float _inicialGravity;
     private RaycastHit2D _checkStairLimit;
     private Vector2 verticalMovement;
-
 
     [Header("References")]
 
@@ -36,6 +36,7 @@ public class PlayerClimbing : MonoBehaviour
     void Update()
     {
     }
+  
     private void VerticalMovement()
     {
         verticalMovement.y = Input.GetAxis("Vertical");
@@ -67,8 +68,6 @@ public class PlayerClimbing : MonoBehaviour
         }
         if ((verticalMovement.y < 0) && (_myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("StairStop"))))
         {
-
-            _platformEffector.enabled = false;
             _boxColliderStairStop.enabled = false;
         }
         else if ((_myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Floor"))))

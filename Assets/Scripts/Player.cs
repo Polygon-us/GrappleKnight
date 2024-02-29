@@ -24,7 +24,10 @@ public class Player : MonoBehaviour
     [SerializeField]private float _jumpForce = 5f;
     [SerializeField]private float _raycastLength = 1.01f;
     [SerializeField]private LayerMask _checkFloorMask;
-    
+
+    //[Header("Climbing")]
+    //[SerializeField] private float _climbingSpeed;
+
     private InputManager _inputManager;
     
     private SpringJoint2D _springJoint2D;
@@ -79,7 +82,13 @@ public class Player : MonoBehaviour
             currentMovable.GetAction(PlayerInputEnum.Movement));
         _inputManager.SubscribePerformedAction(PlayerInputEnum.Jump,
             currentMovable.GetAction(PlayerInputEnum.Jump));
-        
+
+        //currentMovable = new PlayerClimbingMover(_climbingSpeed, transform, _rigidbody2D);
+        //_playerMovementManager.AddMovable(PlayerMovementEnum.ClimbingMovement, currentMovable);
+        //_inputManager.SubscribePerformedAction(PlayerInputEnum.Movement,
+        //    currentMovable.GetAction(PlayerInputEnum.Movement));
+
+
         _inputManager.SubscribePerformedAction(PlayerInputEnum.ChangeSkill,ChangeSkill);
         _inputManager.SubscribeStartedAction(PlayerInputEnum.ThrowSkill,ThrowSkill);
         _inputManager.SubscribeCanceledAction(PlayerInputEnum.ThrowSkill,CancelSkill);
