@@ -145,6 +145,11 @@ public class BlastWaveAttackState : IState
         _myRigidbody.AddForce(Vector2.down * _forceDown, ForceMode2D.Impulse);
     }
 
+    public void StartState()
+    {
+        
+    }
+
     public bool DoState(out EnemyStateEnum enemyStateEnum)
     {
         Jump();

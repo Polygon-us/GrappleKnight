@@ -42,6 +42,11 @@ public class EnemyHuntState : IState
     //    }
     //}
 
+    public void StartState()
+    {
+        
+    }
+
     public bool DoState(out EnemyStateEnum enemyStateEnum)
     {
             HuntPlayer();

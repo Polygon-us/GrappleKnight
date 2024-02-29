@@ -7,7 +7,8 @@ public class PlayerMover : IMovable
 {
     private Transform _playerTransform;
     private float _horizontalSpeed;
-    private float _jumpForce;
+    private float _horizontalForce;
+    private float _jumpHeight;
     private LayerMask _checkFloorMask;
     private float _raycastLength;
     private Rigidbody2D _myrygidbody;
@@ -21,12 +22,14 @@ public class PlayerMover : IMovable
     private Dictionary<PlayerInputEnum, Action<InputAction.CallbackContext>> _inputActions = 
         new Dictionary<PlayerInputEnum, Action<InputAction.CallbackContext>>();
 
-    public PlayerMover(Transform playerTransform,Rigidbody2D myrygidbody,float horizontalSpeed,float jumpForce,float raycastLength ,LayerMask checkFloorMask)
+    public PlayerMover(Transform playerTransform,Rigidbody2D myrygidbody,float horizontalSpeed,float horizontalForce,float jumpHeight,
+        float raycastLength ,LayerMask checkFloorMask)
     {
         _playerTransform = playerTransform;
         _myrygidbody = myrygidbody;
         _horizontalSpeed = horizontalSpeed;
-        _jumpForce = jumpForce;
+        _horizontalForce = horizontalForce;
+        _jumpHeight = jumpHeight;
         _raycastLength = raycastLength;
         _checkFloorMask = checkFloorMask;
         FillInputAction();
@@ -59,14 +62,26 @@ public class PlayerMover : IMovable
 
     private void HorizontalMovement()
     {
-        _myrygidbody.AddForce(new Vector2(_moveAxis.x,0) * _horizontalSpeed, ForceMode2D.Impulse);
-        //a_playerTransform.Translate(new Vector2(_moveAxis.x,0) * Time.fixedDeltaTime * _horizontalSpeed);
+        if (_moveAxis != Vector2.zero)
+        {
+            _myrygidbody.AddForce(Vector2.right*_moveAxis.x*_horizontalForce);
+            _myrygidbody.velocity = new Vector2(Mathf.Clamp(_myrygidbody.velocity.x,-_horizontalSpeed,
+                _horizontalSpeed), _myrygidbody.velocity.y);
+        }
+        else
+        {
+            if (OnGround())
+            {
+                _myrygidbody.velocity = new Vector2(0, _myrygidbody.velocity.y);
+            }
+        }
     }
     private void Jump(InputAction.CallbackContext callbackContext)
     {
         if (OnGround())
         {
-            _myrygidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
+            float velocity = Mathf.Sqrt(_jumpHeight * (Physics2D.gravity.y * _myrygidbody.gravityScale)*-2)*_myrygidbody.mass;
+            _myrygidbody.AddForce(Vector2.up * velocity, ForceMode2D.Impulse);
         }
     }
     private bool OnGround()

@@ -3,27 +3,32 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    [Header("Hook")]
     [SerializeField] private Transform _hookBegin;
     [SerializeField] private Transform _hookEnd;
-    [SerializeField] private Transform _Boomerang;
     [SerializeField] private GameObject _rope;
-    
-    private SpringJoint2D _springJoint2D;
-    private Rigidbody2D _rigidbody2D;
-
     [SerializeField]private float _hookMaxDistance = 10;
     [SerializeField]private float _angleOfShut;
-    [SerializeField]private float _boomerangMaxDistance = 4;
-    [SerializeField]private float _boomerangSpeed = 4f;
     [SerializeField]private Vector2 _swingSpeed = new Vector2(0.01f, 0.1f);
     [SerializeField]private LayerMask _hookMask;
     
-    [SerializeField]private LayerMask _checkFloorMask;
+    [Header("Boomerang")]
+    [SerializeField] private Transform _Boomerang;
+    [SerializeField]private float _boomerangMaxDistance = 4;
+    [SerializeField]private float _boomerangSpeed = 4f;
+    
+    
+    [Header("Movement")]
     [SerializeField]private float _horizontalSpeed = 1;
+    [SerializeField]private float _horizontalForce;
     [SerializeField]private float _jumpForce = 5f;
     [SerializeField]private float _raycastLength = 1.01f;
+    [SerializeField]private LayerMask _checkFloorMask;
     
     private InputManager _inputManager;
+    
+    private SpringJoint2D _springJoint2D;
+    private Rigidbody2D _rigidbody2D;
     
     private SkillManager _skillManager;
     private PlayerSkillController _playerSkillController;
@@ -68,7 +73,7 @@ public class Player : MonoBehaviour
         _inputManager.SubscribePerformedAction(PlayerInputEnum.Movement,
             currentMovable.GetAction(PlayerInputEnum.Movement));
         
-        currentMovable = new PlayerMover(transform,_rigidbody2D,_horizontalSpeed,_jumpForce,_raycastLength,_checkFloorMask);
+        currentMovable = new PlayerMover(transform,_rigidbody2D,_horizontalSpeed,_horizontalForce,_jumpForce,_raycastLength,_checkFloorMask);
         _playerMovementManager.AddMovable(PlayerMovementEnum.PlayerMovement, currentMovable);
         _inputManager.SubscribePerformedAction(PlayerInputEnum.Movement,
             currentMovable.GetAction(PlayerInputEnum.Movement));

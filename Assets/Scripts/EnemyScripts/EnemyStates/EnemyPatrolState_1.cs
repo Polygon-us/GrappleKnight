@@ -29,7 +29,12 @@ public class EnemyPatrolState : IState
         _transform = transform;
         //SetTargetPoint(pointB);
     }
-    
+
+    public void StartState()
+    {
+        
+    }
+
     public bool DoState(out EnemyStateEnum enemyStateEnum)
     {
         //if (isWaiting)

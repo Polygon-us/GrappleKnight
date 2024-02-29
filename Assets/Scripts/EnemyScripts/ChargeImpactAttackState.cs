@@ -9,37 +9,41 @@ public class ChargeImpactAttackState : IState
     private Transform _bossTransform;
     private Transform _playerTransform;
 
-    private int _chargeMaxNumber = 2;
+    private int _chargeMaxNumber;
+    private float _chargeVelocity;
     private int _chargeCount;
     private float _directionSing = 1;
 
     private bool _isOnState = true;
-    
 
-    public ChargeImpactAttackState(Rigidbody2D rigidbody2D,Transform bossTransform ,Transform playerTransform)
+    private Transform _lastCollision2D;
+    public ChargeImpactAttackState(Rigidbody2D rigidbody2D,Transform bossTransform ,Transform playerTransform,int chargeMaxNumber, float chargeVelocity)
     {
         _rigidbody2D = rigidbody2D;
         _bossTransform = bossTransform;
         _playerTransform = playerTransform;
+        _chargeMaxNumber = chargeMaxNumber;
+        _chargeVelocity = chargeVelocity;
 
     }
-    
+
+    public void StartState()
+    {
+        _directionSing = Mathf.Sign(_playerTransform.position.x - _bossTransform.position.x);
+        _lastCollision2D = null;
+        _chargeCount = 0;
+        _isOnState = true;
+    }
+
     public bool DoState(out EnemyStateEnum enemyStateEnum)
     {
-        //_rigidbody2D.AddForce();
-        //_onCollisionEnterAction += CollisionEnter;
-        float direccion = _playerTransform.position.x - _bossTransform.position.x;
-        //_directionSing = Mathf.Sign(direccion);
-        
         Debug.Log(_directionSing);
-        _rigidbody2D.velocity = new Vector2(10*_directionSing, 0);
         if (!_isOnState)
         {
-            _isOnState = true;
             enemyStateEnum = EnemyStateEnum.Idle;
             return false;
-            
         }
+        _rigidbody2D.velocity = new Vector2(_chargeVelocity*_directionSing, 0);
         enemyStateEnum = EnemyStateEnum.Idle;
         return true;
     }
@@ -48,22 +52,25 @@ public class ChargeImpactAttackState : IState
     {
         return CollisionEnter;
     }
-
-
+    
     private void CollisionEnter(Collision2D other)
     {
-        if (other.transform.CompareTag("Player") && _isOnState)
+        if (other.transform.CompareTag("Player") && other.transform != _lastCollision2D)
         {
-            Debug.Log("OncollisionEnter");
-            _directionSing *= -1;
-            _chargeCount += 1;
-            if (_chargeCount>_chargeMaxNumber)
+            _lastCollision2D = other.transform;
+            _rigidbody2D.velocity = new Vector2(0, 0);
+            if (other.transform == _playerTransform)
             {
-                Debug.Log("OncollisionEnterFinished");
-                _chargeCount = 0;
+                float velocity = (1f / 1f) *_playerTransform.GetComponent<Rigidbody2D>().mass;
+                _playerTransform.GetComponent<Rigidbody2D>().AddForce(Vector2.right*_directionSing*velocity,ForceMode2D.Impulse);
+            }
+            _directionSing = Mathf.Sign(_bossTransform.position.x - other.transform.position.x);
+            _chargeCount += 1;
+            if (_chargeCount>=_chargeMaxNumber)
+            {
                 _isOnState = false;
             }
         }
-        
     }
+    
 }

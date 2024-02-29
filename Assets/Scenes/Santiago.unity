@@ -443,7 +443,7 @@ GameObject:
   - component: {fileID: 538972709}
   - component: {fileID: 538972708}
   m_Layer: 0
-  m_Name: Square (5)
+  m_Name: Left
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -598,22 +598,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hookBegin: {fileID: 88238221}
   _hookEnd: {fileID: 426264940}
-  _Boomerang: {fileID: 1205980001}
   _rope: {fileID: 7895640317974165328}
   _hookMaxDistance: 10
   _angleOfShut: 180
-  _boomerangMaxDistance: 6
-  _boomerangSpeed: 5
-  _swingSpeed: {x: 0.05, y: 0.1}
+  _swingSpeed: {x: 0.07, y: 0.1}
   _hookMask:
     serializedVersion: 2
     m_Bits: 8
+  _Boomerang: {fileID: 1205980001}
+  _boomerangMaxDistance: 6
+  _boomerangSpeed: 5
+  _horizontalSpeed: 6
+  _horizontalForce: 20
+  _jumpForce: 5
+  _raycastLength: 1.01
   _checkFloorMask:
     serializedVersion: 2
     m_Bits: 8
-  _horizontalSpeed: 1
-  _jumpForce: 5
-  _raycastLength: 1.01
 --- !u!212 &653828550
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -654,9 +655,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.7837446, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -675,7 +676,7 @@ Transform:
   m_GameObject: {fileID: 653828548}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.44, y: -4, z: 0}
+  m_LocalPosition: {x: -1.2, y: -4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -931,7 +932,7 @@ GameObject:
   - component: {fileID: 1024215628}
   - component: {fileID: 1024215627}
   m_Layer: 0
-  m_Name: Square (4)
+  m_Name: Right
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1108,10 +1109,10 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 100
-  field of view: 60
+  field of view: 120.5
   orthographic: 1
-  orthographic size: 6.37
-  m_Depth: -1
+  orthographic size: 9.4
+  m_Depth: 2.52
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -1587,7 +1588,7 @@ Transform:
   m_GameObject: {fileID: 1577597079}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.38, y: -3, z: 0}
+  m_LocalPosition: {x: 2.23, y: -3, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1612,6 +1613,8 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  _chargeMaxNumber: 3
+  _chargeVelocity: 20
 --- !u!114 &1577597087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2330,8 +2333,8 @@ SceneRoots:
   m_Roots:
   - {fileID: 1194408312}
   - {fileID: 1389503880}
-  - {fileID: 653828551}
   - {fileID: 1577597084}
+  - {fileID: 653828551}
   - {fileID: 967878370}
   - {fileID: 1734112772}
   - {fileID: 1539279780}

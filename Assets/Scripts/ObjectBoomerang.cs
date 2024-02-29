@@ -23,6 +23,10 @@ public class ObjectBoomerang : MonoBehaviour
         {
             enemy.ReduceEnemyLife(10);
         }
+        if (other.TryGetComponent(out Boss boss))
+        {
+            boss.ReduceEnemyLife(10);
+        }
     }
     
     public void UnsubscribeAction()

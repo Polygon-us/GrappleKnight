@@ -13,7 +13,7 @@ public class JumpToPlayerAttackState : IState
     private float _currentTime;
     private float _timeOfJump;
 
-    private bool _isStartState = false;
+    private bool _isAvailableHurtPlayer;
     public JumpToPlayerAttackState(Rigidbody2D rigidbody2D, float jumpHeight, Transform bossTransform ,Transform playerTransform)
     {
         _rigidbody2D = rigidbody2D;
@@ -23,25 +23,13 @@ public class JumpToPlayerAttackState : IState
 
     }
 
-    private void StartState()
+    public void StartState()
     {
-        _isStartState = true;
+        //_playerTransform.gameObject.layer = LayerMask.NameToLayer("Default");
         float direccion = _playerTransform.position.x - _bossTransform.position.x;
         Vector2 _bossPosition = _bossTransform.position;
         Vector2 _playerPosition = _playerTransform.position;
-         _jumpHeight = ((_playerPosition.y*(_bossPosition.x*_bossPosition.x))-(_bossPosition.y
-            *(_playerPosition.x*_playerPosition.x))) / ((_bossPosition.x*_bossPosition.x)-(_playerPosition.x*_playerPosition.x));
- 
-        _jumpHeight = Mathf.Abs(_jumpHeight);
-        // float a = (_jumpHeight -_bossPosition.y) / (_bossPosition.x * _bossPosition.x);
-        // Debug.Log(_jumpHeight);
-        // float x = Mathf.Sqrt((_jumpHeight - _bossPosition.y) / a);
-        // Debug.Log($"a: {a} ...x: {x}");
-        // if (Mathf.Approximately(a,_bossPosition.x))
-        // {
-        //     x = -Mathf.Sqrt((_jumpHeight - _bossPosition.y) / a);
-        //     Debug.Log($"x2: {x}");
-        // }
+
         float velocity = Mathf.Sqrt(_jumpHeight * (Physics2D.gravity.y * _rigidbody2D.gravityScale)*-2)*_rigidbody2D.mass;
         _timeOfJump = -2 * velocity / (Physics2D.gravity.y * _rigidbody2D.gravityScale);
         float velocityDos = (Mathf.Abs(direccion) / _timeOfJump) *_rigidbody2D.mass;
@@ -50,20 +38,15 @@ public class JumpToPlayerAttackState : IState
 
        _rigidbody2D.AddForce(Vector2.up*velocity, ForceMode2D.Impulse);
        _rigidbody2D.AddForce(Vector2.right*Mathf.Sign(direccion)*velocityDos, ForceMode2D.Impulse);
+       _isAvailableHurtPlayer = true;
 
-        
     }
     public bool DoState(out EnemyStateEnum enemyStateEnum)
     {
-        if (!_isStartState)
-        {
-            StartState();
-        }
         _currentTime += Time.fixedDeltaTime;
         if (_currentTime>=_timeOfJump)
         {
             _currentTime = 0;
-            _isStartState = false;
             enemyStateEnum = EnemyStateEnum.Idle;
             return false;
         }
@@ -72,8 +55,17 @@ public class JumpToPlayerAttackState : IState
 
     }
 
+    private void CollisionEnter(Collision2D other)
+    {
+        if (other.transform == _playerTransform && _isAvailableHurtPlayer)
+        {
+            _isAvailableHurtPlayer = false;
+            //other.gameObject.layer = LayerMask.NameToLayer("Invulnerability");
+            Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHAHAHAHAHAHHAHHHHHHHHHHHHH");
+        }
+    }
     public Action<Collision2D> CollisionAction()
     {
-        return null;
+        return CollisionEnter;
     }
 }
