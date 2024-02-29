@@ -577,6 +577,7 @@ GameObject:
   - component: {fileID: 653828549}
   - component: {fileID: 653828554}
   - component: {fileID: 653828556}
+  - component: {fileID: 653828557}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -608,13 +609,14 @@ MonoBehaviour:
   _Boomerang: {fileID: 1205980001}
   _boomerangMaxDistance: 6
   _boomerangSpeed: 5
-  _horizontalSpeed: 6
+  _horizontalSpeed: 10
   _horizontalForce: 20
-  _jumpForce: 5
+  _jumpForce: 3
   _raycastLength: 1.01
   _checkFloorMask:
     serializedVersion: 2
     m_Bits: 8
+  _maxLife: 10
 --- !u!212 &653828550
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -788,6 +790,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7f490af918e7a0f4da3279fa4e3531d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &653828557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653828548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64f92ba2f677495a9f949cdcf7eadf79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &967878368
@@ -1588,7 +1602,7 @@ Transform:
   m_GameObject: {fileID: 1577597079}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.23, y: -3, z: 0}
+  m_LocalPosition: {x: 4.53, y: -2.79, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1607,12 +1621,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _jumpHeight: 5
-  _jumpHeightForBlast: 3
-  _playerTransform: {fileID: 653828551}
+  _waveDuracion: 0.5
+  _waveImpactForce: 3
+  _forceDown: 20
+  _delayBeforeReturn: 0.1
   _maxLife: 10
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
+  _finalWaveScale: {x: 16, y: 0.1, z: 0}
+  _inicialWaveScale: {x: 1, y: 0.1, z: 0}
+  _playerTransform: {fileID: 653828551}
+  _wave: {fileID: 0}
+  _playerRigidbody: {fileID: 0}
+  _waveCollider: {fileID: 0}
   _chargeMaxNumber: 3
   _chargeVelocity: 20
 --- !u!114 &1577597087

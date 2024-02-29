@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -24,8 +25,13 @@ public class Player : MonoBehaviour
     [SerializeField]private float _jumpForce = 5f;
     [SerializeField]private float _raycastLength = 1.01f;
     [SerializeField]private LayerMask _checkFloorMask;
+
+    [Header("Life")] 
+    [SerializeField] private int _maxLife;
     
     private InputManager _inputManager;
+
+    private ILife _playerLife;
     
     private SpringJoint2D _springJoint2D;
     private Rigidbody2D _rigidbody2D;
@@ -57,6 +63,8 @@ public class Player : MonoBehaviour
         _skillManager = new SkillManager();
         _playerSkillController = GetComponent<PlayerSkillController>();
         _springJoint2D = GetComponent<SpringJoint2D>();
+        _playerLife = GetComponent<ILife>();
+        _playerLife.Configure(_maxLife);
     }
 
     private void FillSkillManager()
