@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
     
     [Header("Movement")]
 
-    [SerializeField]private float _jumpForce = 5f;
+    [SerializeField]private float _jumpHeight = 5f;
     [SerializeField]private float _raycastLength = 1.01f;
     [SerializeField]private LayerMask _checkFloorMask;
     [SerializeField, Range(0f, 100f)] private float _maxSpeed = 10f;
@@ -89,7 +89,7 @@ public class Player : MonoBehaviour
             currentMovable.GetAction(PlayerInputEnum.Movement));
         
 
-        currentMovable = new PlayerMover(transform,_rigidbody2D, _maxSpeed, _maxAcceleration, _jumpForce,_raycastLength,_checkFloorMask, _maxAirAcceleration);
+        currentMovable = new PlayerMover(transform,_rigidbody2D, _maxSpeed, _maxAcceleration, _jumpHeight,_raycastLength,_checkFloorMask, _maxAirAcceleration);
 
         _playerMovementManager.AddMovable(PlayerMovementEnum.PlayerMovement, currentMovable);
         _inputManager.SubscribePerformedAction(PlayerInputEnum.Movement,

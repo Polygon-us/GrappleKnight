@@ -125,7 +125,7 @@ public class BlastWaveAttackState : IState
         {
             _jumping = true;
             float velocity = Mathf.Sqrt(_jumpHeight * (Physics2D.gravity.y * _myRigidbody.gravityScale) * -2) * _myRigidbody.mass;
-            _timeOfJump = -1 * _jumpHeight / (Physics2D.gravity.y * _myRigidbody.gravityScale);
+            _timeOfJump = -1 * velocity / (Physics2D.gravity.y * _myRigidbody.gravityScale);
             _myRigidbody.AddForce(velocity * Vector2.up, ForceMode2D.Impulse);
             _currentTime = Time.deltaTime;
         }

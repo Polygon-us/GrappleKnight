@@ -8,6 +8,7 @@ public class PlayerMover : IMovable
 {
 
     private float _jumpHeight;
+    private float _jumpSpeed;
     private float _raycastLength;
     private float _maxSpeed;
     private float _maxAcceleration;
@@ -24,7 +25,7 @@ public class PlayerMover : IMovable
     private RaycastHit2D _checkFloor;
     
     
-    private Rigidbody2D _myrygidbody;
+    private Rigidbody2D _myRigidbody;
     private Transform _playerTransform;
 
     private bool _isJumpOnAir;
@@ -39,17 +40,18 @@ public class PlayerMover : IMovable
         new Dictionary<PlayerInputEnum, Action<InputAction.CallbackContext>>();
 
 
-    public PlayerMover(Transform playerTransform,Rigidbody2D myrygidbody,float maxSpeed, float maxAcceleration, float jumpHeight,
+    public PlayerMover(Transform playerTransform,Rigidbody2D myRigidbody,float maxSpeed, float maxAcceleration, float jumpHeight,
         float raycastLength ,LayerMask checkFloorMask, float maxAirAcceleration)
     {
         _playerTransform = playerTransform;
-        _myrygidbody = myrygidbody;
+        _myRigidbody = myRigidbody;
         _maxSpeed = maxSpeed;
         _maxAcceleration = maxAcceleration;
         _jumpHeight = jumpHeight;
         _raycastLength = raycastLength;
         _checkFloorMask = checkFloorMask;
         _maxAirAcceleration = maxAirAcceleration;
+        _jumpSpeed = Mathf.Sqrt(_jumpHeight * (Physics2D.gravity.y * _myRigidbody.gravityScale) * -2) * _myRigidbody.mass;
         FillInputAction();
     }
     
@@ -85,14 +87,14 @@ public class PlayerMover : IMovable
         {
 
             _desiredVelocity = new Vector2(_moveAxis.x, 0f) * Mathf.Max(_maxSpeed , 0f);
-            _velocity = _myrygidbody.velocity;
+            _velocity = _myRigidbody.velocity;
 
             _acceleration = _onGround ? _maxAcceleration : _maxAirAcceleration;
             
             _maxSpeedChange = _acceleration * Time.deltaTime;
             _velocity.x = Mathf.MoveTowards(_velocity.x, _desiredVelocity.x, _maxSpeedChange);
 
-            _myrygidbody.velocity = _velocity;
+            _myRigidbody.velocity = _velocity;
 
         }
         else
@@ -100,7 +102,7 @@ public class PlayerMover : IMovable
             if (OnGround())
             {
                 _onGround = true;
-                _myrygidbody.velocity = new Vector2(0, _myrygidbody.velocity.y);
+                _myRigidbody.velocity = new Vector2(0, _myRigidbody.velocity.y);
             }
             else if (!OnGround())
             {
@@ -114,7 +116,7 @@ public class PlayerMover : IMovable
     {
         if (OnGround())
         {
-            _myrygidbody.AddForce(Vector2.up * _velocity, ForceMode2D.Impulse);
+            _myRigidbody.AddForce(Vector2.up * _jumpSpeed, ForceMode2D.Impulse);
             return;
         }
         _currentLastJump = 0;
@@ -124,8 +126,8 @@ public class PlayerMover : IMovable
         _currentLastJump += Time.deltaTime;
         if (OnGround() && _currentLastJump <= _maxTimeLastJump )
         {
-            _myrygidbody.velocity = new Vector2(_myrygidbody.velocity.x, 0);
-            _myrygidbody.AddForce(Vector2.up * _velocity, ForceMode2D.Impulse);
+            _myRigidbody.velocity = new Vector2(_myRigidbody.velocity.x, 0);
+            _myRigidbody.AddForce(Vector2.up * _jumpSpeed, ForceMode2D.Impulse);
         }
         
     }
