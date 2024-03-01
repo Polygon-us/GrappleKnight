@@ -4,34 +4,40 @@ using UnityEngine;
 
 public class SkillManager
 {
-    private List<ISkill> _skillContainer = new List<ISkill>();
-    private int _currentSkillIndex;
-
-    // private float _changeSkillMaxTime = 1;
-    // private float _currentTime;
-    public void AddSkill(ISkill skill)
+    private List<ISkill> _skillContainerLeft = new List<ISkill>();
+    private List<ISkill> _skillContainerRight = new List<ISkill>();
+    private int _currentLeftSkillIndex;
+    private int _currentRightSkillIndex;
+    
+    public void AddLeftSkill(ISkill skill)
     {
-        _skillContainer.Add(skill);
+        _skillContainerLeft.Add(skill);
+    } 
+    public void AddRightSkill(ISkill skill)
+    {
+        _skillContainerRight.Add(skill);
     }
 
-    public ISkill GetNextSkill(out PlayerMovementEnum playerMovementEnum)
+    public ISkill GetNextLeftSkill(out PlayerMovementEnum playerMovementEnum)
     {
-        //_currentSkillIndex = (_currentSkillIndex + ((_skillContainer.Count + (int)Mathf.Sign(Input.mouseScrollDelta.y)*(2- _skillContainer.Count)) / 2))%_skillContainer.Count;
-        // if (_skillContainer[_currentSkillIndex] != actualGun && _skillContainer[_currentSkillIndex] != null)
-        // {
-        //     
-        //     
-        // }
-        int index = _currentSkillIndex;
-        _currentSkillIndex = (_currentSkillIndex + 1) % _skillContainer.Count;
-        ISkill currentSkill = _skillContainer[index];
+        int index = _currentLeftSkillIndex;
+        _currentLeftSkillIndex = (_currentLeftSkillIndex + 1) % _skillContainerLeft.Count;
+        ISkill currentSkill = _skillContainerLeft[index];
+        playerMovementEnum = currentSkill.SendActionMapTypeEnum();
+        return currentSkill;
+    }
+    public ISkill GetNextRightSkill(out PlayerMovementEnum playerMovementEnum)
+    {
+        int index = _currentRightSkillIndex;
+        _currentRightSkillIndex = (_currentRightSkillIndex + 1) % _skillContainerRight.Count;
+        ISkill currentSkill = _skillContainerRight[index];
         playerMovementEnum = currentSkill.SendActionMapTypeEnum();
         return currentSkill;
     }
 
     public void UnsubscribeActions()
     {
-        foreach (ISkill item in _skillContainer)
+        foreach (ISkill item in _skillContainerLeft)
         {
             item.UnsubscribeActions();
         }

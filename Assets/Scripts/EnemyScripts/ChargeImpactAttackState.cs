@@ -37,7 +37,6 @@ public class ChargeImpactAttackState : IState
 
     public bool DoState(out EnemyStateEnum enemyStateEnum)
     {
-        Debug.Log(_directionSing);
         if (!_isOnState)
         {
             enemyStateEnum = EnemyStateEnum.Idle;

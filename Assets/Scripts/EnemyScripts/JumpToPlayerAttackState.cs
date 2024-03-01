@@ -22,7 +22,6 @@ public class JumpToPlayerAttackState : IState
         _jumpHeight = jumpHeight;
         _bossTransform = bossTransform;
         _playerTransform = playerTransform;
-
     }
 
     public void StartState()
@@ -84,7 +83,6 @@ public class JumpToPlayerAttackState : IState
                 {
                     if (item.TryGetComponent<ILife>(out ILife life))
                     {
-                        Debug.Log("ASD ASD ASD ASD ASD AS DAS D");
                         life.ReduceLife(1);
                     }
                 }

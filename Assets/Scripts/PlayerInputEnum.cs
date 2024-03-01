@@ -1,7 +1,8 @@
 ﻿public enum PlayerInputEnum
 {
     ChangeSkill,
-    ThrowSkill,
+    ThrowRightSkill,
+    ThrowLeftSkill,
     Movement,
     Jump
 }
