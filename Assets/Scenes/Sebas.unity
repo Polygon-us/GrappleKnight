@@ -5597,7 +5597,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d69939856084df28e6fb6f0bd554d64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _jumpHeight: 3
+  _jumpHeight: 5
   _forceDown: 40
   _waveDuracion: 1
   _waveImpactForce: 100
@@ -7991,7 +7991,7 @@ MonoBehaviour:
   _Boomerang: {fileID: 616470208}
   _boomerangMaxDistance: 4
   _boomerangSpeed: 4
-  _jumpForce: 5
+  _jumpHeight: 5
   _raycastLength: 1.01
   _checkFloorMask:
     serializedVersion: 2
