@@ -14,8 +14,8 @@ public class InputManager
    private Dictionary<Action<InputAction.CallbackContext>,Vector3> _actionStatusContainer =
        new Dictionary<Action<InputAction.CallbackContext>,Vector3>();
 
-   private Action<InputAction, Action<InputAction.CallbackContext>>[] _unsubscribeActionsContainer =
-      new Action<InputAction, Action<InputAction.CallbackContext>>[3]; 
+   // private Action<InputAction, Action<InputAction.CallbackContext>>[] _unsubscribeActionsContainer =
+   //    new Action<InputAction, Action<InputAction.CallbackContext>>[3]; 
    
    public InputManager(PlayerInputAction playerInputAction)
    {
@@ -25,17 +25,18 @@ public class InputManager
 
    private void FillInputActionsContainer()
    {
-      _inputActionsContainer.Add(PlayerInputEnum.ChangeSkill,_playerInputAction.PlayerSkillActionMap.ChangeSkill);
-      _inputActionsContainer.Add(PlayerInputEnum.ThrowSkill,_playerInputAction.PlayerSkillActionMap.ThrowSkill);
+      //_inputActionsContainer.Add(PlayerInputEnum.ChangeSkill,_playerInputAction.PlayerSkillActionMap.ChangeSkill);
+      _inputActionsContainer.Add(PlayerInputEnum.ThrowRightSkill,_playerInputAction.PlayerSkillActionMap.ThorwRightSkill);
+      _inputActionsContainer.Add(PlayerInputEnum.ThrowLeftSkill,_playerInputAction.PlayerSkillActionMap.ThrowLeftSkill);
       _inputActionsContainer.Add(PlayerInputEnum.Movement,_playerInputAction.PlayerMovement.Movement);
       _inputActionsContainer.Add(PlayerInputEnum.Jump,_playerInputAction.PlayerMovement.Jump);
    }
    
    public void Configure()
    {
-      _unsubscribeActionsContainer[0] = UnsubscribeStartedAction;
-      _unsubscribeActionsContainer[1] = UnsubscribePerformedAction;
-      _unsubscribeActionsContainer[2] = UnsubscribeCanceledAction;
+      // _unsubscribeActionsContainer[0] = UnsubscribeStartedAction;
+      // _unsubscribeActionsContainer[1] = UnsubscribePerformedAction;
+      // _unsubscribeActionsContainer[2] = UnsubscribeCanceledAction;
    }
 
    private void EnableInputAction(PlayerInputEnum playerInputEnum)

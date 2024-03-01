@@ -578,7 +578,7 @@ GameObject:
   - component: {fileID: 653828554}
   - component: {fileID: 653828556}
   - component: {fileID: 653828557}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -609,8 +609,9 @@ MonoBehaviour:
   _Boomerang: {fileID: 1205980001}
   _boomerangMaxDistance: 6
   _boomerangSpeed: 5
-  _horizontalSpeed: 10
-  _horizontalForce: 20
+  _horizontalSpeed: 5
+  _horizontalForceOnGround: 30
+  _horizontalForceOnAir: 5
   _jumpForce: 3
   _raycastLength: 1.01
   _checkFloorMask:
@@ -1478,7 +1479,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!50 &1577597081
 Rigidbody2D:
   serializedVersion: 4
@@ -1621,13 +1622,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _jumpHeight: 5
+  _forceDown: 20
   _waveDuracion: 0.5
   _waveImpactForce: 3
-  _forceDown: 20
   _delayBeforeReturn: 0.1
-  _maxLife: 10
   _finalWaveScale: {x: 16, y: 0.1, z: 0}
   _inicialWaveScale: {x: 1, y: 0.1, z: 0}
+  _maxLife: 10
   _playerTransform: {fileID: 653828551}
   _wave: {fileID: 0}
   _playerRigidbody: {fileID: 0}

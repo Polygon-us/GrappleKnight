@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMover : IMovable
 {
-  
+
     private float _jumpHeight;
     private float _raycastLength;
     private float _maxSpeed;
@@ -25,12 +26,18 @@ public class PlayerMover : IMovable
     
     private Rigidbody2D _myrygidbody;
     private Transform _playerTransform;
+
+    private bool _isJumpOnAir;
+
+    private float _currentLastJump = 1;
+    private float _maxTimeLastJump = 0.2f;
     
     private InputAction _inputAxisMovement;
     
 
     private Dictionary<PlayerInputEnum, Action<InputAction.CallbackContext>> _inputActions = 
         new Dictionary<PlayerInputEnum, Action<InputAction.CallbackContext>>();
+
 
     public PlayerMover(Transform playerTransform,Rigidbody2D myrygidbody,float maxSpeed, float maxAcceleration, float jumpHeight,
         float raycastLength ,LayerMask checkFloorMask, float maxAirAcceleration)
@@ -63,6 +70,7 @@ public class PlayerMover : IMovable
             _moveAxis = Vector2.zero;
         }
         HorizontalMovement();
+        Jump();
     }
 
     public Action<InputAction.CallbackContext> GetAction(PlayerInputEnum playerInputEnum)
@@ -75,6 +83,7 @@ public class PlayerMover : IMovable
         
         if (_moveAxis != Vector2.zero )
         {
+
             _desiredVelocity = new Vector2(_moveAxis.x, 0f) * Mathf.Max(_maxSpeed , 0f);
             _velocity = _myrygidbody.velocity;
 
@@ -84,6 +93,7 @@ public class PlayerMover : IMovable
             _velocity.x = Mathf.MoveTowards(_velocity.x, _desiredVelocity.x, _maxSpeedChange);
 
             _myrygidbody.velocity = _velocity;
+
         }
         else
         {
@@ -99,15 +109,25 @@ public class PlayerMover : IMovable
             
         }
     }
-    
- 
+
     private void Jump(InputAction.CallbackContext callbackContext)
     {
         if (OnGround())
         {
-            float velocity = Mathf.Sqrt(_jumpHeight * (Physics2D.gravity.y * _myrygidbody.gravityScale)*-2)*_myrygidbody.mass;
-            _myrygidbody.AddForce(Vector2.up * velocity, ForceMode2D.Impulse);
+            _myrygidbody.AddForce(Vector2.up * _velocity, ForceMode2D.Impulse);
+            return;
         }
+        _currentLastJump = 0;
+    } 
+    private void Jump()
+    {
+        _currentLastJump += Time.deltaTime;
+        if (OnGround() && _currentLastJump <= _maxTimeLastJump )
+        {
+            _myrygidbody.velocity = new Vector2(_myrygidbody.velocity.x, 0);
+            _myrygidbody.AddForce(Vector2.up * _velocity, ForceMode2D.Impulse);
+        }
+        
     }
     private bool OnGround()
     {

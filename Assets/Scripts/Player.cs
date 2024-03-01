@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class Player : MonoBehaviour
     
     
     [Header("Movement")]
+
     [SerializeField]private float _jumpForce = 5f;
     [SerializeField]private float _raycastLength = 1.01f;
     [SerializeField]private LayerMask _checkFloorMask;
@@ -46,13 +48,13 @@ public class Player : MonoBehaviour
 
     private PlayerMovementController _playerMovementController;
     private PlayerMovementManager _playerMovementManager;
-    
+
     private void Awake()
     {
         AssignModules();
         FillSkillManager();
         FillMovementManager();
-        ChangeSkill();
+        //ChangeSkill();
         _playerMovementController.ChangeCurrentMovement(
             _playerMovementManager.GetMovable(PlayerMovementEnum.PlayerMovement));
         _playerMovementController.StarMovement();
@@ -64,7 +66,7 @@ public class Player : MonoBehaviour
         _playerMovementManager = new PlayerMovementManager();
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _inputManager = new InputManager(new PlayerInputAction());
-        _inputManager.Configure();
+        //_inputManager.Configure();
         _skillManager = new SkillManager();
         _playerSkillController = GetComponent<PlayerSkillController>();
         _springJoint2D = GetComponent<SpringJoint2D>();
@@ -74,9 +76,9 @@ public class Player : MonoBehaviour
 
     private void FillSkillManager()
     {
-        _skillManager.AddSkill(new HookSkill(transform,_hookEnd,_hookBegin,_springJoint2D,
+        _skillManager.AddLeftSkill(new HookSkill(transform,_hookEnd,_hookBegin,_springJoint2D,
             _hookMaxDistance,_angleOfShut,_rope,_hookMask));
-        _skillManager.AddSkill(new BoomerangSkill(transform,_Boomerang,
+        _skillManager.AddRightSkill(new BoomerangSkill(transform,_Boomerang,
             _boomerangMaxDistance,_boomerangSpeed));
     }
      private void FillMovementManager()
@@ -86,7 +88,9 @@ public class Player : MonoBehaviour
         _inputManager.SubscribePerformedAction(PlayerInputEnum.Movement,
             currentMovable.GetAction(PlayerInputEnum.Movement));
         
+
         currentMovable = new PlayerMover(transform,_rigidbody2D, _maxSpeed, _maxAcceleration, _jumpForce,_raycastLength,_checkFloorMask, _maxAirAcceleration);
+
         _playerMovementManager.AddMovable(PlayerMovementEnum.PlayerMovement, currentMovable);
         _inputManager.SubscribePerformedAction(PlayerInputEnum.Movement,
             currentMovable.GetAction(PlayerInputEnum.Movement));
@@ -99,28 +103,47 @@ public class Player : MonoBehaviour
         //    currentMovable.GetAction(PlayerInputEnum.Movement));
 
 
-        _inputManager.SubscribePerformedAction(PlayerInputEnum.ChangeSkill,ChangeSkill);
-        _inputManager.SubscribeStartedAction(PlayerInputEnum.ThrowSkill,ThrowSkill);
-        _inputManager.SubscribeCanceledAction(PlayerInputEnum.ThrowSkill,CancelSkill);
+        //_inputManager.SubscribePerformedAction(PlayerInputEnum.ChangeSkill,ChangeSkill);
+        _inputManager.SubscribeStartedAction(PlayerInputEnum.ThrowRightSkill,ThrowRightSkill);
+        _inputManager.SubscribeStartedAction(PlayerInputEnum.ThrowLeftSkill,ThrowLeftSkill);
+        _inputManager.SubscribeCanceledAction(PlayerInputEnum.ThrowRightSkill,CancelSkill);
+        _inputManager.SubscribeCanceledAction(PlayerInputEnum.ThrowLeftSkill,CancelSkill);
     }
     
     private void ChangeSkill(InputAction.CallbackContext callbackContext)
     {
-        _playerSkillController.ChangeCurrentSkill(_skillManager.GetNextSkill(
+        _playerSkillController.ChangeCurrentSkill(_skillManager.GetNextLeftSkill(
             out PlayerMovementEnum playerMovementTypeEnum));
         _playerMovementController.QueueMovement(
             _playerMovementManager.GetMovable(playerMovementTypeEnum));
         
     }
-    private void ChangeSkill()
+    private void ChangeSkill(bool _isLeft)
     {
-        _playerSkillController.ChangeCurrentSkill(_skillManager.GetNextSkill(
-            out PlayerMovementEnum playerMovementTypeEnum));
-        _playerMovementController.QueueMovement(
-            _playerMovementManager.GetMovable(playerMovementTypeEnum));
+        if (_isLeft)
+        {
+            _playerSkillController.ChangeCurrentSkill(_skillManager.GetNextLeftSkill(
+                out PlayerMovementEnum playerMovementTypeEnum)); 
+            _playerMovementController.QueueMovement(
+                _playerMovementManager.GetMovable(playerMovementTypeEnum));
+        }
+        else
+        {
+            _playerSkillController.ChangeCurrentSkill(_skillManager.GetNextRightSkill(
+                out PlayerMovementEnum playerMovementTypeEnum));
+            _playerMovementController.QueueMovement(
+                _playerMovementManager.GetMovable(playerMovementTypeEnum)); 
+        }
     }
-    private void ThrowSkill(InputAction.CallbackContext callbackContext)
+    private void ThrowLeftSkill(InputAction.CallbackContext callbackContext)
     {
+        ChangeSkill(true);
+        _playerSkillController.StartSkill();
+        _playerMovementController.ChangeCurrentMovement(true);
+    } 
+    private void ThrowRightSkill(InputAction.CallbackContext callbackContext)
+    {
+        ChangeSkill(false);
         _playerSkillController.StartSkill();
         _playerMovementController.ChangeCurrentMovement(true);
     }

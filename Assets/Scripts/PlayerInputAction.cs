@@ -37,18 +37,18 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Scroll"",
-                    ""type"": ""Value"",
-                    ""id"": ""33d64fee-373f-4901-98bf-b3363006105c"",
-                    ""expectedControlType"": ""Axis"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""ThrowSkill"",
+                    ""name"": ""ThrowLeftSkill"",
                     ""type"": ""Button"",
                     ""id"": ""b5a47de5-4339-4014-86a0-997656096809"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ThorwRightSkill"",
+                    ""type"": ""Button"",
+                    ""id"": ""e9015907-c5a4-415f-a8ec-0094e86e0c93"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -69,23 +69,23 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""4f7e2a0a-faec-413c-a24c-e63f4bfea13c"",
-                    ""path"": ""<Mouse>/scroll/y"",
-                    ""interactions"": ""MultiTap"",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Scroll"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""9331ab7b-5ba2-426e-885f-208f0d2f02f4"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""ThrowSkill"",
+                    ""action"": ""ThrowLeftSkill"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b6fd24c5-8ef7-4864-98e6-249f86871228"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ThorwRightSkill"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -189,8 +189,8 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         // PlayerSkillActionMap
         m_PlayerSkillActionMap = asset.FindActionMap("PlayerSkillActionMap", throwIfNotFound: true);
         m_PlayerSkillActionMap_ChangeSkill = m_PlayerSkillActionMap.FindAction("ChangeSkill", throwIfNotFound: true);
-        m_PlayerSkillActionMap_Scroll = m_PlayerSkillActionMap.FindAction("Scroll", throwIfNotFound: true);
-        m_PlayerSkillActionMap_ThrowSkill = m_PlayerSkillActionMap.FindAction("ThrowSkill", throwIfNotFound: true);
+        m_PlayerSkillActionMap_ThrowLeftSkill = m_PlayerSkillActionMap.FindAction("ThrowLeftSkill", throwIfNotFound: true);
+        m_PlayerSkillActionMap_ThorwRightSkill = m_PlayerSkillActionMap.FindAction("ThorwRightSkill", throwIfNotFound: true);
         // PlayerMovement
         m_PlayerMovement = asset.FindActionMap("PlayerMovement", throwIfNotFound: true);
         m_PlayerMovement_Movement = m_PlayerMovement.FindAction("Movement", throwIfNotFound: true);
@@ -257,15 +257,15 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerSkillActionMap;
     private List<IPlayerSkillActionMapActions> m_PlayerSkillActionMapActionsCallbackInterfaces = new List<IPlayerSkillActionMapActions>();
     private readonly InputAction m_PlayerSkillActionMap_ChangeSkill;
-    private readonly InputAction m_PlayerSkillActionMap_Scroll;
-    private readonly InputAction m_PlayerSkillActionMap_ThrowSkill;
+    private readonly InputAction m_PlayerSkillActionMap_ThrowLeftSkill;
+    private readonly InputAction m_PlayerSkillActionMap_ThorwRightSkill;
     public struct PlayerSkillActionMapActions
     {
         private @PlayerInputAction m_Wrapper;
         public PlayerSkillActionMapActions(@PlayerInputAction wrapper) { m_Wrapper = wrapper; }
         public InputAction @ChangeSkill => m_Wrapper.m_PlayerSkillActionMap_ChangeSkill;
-        public InputAction @Scroll => m_Wrapper.m_PlayerSkillActionMap_Scroll;
-        public InputAction @ThrowSkill => m_Wrapper.m_PlayerSkillActionMap_ThrowSkill;
+        public InputAction @ThrowLeftSkill => m_Wrapper.m_PlayerSkillActionMap_ThrowLeftSkill;
+        public InputAction @ThorwRightSkill => m_Wrapper.m_PlayerSkillActionMap_ThorwRightSkill;
         public InputActionMap Get() { return m_Wrapper.m_PlayerSkillActionMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -278,12 +278,12 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @ChangeSkill.started += instance.OnChangeSkill;
             @ChangeSkill.performed += instance.OnChangeSkill;
             @ChangeSkill.canceled += instance.OnChangeSkill;
-            @Scroll.started += instance.OnScroll;
-            @Scroll.performed += instance.OnScroll;
-            @Scroll.canceled += instance.OnScroll;
-            @ThrowSkill.started += instance.OnThrowSkill;
-            @ThrowSkill.performed += instance.OnThrowSkill;
-            @ThrowSkill.canceled += instance.OnThrowSkill;
+            @ThrowLeftSkill.started += instance.OnThrowLeftSkill;
+            @ThrowLeftSkill.performed += instance.OnThrowLeftSkill;
+            @ThrowLeftSkill.canceled += instance.OnThrowLeftSkill;
+            @ThorwRightSkill.started += instance.OnThorwRightSkill;
+            @ThorwRightSkill.performed += instance.OnThorwRightSkill;
+            @ThorwRightSkill.canceled += instance.OnThorwRightSkill;
         }
 
         private void UnregisterCallbacks(IPlayerSkillActionMapActions instance)
@@ -291,12 +291,12 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @ChangeSkill.started -= instance.OnChangeSkill;
             @ChangeSkill.performed -= instance.OnChangeSkill;
             @ChangeSkill.canceled -= instance.OnChangeSkill;
-            @Scroll.started -= instance.OnScroll;
-            @Scroll.performed -= instance.OnScroll;
-            @Scroll.canceled -= instance.OnScroll;
-            @ThrowSkill.started -= instance.OnThrowSkill;
-            @ThrowSkill.performed -= instance.OnThrowSkill;
-            @ThrowSkill.canceled -= instance.OnThrowSkill;
+            @ThrowLeftSkill.started -= instance.OnThrowLeftSkill;
+            @ThrowLeftSkill.performed -= instance.OnThrowLeftSkill;
+            @ThrowLeftSkill.canceled -= instance.OnThrowLeftSkill;
+            @ThorwRightSkill.started -= instance.OnThorwRightSkill;
+            @ThorwRightSkill.performed -= instance.OnThorwRightSkill;
+            @ThorwRightSkill.canceled -= instance.OnThorwRightSkill;
         }
 
         public void RemoveCallbacks(IPlayerSkillActionMapActions instance)
@@ -371,8 +371,8 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     public interface IPlayerSkillActionMapActions
     {
         void OnChangeSkill(InputAction.CallbackContext context);
-        void OnScroll(InputAction.CallbackContext context);
-        void OnThrowSkill(InputAction.CallbackContext context);
+        void OnThrowLeftSkill(InputAction.CallbackContext context);
+        void OnThorwRightSkill(InputAction.CallbackContext context);
     }
     public interface IPlayerMovementActions
     {

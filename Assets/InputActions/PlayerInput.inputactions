@@ -15,18 +15,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Scroll",
-                    "type": "Value",
-                    "id": "33d64fee-373f-4901-98bf-b3363006105c",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "ThrowSkill",
+                    "name": "ThrowLeftSkill",
                     "type": "Button",
                     "id": "b5a47de5-4339-4014-86a0-997656096809",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ThorwRightSkill",
+                    "type": "Button",
+                    "id": "e9015907-c5a4-415f-a8ec-0094e86e0c93",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -47,23 +47,23 @@
                 },
                 {
                     "name": "",
-                    "id": "4f7e2a0a-faec-413c-a24c-e63f4bfea13c",
-                    "path": "<Mouse>/scroll/y",
-                    "interactions": "MultiTap",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Scroll",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "9331ab7b-5ba2-426e-885f-208f0d2f02f4",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "ThrowSkill",
+                    "action": "ThrowLeftSkill",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b6fd24c5-8ef7-4864-98e6-249f86871228",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ThorwRightSkill",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
