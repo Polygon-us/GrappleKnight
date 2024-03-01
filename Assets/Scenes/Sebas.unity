@@ -1686,6 +1686,7 @@ GameObject:
   - component: {fileID: 417101580}
   - component: {fileID: 417101579}
   - component: {fileID: 417101581}
+  - component: {fileID: 417101582}
   m_Layer: 3
   m_Name: Platform
   m_TagString: Untagged
@@ -1769,7 +1770,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 417101578}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 190ddb3c91e144b4a969e6f76e1bdec3, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1805,6 +1806,33 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!50 &417101582
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417101578}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &433574584
 GameObject:
   m_ObjectHideFlags: 0
@@ -7837,7 +7865,7 @@ Transform:
   m_GameObject: {fileID: 2043213916}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.34, y: 13.59, z: 0}
+  m_LocalPosition: {x: -3.7, y: -9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7867,9 +7895,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &2043213921
 CapsuleCollider2D:
@@ -7963,13 +7991,14 @@ MonoBehaviour:
   _Boomerang: {fileID: 616470208}
   _boomerangMaxDistance: 4
   _boomerangSpeed: 4
-  _horizontalSpeed: 10
-  _horizontalForce: 14
   _jumpForce: 5
   _raycastLength: 1.01
   _checkFloorMask:
     serializedVersion: 2
     m_Bits: 8
+  _maxSpeed: 10
+  _maxAcceleration: 70
+  _maxAirAcceleration: 15
   _maxLife: 10
 --- !u!114 &2043213925
 MonoBehaviour:
