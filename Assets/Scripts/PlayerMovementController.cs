@@ -17,6 +17,10 @@ public class PlayerMovementController : MonoBehaviour
         }
     }
 
+    public void FirstLastMovement()
+    {
+        _lastMovement = _currentMovement;
+    }
     public void ChangeCurrentMovement(IMovable movement)
     {
         _currentMovement = movement;

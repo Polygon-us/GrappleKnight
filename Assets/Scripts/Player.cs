@@ -57,6 +57,7 @@ public class Player : MonoBehaviour
         //ChangeSkill();
         _playerMovementController.ChangeCurrentMovement(
             _playerMovementManager.GetMovable(PlayerMovementEnum.PlayerMovement));
+        _playerMovementController.FirstLastMovement();
         _playerMovementController.StarMovement();
     }
 

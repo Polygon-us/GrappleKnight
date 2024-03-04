@@ -25,7 +25,6 @@ public class PlayerLife : MonoBehaviour , ILife
         //Debug.Log(_currentLife);
     }
     
-    
     public void Activate()
     {
         gameObject.SetActive(true);
