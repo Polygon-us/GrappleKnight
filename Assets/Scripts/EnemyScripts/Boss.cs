@@ -24,7 +24,7 @@ public class Boss : MonoBehaviour
     [SerializeField] private Transform _wave;
     [SerializeField] private Rigidbody2D _playerRigidbody;
     [SerializeField] private BoxCollider2D _waveCollider;
-    
+    [SerializeField] private BoxCollider2D activationZoneCollider;
 
     [SerializeField]private int _chargeMaxNumber;
     [SerializeField]private float _chargeVelocity;
@@ -67,7 +67,7 @@ public class Boss : MonoBehaviour
             _jumpHeight, transform, _playerTransform));
         _enemyStateManager.FillStatesContainer(EnemyStateEnum.ChargeImpact, new ChargeImpactAttackState(_rigidbody2D,
             transform, _playerTransform, _chargeMaxNumber, _chargeVelocity));
-        _enemyStateManager.FillStatesContainer(EnemyStateEnum.Idle, new EnemyIdleState(1,EnemyStateEnum.Random));
+        _enemyStateManager.FillStatesContainer(EnemyStateEnum.Idle, new BossIdleState(1,EnemyStateEnum.Random, activationZoneCollider));
     }
     private void InitialState()
     {

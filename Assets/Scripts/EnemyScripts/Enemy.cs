@@ -11,7 +11,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Rigidbody2D _rigidbody;
 
     [SerializeField] private BoxCollider2D _persecutorCollider;
-
     private bool _isHuntingMode;
 
     private EnemyLife _enemyLife;

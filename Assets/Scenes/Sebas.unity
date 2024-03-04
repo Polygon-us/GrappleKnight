@@ -7984,7 +7984,7 @@ MonoBehaviour:
   _rope: {fileID: 991267974}
   _hookMaxDistance: 10
   _angleOfShut: 180
-  _swingSpeed: {x: 0.01, y: 0.1}
+  _swingSpeed: {x: 0.25, y: 0.1}
   _hookMask:
     serializedVersion: 2
     m_Bits: 8

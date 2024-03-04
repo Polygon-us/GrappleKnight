@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class EnemyIdleState : IState
 {
+    private bool initStates = false;
+    
     private float _waitTime;
     private float _currentTime;
     private EnemyStateEnum _nextEnemyStateEnum;
@@ -12,21 +14,23 @@ public class EnemyIdleState : IState
         _waitTime = waitTime;
         _nextEnemyStateEnum = nextEnemyStateEnum;
     }
-
     public void StartState()
     {
-        
+
     }
+
 
     public bool DoState(out EnemyStateEnum enemyStateEnum)
     {
-        _currentTime += Time.deltaTime;
+
         if (_currentTime>=_waitTime)
         {
             _currentTime = 0;
             enemyStateEnum = _nextEnemyStateEnum;
             return false;
         }
+        
+        _currentTime += Time.deltaTime;
         enemyStateEnum = _nextEnemyStateEnum;
         return true;
     }
