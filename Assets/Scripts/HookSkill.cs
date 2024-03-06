@@ -23,10 +23,11 @@ public class HookSkill : ISkill
 
     private float _currentTimeFakeHook ;
     private float _maxTimeFakeHook = 0.1f;
+    private float _shakeForceHook;
     
     private bool _onHook;
     public HookSkill(Transform transform,Transform hookEnd,Transform hookBegin, SpringJoint2D springJoint2D
-        ,float hookMaxDistance, float angleOfShut,GameObject rope, LayerMask hookMask)
+        ,float hookMaxDistance, float angleOfShut,GameObject rope, LayerMask hookMask, float shakeForceHook)
     {
         _transform = transform;
         _hookBegin = hookBegin;
@@ -40,6 +41,7 @@ public class HookSkill : ISkill
         _lineRenderer = _rope.GetComponent<LineRenderer>();
         _springJoint2D = springJoint2D;
         _springJoint2D.anchor = hookBegin.localPosition;
+        _shakeForceHook = shakeForceHook;
     }
     
     public void InitSkill()
@@ -67,6 +69,7 @@ public class HookSkill : ISkill
             {
                 if (hit.distance <= _hookMaxDistance)
                 {
+                    CinemachineController.Instance.MoveCamera(_shakeForceHook, 5,0.5f);
                     _hookEnd.parent = null;
                     _hookEnd.gameObject.SetActive(true);
                     _rope.SetActive(true);

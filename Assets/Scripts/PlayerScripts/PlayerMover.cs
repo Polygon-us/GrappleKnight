@@ -35,10 +35,10 @@ public class PlayerMover : IMovable
     
     private InputAction _inputAxisMovement;
     
+    public Action<InputAction> OnInputMoveChange;
 
     private Dictionary<PlayerInputEnum, Action<InputAction.CallbackContext>> _inputActions = 
         new Dictionary<PlayerInputEnum, Action<InputAction.CallbackContext>>();
-
 
     public PlayerMover(Transform playerTransform,Rigidbody2D myRigidbody,float maxSpeed, float maxAcceleration, float jumpHeight,
         float raycastLength ,LayerMask checkFloorMask, float maxAirAcceleration)
@@ -147,6 +147,7 @@ public class PlayerMover : IMovable
     private void HorizontalInput(InputAction.CallbackContext callbackContext)
     {
         _inputAxisMovement = callbackContext.action;
+        OnInputMoveChange?.Invoke(_inputAxisMovement);
     }
     
 }

@@ -9,11 +9,12 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform _hookBegin;
     [SerializeField] private Transform _hookEnd;
     [SerializeField] private GameObject _rope;
-    [SerializeField]private float _hookMaxDistance = 10;
-    [SerializeField]private float _angleOfShut;
-    [SerializeField]private Vector2 _swingSpeed = new Vector2(0.01f, 0.1f);
-    [SerializeField]private LayerMask _hookMask;
-    
+    [SerializeField] private float _hookMaxDistance = 10;
+    [SerializeField] private float _angleOfShut;
+    [SerializeField] private Vector2 _swingSpeed = new Vector2(0.01f, 0.1f);
+    [SerializeField] private LayerMask _hookMask;
+    [SerializeField] private float _shakeForceHook = 5;
+
     [Header("Boomerang")]
     [SerializeField] private Transform _Boomerang;
     [SerializeField]private float _boomerangMaxDistance = 4;
@@ -49,12 +50,15 @@ public class Player : MonoBehaviour
     private PlayerMovementController _playerMovementController;
     private PlayerMovementManager _playerMovementManager;
 
+    private TargetCameraController _targetCameraController;
+
     private void Awake()
     {
         AssignModules();
         FillSkillManager();
         FillMovementManager();
         //ChangeSkill();
+        _targetCameraController = GetComponentInChildren<TargetCameraController>();
         _playerMovementController.ChangeCurrentMovement(
             _playerMovementManager.GetMovable(PlayerMovementEnum.PlayerMovement));
         _playerMovementController.StarMovement();
@@ -77,7 +81,7 @@ public class Player : MonoBehaviour
     private void FillSkillManager()
     {
         _skillManager.AddLeftSkill(new HookSkill(transform,_hookEnd,_hookBegin,_springJoint2D,
-            _hookMaxDistance,_angleOfShut,_rope,_hookMask));
+            _hookMaxDistance,_angleOfShut,_rope,_hookMask, _shakeForceHook));
         _skillManager.AddRightSkill(new BoomerangSkill(transform,_Boomerang,
             _boomerangMaxDistance,_boomerangSpeed));
     }
@@ -88,8 +92,9 @@ public class Player : MonoBehaviour
         _inputManager.SubscribePerformedAction(PlayerInputEnum.Movement,
             currentMovable.GetAction(PlayerInputEnum.Movement));
         
-
-        currentMovable = new PlayerMover(transform,_rigidbody2D, _maxSpeed, _maxAcceleration, _jumpHeight,_raycastLength,_checkFloorMask, _maxAirAcceleration);
+        PlayerMover mover = new PlayerMover(transform, _rigidbody2D, _maxSpeed, _maxAcceleration, _jumpHeight, _raycastLength, _checkFloorMask, _maxAirAcceleration);
+        currentMovable = mover;
+        mover.OnInputMoveChange += OnPressVertical;
 
         _playerMovementManager.AddMovable(PlayerMovementEnum.PlayerMovement, currentMovable);
         _inputManager.SubscribePerformedAction(PlayerInputEnum.Movement,
@@ -100,7 +105,7 @@ public class Player : MonoBehaviour
         //currentMovable = new PlayerClimbingMover(_climbingSpeed, transform, _rigidbody2D);
         //_playerMovementManager.AddMovable(PlayerMovementEnum.ClimbingMovement, currentMovable);
         //_inputManager.SubscribePerformedAction(PlayerInputEnum.Movement,
-        //    currentMovable.GetAction(PlayerInputEnum.Movement));
+        //    currentMovable.OnGetAction(PlayerInputEnum.Movement));
 
 
         //_inputManager.SubscribePerformedAction(PlayerInputEnum.ChangeSkill,ChangeSkill);
@@ -109,7 +114,15 @@ public class Player : MonoBehaviour
         _inputManager.SubscribeCanceledAction(PlayerInputEnum.ThrowRightSkill,CancelSkill);
         _inputManager.SubscribeCanceledAction(PlayerInputEnum.ThrowLeftSkill,CancelSkill);
     }
-    
+
+    private void OnPressVertical(InputAction action)
+    {
+        if (action.activeControl.IsPressed())
+        {
+            _targetCameraController.SetPosBySide(action.activeControl.name == "d");
+        }
+    }
+
     private void ChangeSkill(InputAction.CallbackContext callbackContext)
     {
         _playerSkillController.ChangeCurrentSkill(_skillManager.GetNextLeftSkill(
