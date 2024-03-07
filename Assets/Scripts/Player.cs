@@ -17,8 +17,8 @@ public class Player : MonoBehaviour
 
     [Header("Boomerang")]
     [SerializeField] private Transform _Boomerang;
-    [SerializeField]private float _boomerangMaxDistance = 4;
-    [SerializeField]private float _boomerangSpeed = 4f;
+    [SerializeField] private float _boomerangMaxDistance = 4;
+    [SerializeField] private float _boomerangSpeed = 4f;
     
     
     [Header("Movement")]
@@ -26,9 +26,10 @@ public class Player : MonoBehaviour
     [SerializeField]private float _jumpHeight = 5f;
     [SerializeField]private float _raycastLength = 1.01f;
     [SerializeField]private LayerMask _checkFloorMask;
-    [SerializeField, Range(0f, 100f)] private float _maxSpeed = 10f;
-    [SerializeField, Range(0f, 1000f)] private float _maxAcceleration = 35f;
+    [SerializeField, Range(0f, 100f)] public float _maxSpeed = 10f;
+    [SerializeField, Range(0f, 1000f)] public float _maxAcceleration = 35f;
     [SerializeField, Range(0f, 100f)] private float _maxAirAcceleration = 20f;
+    public Vector2 _moveAxis;
 
     //[Header("Climbing")]
     //[SerializeField] private float _climbingSpeed;
@@ -92,7 +93,8 @@ public class Player : MonoBehaviour
         _inputManager.SubscribePerformedAction(PlayerInputEnum.Movement,
             currentMovable.GetAction(PlayerInputEnum.Movement));
         
-        PlayerMover mover = new PlayerMover(transform, _rigidbody2D, _maxSpeed, _maxAcceleration, _jumpHeight, _raycastLength, _checkFloorMask, _maxAirAcceleration);
+        PlayerMover mover = new PlayerMover(transform, _rigidbody2D, _maxSpeed, _maxAcceleration, _jumpHeight,
+            _raycastLength, _checkFloorMask, _maxAirAcceleration, _moveAxis);
         currentMovable = mover;
         mover.OnInputMoveChange += OnPressVertical;
 
@@ -119,7 +121,8 @@ public class Player : MonoBehaviour
     {
         if (action.activeControl.IsPressed())
         {
-            _targetCameraController.SetPosBySide(action.activeControl.name == "d");
+             //_targetCameraController.SetPosBySide(action.activeControl.name == "d");
+            
         }
     }
 

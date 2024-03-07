@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMover : IMovable
+public class PlayerMover : MonoBehaviour, IMovable
 {
 
     private float _jumpHeight;
@@ -14,11 +14,12 @@ public class PlayerMover : IMovable
     private float _maxAcceleration;
     private float _maxAirAcceleration;
     private float _maxSpeedChange, _acceleration;
-   
-    private Vector2 _direction, _desiredVelocity, _velocity;
+    public float mover;
+    private Vector2 _direction;
+    private Vector2 _desiredVelocity;
+    private Vector2 _velocity;
     private Vector2 _moveAxis;
-
-    public bool _onGround;
+    private bool _onGround;
 
     private LayerMask _checkFloorMask;
     
@@ -41,7 +42,7 @@ public class PlayerMover : IMovable
         new Dictionary<PlayerInputEnum, Action<InputAction.CallbackContext>>();
 
     public PlayerMover(Transform playerTransform,Rigidbody2D myRigidbody,float maxSpeed, float maxAcceleration, float jumpHeight,
-        float raycastLength ,LayerMask checkFloorMask, float maxAirAcceleration)
+        float raycastLength ,LayerMask checkFloorMask, float maxAirAcceleration, Vector2 moveAxis)
     {
         _playerTransform = playerTransform;
         _myRigidbody = myRigidbody;
@@ -51,6 +52,7 @@ public class PlayerMover : IMovable
         _raycastLength = raycastLength;
         _checkFloorMask = checkFloorMask;
         _maxAirAcceleration = maxAirAcceleration;
+        _moveAxis = moveAxis;
         _jumpSpeed = Mathf.Sqrt(_jumpHeight * (Physics2D.gravity.y * _myRigidbody.gravityScale) * -2) * _myRigidbody.mass;
         FillInputAction();
     }
@@ -65,7 +67,9 @@ public class PlayerMover : IMovable
     {
         if (_inputAxisMovement != null && _inputAxisMovement.inProgress)
         {
+            TargetCameraController.instance.MoveCameraPosition(mover);
             _moveAxis = _inputAxisMovement.ReadValue<Vector2>();
+             mover = _moveAxis.x;
         }
         else
         {
