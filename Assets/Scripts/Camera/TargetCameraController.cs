@@ -8,12 +8,13 @@ public class TargetCameraController : MonoBehaviour
 {
     public static TargetCameraController instance;
 
-    [SerializeField] private float smoothness = 10f;
-    [SerializeField] private float smoothTime = 0.01f; 
+    [SerializeField] private float smoothTime = 0.4f; 
     private float _negativeOrPositive;
 
     private Vector2 _targetOffset;
     private Vector2 _mediumTargetOffset;
+    private Vector2 targetVelocity = Vector2.zero;
+    private Vector2 mediumVelocity = Vector2.zero;
 
     [SerializeField] private CinemachineFramingTransposer transposer;
     [SerializeField] private CinemachineVirtualCamera _myCamera;
@@ -24,7 +25,7 @@ public class TargetCameraController : MonoBehaviour
         transposer = _myCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
     }
 
-    public void MoveCameraPosition(float mover)
+    public void MoveCameraPosition(float mover, float maxSpeed = 0.3f)
     {
         float targetX, mediumX;
 
@@ -46,13 +47,14 @@ public class TargetCameraController : MonoBehaviour
         _targetOffset = new Vector2(targetX, 0);
         _mediumTargetOffset = new Vector2(mediumX, 0);
 
-        Vector2 velocity = Vector2.zero;
-        transposer.m_TrackedObjectOffset = Vector2.SmoothDamp(
-            transposer.m_TrackedObjectOffset, _targetOffset, ref velocity, smoothTime);
+        float deltaTime = Time.deltaTime; 
 
-        transposer.m_TrackedObjectOffset = Vector2.Lerp(
-            transposer.m_TrackedObjectOffset, _mediumTargetOffset, Time.deltaTime * smoothness);
-    }   
+        transposer.m_TrackedObjectOffset = Vector2.SmoothDamp(
+            transposer.m_TrackedObjectOffset, _targetOffset, ref targetVelocity, smoothTime, maxSpeed, deltaTime);
+
+        transposer.m_TrackedObjectOffset = Vector2.SmoothDamp(
+            transposer.m_TrackedObjectOffset, _mediumTargetOffset, ref mediumVelocity, smoothTime, maxSpeed, deltaTime);
+    }
 }
 
 
