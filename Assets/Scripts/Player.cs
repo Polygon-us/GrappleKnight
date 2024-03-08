@@ -51,18 +51,19 @@ public class Player : MonoBehaviour
     private PlayerMovementController _playerMovementController;
     private PlayerMovementManager _playerMovementManager;
 
-    private TargetCameraController _targetCameraController;
+    private TargetCameraController2 _targetCameraController;
 
     private void Awake()
     {
+        //ChangeSkill();
+        _targetCameraController = GetComponentInChildren<TargetCameraController2>();
         AssignModules();
         FillSkillManager();
         FillMovementManager();
-        //ChangeSkill();
-        _targetCameraController = GetComponentInChildren<TargetCameraController>();
         _playerMovementController.ChangeCurrentMovement(
             _playerMovementManager.GetMovable(PlayerMovementEnum.PlayerMovement));
         _playerMovementController.StarMovement();
+
     }
 
     private void AssignModules()
@@ -88,13 +89,13 @@ public class Player : MonoBehaviour
     }
      private void FillMovementManager()
      {
-         IMovable currentMovable = new HookMover(_rigidbody2D, _springJoint2D, _swingSpeed);
+         IMovable currentMovable = new HookMover(_rigidbody2D, _springJoint2D, _swingSpeed,_targetCameraController);
         _playerMovementManager.AddMovable(PlayerMovementEnum.HookMovement,currentMovable);
         _inputManager.SubscribePerformedAction(PlayerInputEnum.Movement,
             currentMovable.GetAction(PlayerInputEnum.Movement));
         
         PlayerMover mover = new PlayerMover(transform, _rigidbody2D, _maxSpeed, _maxAcceleration, _jumpHeight,
-            _raycastLength, _checkFloorMask, _maxAirAcceleration, _moveAxis);
+            _raycastLength, _checkFloorMask, _maxAirAcceleration, _moveAxis, _targetCameraController);
         currentMovable = mover;
         mover.OnInputMoveChange += OnPressVertical;
 

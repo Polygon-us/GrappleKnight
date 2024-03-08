@@ -21,12 +21,15 @@ public class TargetCameraController : MonoBehaviour
 
     private void Awake()
     {
+
         instance = this;
         transposer = _myCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
     }
 
-    public void MoveCameraPosition(float mover, float maxSpeed = 0.3f)
+ 
+    public void MoveCameraPosition(float mover, float maxSpeed = 1f)
     {
+        Debug.Log("Hello");
         float targetX, mediumX;
 
         if (mover > 0)
@@ -36,7 +39,7 @@ public class TargetCameraController : MonoBehaviour
         }
         else if (mover < 0)
         {
-            targetX = -6f;
+            targetX = -12f;
             mediumX = -4f;
         }
         else
@@ -52,8 +55,8 @@ public class TargetCameraController : MonoBehaviour
         transposer.m_TrackedObjectOffset = Vector2.SmoothDamp(
             transposer.m_TrackedObjectOffset, _targetOffset, ref targetVelocity, smoothTime, maxSpeed, deltaTime);
 
-        transposer.m_TrackedObjectOffset = Vector2.SmoothDamp(
-            transposer.m_TrackedObjectOffset, _mediumTargetOffset, ref mediumVelocity, smoothTime, maxSpeed, deltaTime);
+        //transposer.m_TrackedObjectOffset = Vector2.SmoothDamp(
+        //    transposer.m_TrackedObjectOffset, _mediumTargetOffset, ref mediumVelocity, smoothTime, maxSpeed, deltaTime);
     }
 }
 

@@ -40,9 +40,11 @@ public class PlayerMover : MonoBehaviour, IMovable
 
     private Dictionary<PlayerInputEnum, Action<InputAction.CallbackContext>> _inputActions = 
         new Dictionary<PlayerInputEnum, Action<InputAction.CallbackContext>>();
+    private float lastMove;
 
+    private TargetCameraController2 _targetCameraController;
     public PlayerMover(Transform playerTransform,Rigidbody2D myRigidbody,float maxSpeed, float maxAcceleration, float jumpHeight,
-        float raycastLength ,LayerMask checkFloorMask, float maxAirAcceleration, Vector2 moveAxis)
+        float raycastLength ,LayerMask checkFloorMask, float maxAirAcceleration, Vector2 moveAxis, TargetCameraController2 targetCameraController)
     {
         _playerTransform = playerTransform;
         _myRigidbody = myRigidbody;
@@ -54,6 +56,7 @@ public class PlayerMover : MonoBehaviour, IMovable
         _maxAirAcceleration = maxAirAcceleration;
         _moveAxis = moveAxis;
         _jumpSpeed = Mathf.Sqrt(_jumpHeight * (Physics2D.gravity.y * _myRigidbody.gravityScale) * -2) * _myRigidbody.mass;
+        _targetCameraController = targetCameraController;
         FillInputAction();
     }
     
@@ -67,7 +70,6 @@ public class PlayerMover : MonoBehaviour, IMovable
     {
         if (_inputAxisMovement != null && _inputAxisMovement.inProgress)
         {
-            TargetCameraController.instance.MoveCameraPosition(mover);
             _moveAxis = _inputAxisMovement.ReadValue<Vector2>();
              mover = _moveAxis.x;
         }
@@ -89,7 +91,12 @@ public class PlayerMover : MonoBehaviour, IMovable
         
         if (_moveAxis != Vector2.zero )
         {
-
+           
+            if(_moveAxis.x != lastMove)
+            {
+                lastMove = _moveAxis.x;
+                _targetCameraController.MoveCameraPosition(lastMove,8);
+            }
             _desiredVelocity = new Vector2(_moveAxis.x, 0f) * Mathf.Max(_maxSpeed , 0f);
             _velocity = _myRigidbody.velocity;
 
