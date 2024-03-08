@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     [Header("Movement")]
 
     [SerializeField]private float _jumpHeight = 5f;
-    [SerializeField]private float _raycastLength = 1.01f;
+    [SerializeField]private float _raycastLength = 1.1f;
     [SerializeField]private LayerMask _checkFloorMask;
     [SerializeField, Range(0f, 100f)] private float _maxSpeed = 10f;
     [SerializeField, Range(0f, 1000f)] private float _maxAcceleration = 35f;

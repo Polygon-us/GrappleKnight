@@ -36,7 +36,7 @@ public class Boss : MonoBehaviour
     private EnemyLife _enemyLife;
     private EnemyStateManager _enemyStateManager;
     private EnemyStateController _enemyStateController;
-
+    private CollisionEvents _collisionEvents;
 
 
 
@@ -45,7 +45,8 @@ public class Boss : MonoBehaviour
     {
         _enemyStateManager = new EnemyStateManager();
         _enemyStateController = GetComponent<EnemyStateController>();
-        _enemyStateController.Configure(_enemyStateManager);
+        _collisionEvents = new CollisionEvents();
+        _enemyStateController.Configure(_enemyStateManager, _collisionEvents);
 
         
         _enemyLife = new EnemyLife(gameObject,_maxLife);
@@ -62,10 +63,10 @@ public class Boss : MonoBehaviour
         // _enemyStateManager.FillStatesContainer(EnemyStateEnum.BlastWave, new BlastWaveAttackState(_jumpHeight, _rigidbody2D,
         //     _capsuleCollider2D, _wave, _finalWaveScale, _waveDuracion, _playerRigidbody, _waveCollider,
         //     _waveImpactForce, _playerTransform, _forceDown, _delayBeforeReturn, _inicialWaveScale));
-        _enemyStateManager.FillStatesContainer(EnemyStateEnum.JumpAttack, new JumpToPlayerAttackState(_rigidbody2D,
-            _jumpHeight, transform, _playerTransform));
-        // _enemyStateManager.FillStatesContainer(EnemyStateEnum.ChargeImpact, new ChargeImpactAttackState(_rigidbody2D,
-        //     transform, _playerTransform, _chargeMaxNumber, _chargeVelocity));
+        // _enemyStateManager.FillStatesContainer(EnemyStateEnum.JumpAttack, new JumpToPlayerAttackState(_rigidbody2D,
+        //     _jumpHeight, transform, _playerTransform));
+        _enemyStateManager.FillStatesContainer(EnemyStateEnum.ChargeImpact, new ChargeImpactAttackState(_rigidbody2D,
+            transform, _playerTransform, _chargeMaxNumber, _chargeVelocity));
         _enemyStateManager.FillStatesContainer(EnemyStateEnum.Idle, new EnemyIdleState(1,EnemyStateEnum.Random));
     }
     private void InitialState()

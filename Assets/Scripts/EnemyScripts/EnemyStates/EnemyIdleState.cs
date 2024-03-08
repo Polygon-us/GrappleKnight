@@ -35,4 +35,10 @@ public class EnemyIdleState : IState
     {
         return null;
     }
+
+    public Action<Collider2D> ColliderAction()
+    {
+        return null;
+    }
+    
 }

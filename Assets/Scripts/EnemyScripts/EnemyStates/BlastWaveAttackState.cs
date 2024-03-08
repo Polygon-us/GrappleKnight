@@ -186,5 +186,11 @@ public class BlastWaveAttackState : IState
     {
         return CollisionEnter;
     }
+
+    public Action<Collider2D> ColliderAction()
+    {
+        return null;
+    }
+    
 }
 

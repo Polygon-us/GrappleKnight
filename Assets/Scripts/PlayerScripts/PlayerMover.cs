@@ -19,7 +19,7 @@ public class PlayerMover : IMovable
     private Vector2 _moveAxis;
 
     public bool _onGround;
-
+    
     private LayerMask _checkFloorMask;
     
     private RaycastHit2D _checkFloor;
@@ -29,7 +29,9 @@ public class PlayerMover : IMovable
     private Transform _playerTransform;
 
     private bool _isJumpOnAir;
-
+    private bool _isOnMove;
+    private bool _isStop;
+    
     private float _currentLastJump = 1;
     private float _maxTimeLastJump = 0.2f;
     
@@ -85,30 +87,33 @@ public class PlayerMover : IMovable
         
         if (_moveAxis != Vector2.zero )
         {
-
             _desiredVelocity = new Vector2(_moveAxis.x, 0f) * Mathf.Max(_maxSpeed , 0f);
             _velocity = _myRigidbody.velocity;
 
             _acceleration = _onGround ? _maxAcceleration : _maxAirAcceleration;
+            Debug.Log($"_acceleration: {_acceleration}");
             
             _maxSpeedChange = _acceleration * Time.deltaTime;
             _velocity.x = Mathf.MoveTowards(_velocity.x, _desiredVelocity.x, _maxSpeedChange);
 
             _myRigidbody.velocity = _velocity;
-
+            _isStop = false;
         }
         else
         {
-            if (OnGround())
+            if (!_isStop)
             {
-                _onGround = true;
-                _myRigidbody.velocity = new Vector2(0, _myRigidbody.velocity.y);
+                _isStop = true;
+                if (OnGround())
+                {
+                    _onGround = true;
+                    _myRigidbody.velocity = new Vector2(0, _myRigidbody.velocity.y);
+                }
+                else
+                {
+                    _onGround = false;
+                }
             }
-            else if (!OnGround())
-            {
-                _onGround = false;
-            }
-            
         }
     }
 
@@ -134,7 +139,7 @@ public class PlayerMover : IMovable
     private bool OnGround()
     {
         _checkFloor = Physics2D.Raycast(_playerTransform.position, Vector2.down, _raycastLength, _checkFloorMask);
-        Debug.DrawRay(_playerTransform.position, -_playerTransform.up*_raycastLength, Color.red);
+        Debug.DrawRay(_playerTransform.position, -_playerTransform.up*_raycastLength, Color.red,10);
         if (_checkFloor.collider != null)
         {
 
