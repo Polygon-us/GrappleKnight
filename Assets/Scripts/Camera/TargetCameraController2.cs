@@ -12,7 +12,6 @@ public class TargetCameraController2 : MonoBehaviour
     private Vector3 _targetOffset;
     private Vector3 _currentOffset;
     private Vector3 _mediumTargetOffset;
-    //private Vector2 targetVelocity = Vector2.zero;
     private Vector2 targetVelocity = new Vector2(1,0);
     private Vector2 mediumVelocity = Vector2.zero;
 
@@ -26,17 +25,18 @@ public class TargetCameraController2 : MonoBehaviour
     {
         transposer = _myCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
         transposer.m_TrackedObjectOffset = new Vector3(0,0,0);
-        //MoveCameraPosition(1);
     }
 
 
     private void Update()
     {
+        SmoothCameraMovement();
+    }
+
+    private void SmoothCameraMovement()
+    {
         if (transposer.m_TrackedObjectOffset != _targetOffset)
         {
-            Debug.Log("OnMove");
-            //transposer.m_TrackedObjectOffset = Vector2.SmoothDamp(
-            //    transposer.m_TrackedObjectOffset, _targetOffset, ref targetVelocity, smoothTime);
             _curentTime += Time.deltaTime;
             float t = _curve.Evaluate(_curentTime);
             Debug.Log(t);
@@ -47,6 +47,7 @@ public class TargetCameraController2 : MonoBehaviour
             _curentTime = 0;
         }
     }
+
     public void MoveCameraPosition(float mover, int amount)
     {
         _currentOffset = transposer.m_TrackedObjectOffset;
@@ -57,7 +58,6 @@ public class TargetCameraController2 : MonoBehaviour
         else if (mover < 0)
         {
             _targetOffset.x = -amount;
-
         }
     }
 }

@@ -4,7 +4,7 @@ public class PlayerClimbing : MonoBehaviour
 {
     [Header("isClimbing")]
 
-    [SerializeField] private float climbingSpeed = 4f;
+    [SerializeField] private float climbingSpeed = 5f;
     [SerializeField] private bool isClimbing;
     [SerializeField] private LayerMask checkLimitStair;
     [SerializeField] private CapsuleCollider2D _myCapsuleCollider;

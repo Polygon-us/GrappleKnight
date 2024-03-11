@@ -9,26 +9,26 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform _hookBegin;
     [SerializeField] private Transform _hookEnd;
     [SerializeField] private GameObject _rope;
-    [SerializeField] private float _hookMaxDistance = 10;
+    [SerializeField] private float _hookMaxDistance = 6;
     [SerializeField] private float _angleOfShut;
     [SerializeField] private Vector2 _swingSpeed = new Vector2(0.01f, 0.1f);
     [SerializeField] private LayerMask _hookMask;
-    [SerializeField] private float _shakeForceHook = 5;
+    [SerializeField] private float _shakeForceHook = 0.7f;
 
     [Header("Boomerang")]
     [SerializeField] private Transform _Boomerang;
-    [SerializeField] private float _boomerangMaxDistance = 4;
-    [SerializeField] private float _boomerangSpeed = 4f;
+    [SerializeField] private float _boomerangMaxDistance = 8;
+    [SerializeField] private float _boomerangSpeed = 2f;
     
     
     [Header("Movement")]
 
-    [SerializeField]private float _jumpHeight = 5f;
+    [SerializeField]private float _jumpHeight = 3f;
     [SerializeField]private float _raycastLength = 1.01f;
     [SerializeField]private LayerMask _checkFloorMask;
     [SerializeField, Range(0f, 100f)] public float _maxSpeed = 10f;
-    [SerializeField, Range(0f, 1000f)] public float _maxAcceleration = 35f;
-    [SerializeField, Range(0f, 100f)] private float _maxAirAcceleration = 20f;
+    [SerializeField, Range(0f, 1000f)] public float _maxAcceleration = 18f;
+    [SerializeField, Range(0f, 100f)] private float _maxAirAcceleration = 15f;
     public Vector2 _moveAxis;
 
     //[Header("Climbing")]

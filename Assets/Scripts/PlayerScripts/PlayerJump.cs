@@ -4,7 +4,7 @@ public class PlayerJump : MonoBehaviour
 {
     [Header("Jump")]
 
-    [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private float jumpForce = 7f;
     [SerializeField] private LayerMask checkFloorMask;
     private float raycastLength = 1.01f;
     private RaycastHit2D _checkFloor;
