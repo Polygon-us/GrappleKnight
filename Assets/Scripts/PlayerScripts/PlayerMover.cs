@@ -152,7 +152,7 @@ public class PlayerMover : MonoBehaviour, IMovable
     private bool OnGround()
     {
         _checkFloor = Physics2D.Raycast(_playerTransform.position, Vector2.down, _raycastLength, _checkFloorMask);
-        Debug.DrawRay(_playerTransform.position, -_playerTransform.up*_raycastLength, Color.red,10);
+        Debug.DrawRay(_playerTransform.position, -_playerTransform.up*_raycastLength, Color.red);
         if (_checkFloor.collider != null)
         {
 
