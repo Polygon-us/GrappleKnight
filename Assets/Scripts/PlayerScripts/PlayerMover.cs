@@ -104,7 +104,6 @@ public class PlayerMover : MonoBehaviour, IMovable
             _velocity = _myRigidbody.velocity;
 
             _acceleration = _onGround ? _maxAcceleration : _maxAirAcceleration;
-            Debug.Log($"_acceleration: {_acceleration}");
             
             _maxSpeedChange = _acceleration * Time.deltaTime;
             _velocity.x = Mathf.MoveTowards(_velocity.x, _desiredVelocity.x, _maxSpeedChange);

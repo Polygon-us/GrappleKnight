@@ -16,8 +16,8 @@ public class TargetCameraController2 : MonoBehaviour
     private Vector2 mediumVelocity = Vector2.zero;
 
     [SerializeField] private float _maxSpeed;
-    [SerializeField] private CinemachineFramingTransposer transposer;
     [SerializeField] private CinemachineVirtualCamera _myCamera;
+    private CinemachineFramingTransposer transposer;
 
     private bool _OnMove;
     private float _curentTime;
@@ -39,7 +39,6 @@ public class TargetCameraController2 : MonoBehaviour
         {
             _curentTime += Time.deltaTime;
             float t = _curve.Evaluate(_curentTime);
-            Debug.Log(t);
             transposer.m_TrackedObjectOffset = Vector3.Lerp(_currentOffset, _targetOffset, t);
         }
         else
