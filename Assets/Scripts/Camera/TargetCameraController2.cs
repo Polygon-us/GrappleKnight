@@ -39,7 +39,6 @@ public class TargetCameraController2 : MonoBehaviour
         {
             _curentTime += Time.deltaTime;
             float t = _curve.Evaluate(_curentTime);
-            Debug.Log(t);
             transposer.m_TrackedObjectOffset = Vector3.Lerp(_currentOffset, _targetOffset, t);
         }
         else
