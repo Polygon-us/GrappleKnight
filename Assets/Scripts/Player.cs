@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
 
     [SerializeField]private float _jumpHeight = 3f;
     [SerializeField]private float _raycastLength = 1.01f;
+  
     [SerializeField]private LayerMask _checkFloorMask;
     [SerializeField, Range(0f, 100f)] public float _maxSpeed = 10f;
     [SerializeField, Range(0f, 1000f)] public float _maxAcceleration = 18f;
@@ -62,6 +63,7 @@ public class Player : MonoBehaviour
         FillMovementManager();
         _playerMovementController.ChangeCurrentMovement(
             _playerMovementManager.GetMovable(PlayerMovementEnum.PlayerMovement));
+        _playerMovementController.FirstLastMovement();
         _playerMovementController.StarMovement();
 
     }

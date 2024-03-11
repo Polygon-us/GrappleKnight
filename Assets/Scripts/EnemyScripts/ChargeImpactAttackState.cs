@@ -51,6 +51,11 @@ public class ChargeImpactAttackState : IState
     {
         return CollisionEnter;
     }
+
+    public Action<Collider2D> ColliderAction()
+    {
+        return null;
+    }
     
     private void CollisionEnter(Collision2D other)
     {
@@ -58,10 +63,10 @@ public class ChargeImpactAttackState : IState
         {
             _lastCollision2D = other.transform;
             _rigidbody2D.velocity = new Vector2(0, 0);
-            if (other.transform.TryGetComponent<ILife>(out ILife life))
+            if (other.transform.TryGetComponent(out ILife life))
             {
-                float velocity = (1f / 1f) *_playerTransform.GetComponent<Rigidbody2D>().mass;
-                _playerTransform.GetComponent<Rigidbody2D>().AddForce(Vector2.right*_directionSing*velocity,ForceMode2D.Impulse);
+                other.rigidbody.velocity = new Vector2(0, other.rigidbody.velocity.y);
+                other.rigidbody.AddForce(Vector2.right*_directionSing*10,ForceMode2D.Impulse);
                 life.ReduceLife(1);
             }
             _directionSing = Mathf.Sign(_bossTransform.position.x - other.transform.position.x);
