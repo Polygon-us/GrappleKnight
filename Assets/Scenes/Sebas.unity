@@ -362,7 +362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ad980451443d70438faac0bc6c235a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TrackedObjectOffset: {x: 8, y: 0, z: 0}
+  m_TrackedObjectOffset: {x: 0, y: 0, z: 0}
   m_LookaheadTime: 1
   m_LookaheadSmoothing: 5
   m_LookaheadIgnoreY: 1
@@ -2132,7 +2132,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.0959916, y: -16.164864, z: -10}
+  m_LocalPosition: {x: -6.9039893, y: -16.177217, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2734,8 +2734,17 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.057787564
     - serializedVersion: 3
-      time: 1.0012817
-      value: 1
+      time: 0.29584157
+      value: 0.39855045
+      inSlope: 0.09526784
+      outSlope: 0.09526784
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.9433594
+      value: 0.7263756
       inSlope: 2.176089
       outSlope: 2.176089
       tangentMode: 0
@@ -7989,7 +7998,7 @@ Transform:
   m_GameObject: {fileID: 1166572076}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.0999999, y: -18.76, z: -10}
+  m_LocalPosition: {x: -6.9, y: -18.76, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11502,7 +11511,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: c23f2c1bb3edde649a633641707d4776, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -11596,13 +11605,13 @@ MonoBehaviour:
   _hookBegin: {fileID: 685029894}
   _hookEnd: {fileID: 445081096}
   _rope: {fileID: 991267974}
-  _hookMaxDistance: 10
+  _hookMaxDistance: 6
   _angleOfShut: 180
   _swingSpeed: {x: 0.25, y: 0.1}
   _hookMask:
     serializedVersion: 2
     m_Bits: 8
-  _shakeForceHook: 1
+  _shakeForceHook: 0.3
   _Boomerang: {fileID: 616470208}
   _boomerangMaxDistance: 8
   _boomerangSpeed: 2
@@ -11612,7 +11621,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 520
   _maxSpeed: 10
-  _maxAcceleration: 18
+  _maxAcceleration: 30
   _maxAirAcceleration: 15
   _moveAxis: {x: 0, y: 0}
   _maxLife: 10
