@@ -16,8 +16,8 @@ public class TargetCameraController2 : MonoBehaviour
     private Vector2 mediumVelocity = Vector2.zero;
 
     [SerializeField] private float _maxSpeed;
-    [SerializeField] private CinemachineFramingTransposer transposer;
     [SerializeField] private CinemachineVirtualCamera _myCamera;
+    private CinemachineFramingTransposer transposer;
 
     private bool _OnMove;
     private float _curentTime;
