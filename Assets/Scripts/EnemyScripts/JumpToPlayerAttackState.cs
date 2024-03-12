@@ -16,10 +16,13 @@ public class JumpToPlayerAttackState : IState
     private float _currentTime;
     private float _timeOfJump;
 
+    private int _percentDamage;
+    
     private bool _isAvailableHurtPlayer;
 
     private bool _isOnState;
-    public JumpToPlayerAttackState(Rigidbody2D rigidbody2D, float jumpHeight, Transform bossTransform ,Transform playerTransform)
+    public JumpToPlayerAttackState(Rigidbody2D rigidbody2D, float jumpHeight, Transform bossTransform ,
+        Transform playerTransform, int percenteDamage)
     {
         _rigidbody2D = rigidbody2D;
         _jumpHeight = jumpHeight;
@@ -28,6 +31,7 @@ public class JumpToPlayerAttackState : IState
         _bossCollider2D = _bossTransform.GetComponent<Collider2D>().bounds.extents.y;
         _playerCollider2D = _playerTransform.GetComponent<Collider2D>().bounds.extents.y;
         _playerCollider2D += _playerTransform.position.y;
+        _percentDamage = percenteDamage;
     }
 
     public void StartState()
@@ -87,7 +91,7 @@ public class JumpToPlayerAttackState : IState
                 {
                     if (item.TryGetComponent(out ILife life))
                     {
-                        life.ReduceLife(1);
+                        life.ReduceLife(_percentDamage);
                     }
                 }
                 _isAvailableHurtPlayer = false;

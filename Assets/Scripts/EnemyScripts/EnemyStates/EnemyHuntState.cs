@@ -23,10 +23,12 @@ public class EnemyHuntState : IState
 
     private Vector2 playerDirection;
 
-   
+    private int _percentDamage;
+    
     private bool _isOutOfRange;
     public EnemyHuntState(BoxCollider2D persecutorCollider, Rigidbody2D enemyRigidbody, Transform enemyTransform, 
-        Transform playerTransform, bool isHuntingMode,Transform pointA, Transform pointB, CollisionEvents collisionEvents)
+        Transform playerTransform, bool isHuntingMode,Transform pointA, Transform pointB, CollisionEvents collisionEvents,
+        int percentDamage)
     {
         _persecutorCollider = persecutorCollider;
         _enemyRigidbody = enemyRigidbody;
@@ -36,6 +38,7 @@ public class EnemyHuntState : IState
         _pointA = pointA;
         _pointB = pointB;
         _collisionEvents = collisionEvents;
+        _percentDamage = percentDamage;
     }
 
     private bool HuntPlayer()
@@ -98,6 +101,7 @@ public class EnemyHuntState : IState
             other.rigidbody.velocity = new Vector2(0, other.rigidbody.velocity.y);
             float directionSing = Mathf.Sign(other.transform.position.x - _enemyTransform.position.x);
             other.rigidbody.AddForce(Vector2.right*directionSing*10,ForceMode2D.Impulse);
+            other.transform.GetComponent<ILife>().ReduceLife(_percentDamage);
             
         }
     }

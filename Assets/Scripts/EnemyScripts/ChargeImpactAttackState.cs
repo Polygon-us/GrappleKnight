@@ -14,17 +14,20 @@ public class ChargeImpactAttackState : IState
     private int _chargeCount;
     private float _directionSing = 1;
 
+    private int _percentDamage;
+    
     private bool _isOnState = true;
 
     private Transform _lastCollision2D;
-    public ChargeImpactAttackState(Rigidbody2D rigidbody2D,Transform bossTransform ,Transform playerTransform,int chargeMaxNumber, float chargeVelocity)
+    public ChargeImpactAttackState(Rigidbody2D rigidbody2D,Transform bossTransform ,Transform playerTransform,
+        int chargeMaxNumber, float chargeVelocity, int percentDamage)
     {
         _rigidbody2D = rigidbody2D;
         _bossTransform = bossTransform;
         _playerTransform = playerTransform;
         _chargeMaxNumber = chargeMaxNumber;
         _chargeVelocity = chargeVelocity;
-
+        _percentDamage = percentDamage;
     }
 
     public void StartState()
@@ -67,7 +70,7 @@ public class ChargeImpactAttackState : IState
             {
                 other.rigidbody.velocity = new Vector2(0, other.rigidbody.velocity.y);
                 other.rigidbody.AddForce(Vector2.right*_directionSing*10,ForceMode2D.Impulse);
-                life.ReduceLife(1);
+                life.ReduceLife(_percentDamage);
             }
             _directionSing = Mathf.Sign(_bossTransform.position.x - other.transform.position.x);
             _chargeCount += 1;
