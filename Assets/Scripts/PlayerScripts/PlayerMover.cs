@@ -14,13 +14,13 @@ public class PlayerMover : MonoBehaviour, IMovable
     private float _maxAcceleration;
     private float _maxAirAcceleration;
     private float _maxSpeedChange, _acceleration;
-    public float mover;
+    private float mover;
     private Vector2 _direction;
     private Vector2 _desiredVelocity;
     private Vector2 _velocity;
     private Vector2 _moveAxis;
 
-    public bool _onGround;
+    private bool _onGround;
     
     private LayerMask _checkFloorMask;
     
@@ -38,6 +38,7 @@ public class PlayerMover : MonoBehaviour, IMovable
     private float _maxTimeLastJump = 0.2f;
     
     private InputAction _inputAxisMovement;
+    public PlayerClimbing _playerClimbing;
     
     public Action<InputAction> OnInputMoveChange;
 
@@ -62,7 +63,7 @@ public class PlayerMover : MonoBehaviour, IMovable
         _targetCameraController = targetCameraController;
         FillInputAction();
     }
-    
+   
     private void FillInputAction()
     {
         _inputActions.Add(PlayerInputEnum.Movement,HorizontalInput);
@@ -113,27 +114,28 @@ public class PlayerMover : MonoBehaviour, IMovable
         }
         else
         {
-            if (!_isStop)
+            //if (!_isStop)
+            //{
+            //    _isStop = true;
+            if (OnGround())
             {
-                _isStop = true;
-                if (OnGround())
-                {
-                    _onGround = true;
-                    _myRigidbody.velocity = new Vector2(0, _myRigidbody.velocity.y);
+                     _onGround = true;
+                _myRigidbody.velocity = new Vector2(0, _myRigidbody.velocity.y);
                 }
                 else
                 {
                     _onGround = false;
                 }
-            }
+            //}
         }
     }
 
     private void Jump(InputAction.CallbackContext callbackContext)
     {
-        if (OnGround())
+        if (OnGround() )
         {
-            _myRigidbody.AddForce(Vector2.up * _jumpSpeed, ForceMode2D.Impulse);
+            
+                _myRigidbody.AddForce(Vector2.up * _jumpSpeed, ForceMode2D.Impulse);
             return;
         }
         _currentLastJump = 0;
@@ -141,9 +143,10 @@ public class PlayerMover : MonoBehaviour, IMovable
     private void Jump()
     {
         _currentLastJump += Time.deltaTime;
+
         if (OnGround() && _currentLastJump <= _maxTimeLastJump )
         {
-            _myRigidbody.velocity = new Vector2(_myRigidbody.velocity.x, 0);
+                _myRigidbody.velocity = new Vector2(_myRigidbody.velocity.x, 0);
             _myRigidbody.AddForce(Vector2.up * _jumpSpeed, ForceMode2D.Impulse);
         }
         

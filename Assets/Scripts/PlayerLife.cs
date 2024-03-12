@@ -1,19 +1,24 @@
 ﻿using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerLife : MonoBehaviour , ILife
 {
     private int _currentLife;
-    
+    [SerializeField] private Slider _slider;
+
     public void Configure(int maxlife)
     {
         _currentLife = maxlife;
-       
+       _slider.maxValue = _currentLife;
     }
     
     public void ReduceLife(int amount)
     {
         _currentLife -= amount;
+        _slider.value = _currentLife;
         if (_currentLife<=0)
         {
             Deactivate();
@@ -21,6 +26,10 @@ public class PlayerLife : MonoBehaviour , ILife
         else
         {
             StartCoroutine(CInvulnerability());
+        }
+        if (_currentLife <= 0) 
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
         //Debug.Log(_currentLife);
     }

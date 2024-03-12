@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Stair
   - Boomerang
+  - StairStop
   layers:
   - Default
   - TransparentFX

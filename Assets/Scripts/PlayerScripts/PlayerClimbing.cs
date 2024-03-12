@@ -5,7 +5,7 @@ public class PlayerClimbing : MonoBehaviour
     [Header("isClimbing")]
 
     [SerializeField] private float climbingSpeed = 5f;
-    [SerializeField] private bool isClimbing;
+     public bool isClimbing = false;
     [SerializeField] private LayerMask checkLimitStair;
     [SerializeField] private CapsuleCollider2D _myCapsuleCollider;
     [SerializeField] private PlatformEffector2D _platformEffector;
@@ -40,14 +40,14 @@ public class PlayerClimbing : MonoBehaviour
     private void VerticalMovement()
     {
         verticalMovement.y = Input.GetAxis("Vertical");
-        if ((_myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Stair"))))
+        if ((verticalMovement.y != 0 && _myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Stair"))))
         {
             transform.Translate(climbingSpeed * Time.fixedDeltaTime * Vector2.up * verticalMovement);
         }
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Stair"))
+        if (other.CompareTag("Stair") || other.CompareTag("StairStop"))
         {
             _platformEffector = other.transform.Find("StairTop").GetComponent<PlatformEffector2D>();
             _boxColliderStairStop = other.transform.Find("StairTop").GetComponent<BoxCollider2D>();
@@ -59,7 +59,6 @@ public class PlayerClimbing : MonoBehaviour
         {
             _myrygidbody.gravityScale = 0;
             isClimbing = true;
-            Debug.Log("cero gravedad");
         }
         else
         {
@@ -68,9 +67,12 @@ public class PlayerClimbing : MonoBehaviour
         }
         if ((verticalMovement.y < 0) && (_myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("StairStop"))))
         {
+            _myrygidbody.gravityScale = 0;
+            isClimbing = true;
             _boxColliderStairStop.enabled = false;
         }
-        else if ((_myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Floor"))))
+       
+        if ((_myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Floor"))))
         {
             _platformEffector.enabled = true;
             _boxColliderStairStop.enabled = true;
