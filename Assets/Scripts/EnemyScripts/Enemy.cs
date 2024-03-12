@@ -14,6 +14,9 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private BoxCollider2D _persecutorCollider;
 
+    [Header("Damage")] 
+    [SerializeField] [Range(1, 100)] private int _percentDamage;
+
     private bool _isHuntingMode;
 
     private EnemyLife _enemyLife;
@@ -41,7 +44,7 @@ public class Enemy : MonoBehaviour
         _enemyStateManager.FillStatesContainer(EnemyStateEnum.Patrol, new EnemyPatrolState(_pointA,_pointB,_rigidbody,
             transform,_collisionEvents));
         _enemyStateManager.FillStatesContainer(EnemyStateEnum.Hunt, new EnemyHuntState( _persecutorCollider, _rigidbody,
-            transform,  playerTransform,  _isHuntingMode,_pointA,_pointB,_collisionEvents));
+            transform,  playerTransform,  _isHuntingMode,_pointA,_pointB,_collisionEvents,_percentDamage));
         _enemyStateManager.FillStatesContainer(EnemyStateEnum.Idle, new EnemyIdleState(1,EnemyStateEnum.Patrol));
     }
     private void InitialState()

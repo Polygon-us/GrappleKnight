@@ -1,19 +1,23 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerLife : MonoBehaviour , ILife
 {
     private int _currentLife;
+    private int _maxLife;
     
     public void Configure(int maxlife)
     {
+        _maxLife = maxlife;
         _currentLife = maxlife;
-       
     }
     
     public void ReduceLife(int amount)
     {
+        amount = amount * _maxLife / 100;
         _currentLife -= amount;
+        
         if (_currentLife<=0)
         {
             Deactivate();
