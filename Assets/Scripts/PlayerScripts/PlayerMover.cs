@@ -117,10 +117,10 @@ public class PlayerMover : MonoBehaviour, IMovable
             //if (!_isStop)
             //{
             //    _isStop = true;
-            if (OnGround())
-            {
+                if (OnGround())
+                {
                      _onGround = true;
-                _myRigidbody.velocity = new Vector2(0, _myRigidbody.velocity.y);
+                    _myRigidbody.velocity = new Vector2(0, _myRigidbody.velocity.y);
                 }
                 else
                 {
