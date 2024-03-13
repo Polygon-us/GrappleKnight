@@ -105,9 +105,11 @@ public class PlayerMover : MonoBehaviour, IMovable
             _velocity = _myRigidbody.velocity;
 
             _acceleration = _onGround ? _maxAcceleration : _maxAirAcceleration;
-            
+
+
             _maxSpeedChange = _acceleration * Time.deltaTime;
             _velocity.x = Mathf.MoveTowards(_velocity.x, _desiredVelocity.x, _maxSpeedChange);
+            
 
             _myRigidbody.velocity = _velocity;
             _isStop = false;
@@ -116,11 +118,11 @@ public class PlayerMover : MonoBehaviour, IMovable
         {
             //if (!_isStop)
             //{
-            //    _isStop = true;
                 if (OnGround())
                 {
                      _onGround = true;
-                    _myRigidbody.velocity = new Vector2(0, _myRigidbody.velocity.y);
+                    _myRigidbody.velocity = new Vector2(_myRigidbody.velocity.x, _myRigidbody.velocity.y);
+                    //_isStop = true;
                 }
                 else
                 {

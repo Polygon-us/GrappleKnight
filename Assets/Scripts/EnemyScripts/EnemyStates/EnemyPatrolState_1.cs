@@ -31,7 +31,7 @@ public class EnemyPatrolState : IState
         this.pointB = pointB;
         _enemyRigidbody = enemyRigidbody;
         _transform = transform;
-        //SetTargetPoint(pointB);
+        SetTargetPoint(pointB);
         _collisionEvents = collisionEvents;
     }
 
