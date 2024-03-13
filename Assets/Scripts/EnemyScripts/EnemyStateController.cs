@@ -107,6 +107,10 @@ public class EnemyStateController : MonoBehaviour
     {
         _isOnState = false;
     }
-    
+
+    public void PushEnemy()
+    {
+        ChangeCurrentState(EnemyStateEnum.Idle);
+    }
     
 }

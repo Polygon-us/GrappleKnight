@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class ObjectBoomerang : MonoBehaviour
@@ -21,6 +22,10 @@ public class ObjectBoomerang : MonoBehaviour
         }
         if (other.TryGetComponent(out Enemy enemy))
         {
+            other.GetComponent<EnemyStateController>().PushEnemy();
+            float direction = Mathf.Sign(other.transform.position.x - transform.position.x);
+            StartCoroutine(CPush(other.GetComponent<Rigidbody2D>(),direction));
+            other.GetComponent<Rigidbody2D>().AddForce(Vector2.right*direction*10,ForceMode2D.Impulse);
             enemy.ReduceEnemyLife(10);
         }
         if (other.TryGetComponent(out Boss boss))
@@ -32,5 +37,11 @@ public class ObjectBoomerang : MonoBehaviour
     public void UnsubscribeAction()
     {
         _senderAction -= _receiverAction;
+    }
+
+    IEnumerator CPush(Rigidbody2D rigidbody2D, float direction)
+    {
+        yield return new WaitForSeconds(0.2f);
+        rigidbody2D.AddForce(Vector2.right*direction*10,ForceMode2D.Impulse);
     }
 }

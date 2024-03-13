@@ -23,7 +23,7 @@ public class EnemyLife
             return true;
         }
         
-        Debug.Log(_currentLife);
+        //Debug.Log(_currentLife);
         return false;
     }
     
