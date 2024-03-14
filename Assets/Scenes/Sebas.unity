@@ -1174,7 +1174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ec0aba04411513498d4069e717e1644, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  message: Press right click to swing
+  message: Press left click to swing
 --- !u!61 &132848779
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1207,7 +1207,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.52, y: 0.7042661}
+  m_Offset: {x: 7.3661213, y: 1.2410107}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1218,7 +1218,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 8.07, y: 4.9}
+  m_Size: {x: 19.762241, y: 14.1425495}
   m_EdgeRadius: 0
 --- !u!4 &132848780
 Transform:
@@ -1905,7 +1905,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.52, y: 0.7042661}
+  m_Offset: {x: 4.445405, y: 0.7042661}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1916,7 +1916,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 8.07, y: 4.9}
+  m_Size: {x: 13.920809, y: 4.9}
   m_EdgeRadius: 0
 --- !u!4 &310382813
 Transform:
@@ -3548,7 +3548,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -25.881445, y: 17.71016, z: -10}
+  m_LocalPosition: {x: -39.671432, y: -20.235075, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -48789,7 +48789,7 @@ Transform:
   m_GameObject: {fileID: 1166572076}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -7.94001, y: -0.004764557, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -50371,9 +50371,9 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 38.522243, y: 86.75897}
-      - {x: -53.27194, y: 86.80216}
-      - {x: -53.572422, y: -26.936752}
+    - - {x: 36.840683, y: 88.628365}
+      - {x: -53.23877, y: 88.609924}
+      - {x: -53.16897, y: -27.52359}
       - {x: 36.8116, y: -27.344053}
   m_UseDelaunayMesh: 0
 --- !u!1 &1289598704
@@ -55381,7 +55381,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: b9b2f4578d740744c8ca2d29ed69dfd2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -55422,7 +55422,7 @@ Transform:
   m_GameObject: {fileID: 2043213916}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -27.8, y: 15.9, z: 0}
+  m_LocalPosition: {x: -49.53, y: -22.05, z: 0}
   m_LocalScale: {x: 0.7482, y: 0.75, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -55446,7 +55446,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: c23f2c1bb3edde649a633641707d4776, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
