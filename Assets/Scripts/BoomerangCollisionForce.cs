@@ -44,7 +44,7 @@ public class BoomerangCollisionForce : MonoBehaviour
     private IEnumerator DamageIndicator()
     {
         _damageColor.color = Color.white;
-        yield return new  WaitForSeconds(0.01f);
+        yield return new  WaitForSeconds(0.03f);
         _damageColor.color = Color.red;
     } 
 }
