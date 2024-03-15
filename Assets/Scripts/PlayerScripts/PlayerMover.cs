@@ -154,16 +154,22 @@ public class PlayerMover : MonoBehaviour, IMovable
         
     }
     private bool OnGround()
-    {
-        _checkFloor = Physics2D.Raycast(_playerTransform.position, Vector2.down, _raycastLength, _checkFloorMask);
-        Debug.DrawRay(_playerTransform.position, -_playerTransform.up*_raycastLength, Color.red);
-        if (_checkFloor.collider != null)
+    {   
+        if (_myRigidbody.IsTouchingLayers(LayerMask.GetMask("Floor")))
         {
-
             return true;
         }
-
         return false;
+
+        //_checkFloor = Physics2D.Raycast(_playerTransform.position, Vector2.down, _raycastLength, _checkFloorMask);
+        //Debug.DrawRay(_playerTransform.position, -_playerTransform.up*_raycastLength, Color.red);
+        //if (_checkFloor.collider != null)
+        //{
+
+        //    return true;
+        //}
+
+        //return false;
     }
     
     private void HorizontalInput(InputAction.CallbackContext callbackContext)

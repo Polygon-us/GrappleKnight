@@ -18,7 +18,7 @@ public class ShowText : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") || collision.IsTouchingLayers(LayerMask.GetMask("Player")))
         {
             OnCollision?.Invoke(message);
         }

@@ -7,7 +7,7 @@ public class PlayerClimbing : MonoBehaviour
     [SerializeField] private float climbingSpeed = 5f;
      public bool isClimbing = false;
     [SerializeField] private LayerMask checkLimitStair;
-    [SerializeField] private BoxCollider2D _myCollider;
+    [SerializeField] private CapsuleCollider2D _myCollider;
     [SerializeField] private PlatformEffector2D _platformEffector;
 
 
@@ -24,7 +24,7 @@ public class PlayerClimbing : MonoBehaviour
     {
         _myrygidbody = GetComponent<Rigidbody2D>();
         _myTransform = GetComponent<Transform>();
-        _myCollider = GetComponent<BoxCollider2D>();
+        _myCollider = GetComponent<CapsuleCollider2D>();
         _inicialGravity = _myrygidbody.gravityScale;
     }
     private void FixedUpdate()
