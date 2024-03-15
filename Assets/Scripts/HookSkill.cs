@@ -81,7 +81,7 @@ public class HookSkill : ISkill
                 else
                 {
                     _rope.SetActive(true);
-                    _outPoint = newPosition;
+                    _outPoint = createPosition.normalized*_hookMaxDistance+_hookBegin.position;
                 }
                 
             }
