@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 3243469495412686911}
   - component: {fileID: 5684666071558915170}
   - component: {fileID: 5780500968002021185}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -56,6 +56,7 @@ MonoBehaviour:
   playerTransform: {fileID: 0}
   _rigidbody: {fileID: 5780500968002021185}
   _persecutorCollider: {fileID: 4594710864811455308}
+  _percentDamage: 0
 --- !u!212 &5447547800480019670
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -191,9 +192,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4909540472532686978}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: HuntingEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -226,7 +227,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4798955260722152095}
   - component: {fileID: 8067933923731106854}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -309,7 +310,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8184959442703095570}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PointB
   m_TagString: Untagged
   m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
@@ -342,7 +343,7 @@ GameObject:
   - component: {fileID: 4382516415363299605}
   - component: {fileID: 2802349135888089497}
   - component: {fileID: 4594710864811455308}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Persecutor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -448,7 +449,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0065843463, y: 0.25114208}
+  m_Offset: {x: 0.0065843463, y: 0.18318819}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -459,7 +460,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.8120745, y: 0.1483013}
+  m_Size: {x: 1.8120745, y: 0.012393504}
   m_EdgeRadius: 0
 --- !u!1 &8509754266838172551
 GameObject:
@@ -470,7 +471,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2107387495086377007}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PointA
   m_TagString: Untagged
   m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}

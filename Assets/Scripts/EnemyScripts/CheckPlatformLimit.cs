@@ -14,11 +14,7 @@ public class VerifyPlataform : MonoBehaviour
     [Header("References")]
 
     [SerializeField] private Transform _targetToPlatform;
-    [SerializeField] private Transform _myTransform;
-    void Start()
-    {
-        _myTransform = GetComponent<Transform>();
-    }
+   
     private void FixedUpdate()
     {
         DetecPlatform();
@@ -37,14 +33,15 @@ public class VerifyPlataform : MonoBehaviour
     public void IfNotDetectPlatform() 
     {
         if (!_platformDetector)
-        {   
+        {
+            
             RotateDireccion();
         }
     }
 
     public void RotateDireccion () 
     {
-        _myTransform.eulerAngles = new Vector3(0, transform.eulerAngles.y + 180, 0);
+        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + 180, 0);
     }
 
 }

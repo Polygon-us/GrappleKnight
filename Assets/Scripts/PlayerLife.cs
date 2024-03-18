@@ -37,7 +37,7 @@ public class PlayerLife : MonoBehaviour , ILife
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
-        //Debug.Log(_currentLife);
+        Debug.Log(_currentLife);
     }
     
     public void Activate()

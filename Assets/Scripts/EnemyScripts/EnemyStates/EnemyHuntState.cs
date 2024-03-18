@@ -20,6 +20,7 @@ public class EnemyHuntState : IState
     private bool _isOnCollision = false;
     
     private float _walkSpeed = 5f;
+    private float _walkSpeedHunting = 7f;
 
     private Vector2 playerDirection;
 
@@ -51,7 +52,7 @@ public class EnemyHuntState : IState
 
                 Vector2 moveDirection = new Vector2(playerDirection.x, 0f).normalized;
 
-                _enemyRigidbody.velocity = moveDirection * _walkSpeed;
+                _enemyRigidbody.velocity = moveDirection * _walkSpeedHunting;
                 return false;
             }
         }
@@ -100,7 +101,7 @@ public class EnemyHuntState : IState
             _walkSpeed = 0;
             other.rigidbody.velocity = new Vector2(0, other.rigidbody.velocity.y);
             float directionSing = Mathf.Sign(other.transform.position.x - _enemyTransform.position.x);
-            other.rigidbody.AddForce(Vector2.right*directionSing*10,ForceMode2D.Impulse);
+            other.rigidbody.AddForce(Vector2.right*directionSing*5,ForceMode2D.Impulse);
             other.transform.GetComponent<ILife>().ReduceLife(_percentDamage);
             
         }

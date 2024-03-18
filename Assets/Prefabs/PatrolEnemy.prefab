@@ -167,12 +167,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c2818bc106daf5468dd2d338cea9e69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxLife: 10
+  _maxLife: 50
   _pointA: {fileID: 5308732142845542220}
   _pointB: {fileID: 230684981612751409}
   playerTransform: {fileID: 0}
   _rigidbody: {fileID: 6911676106697885427}
   _persecutorCollider: {fileID: 0}
+  _percentDamage: 0
 --- !u!212 &3482127850916626536
 SpriteRenderer:
   m_ObjectHideFlags: 0

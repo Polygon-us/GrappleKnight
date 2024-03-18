@@ -7,6 +7,8 @@ TagManager:
   - Stair
   - Boomerang
   - StairStop
+  - Enemy
+  - Spikes
   layers:
   - Default
   - TransparentFX
@@ -14,13 +16,13 @@ TagManager:
   - Floor
   - Water
   - UI
-  - 
+  - Spikes
   - 
   - Hook
   - StairStop
   - Stair
   - Player
-  - 
+  - Enemy
   - 
   - Invulnerability
   - Boss
