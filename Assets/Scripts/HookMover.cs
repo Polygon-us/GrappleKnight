@@ -20,12 +20,14 @@ public class HookMover : IMovable
     private Dictionary<PlayerInputEnum, Action<InputAction.CallbackContext>> _inputActions = 
         new Dictionary<PlayerInputEnum, Action<InputAction.CallbackContext>>();
     private float last;
+    private float _hookMaxDistance;
 
-    public HookMover(Rigidbody2D rigidbody2D, SpringJoint2D springJoint2D, Vector2 swingSpeed, TargetCameraController2 targetCameraController)
+    public HookMover(Rigidbody2D rigidbody2D, SpringJoint2D springJoint2D, Vector2 swingSpeed, float hookMaxDistance, TargetCameraController2 targetCameraController)
     {
         _rigidbody2D = rigidbody2D;
         _springJoint2D = springJoint2D;
         _swingSpeed = swingSpeed;
+        _hookMaxDistance = hookMaxDistance;
         _targetCameraController = targetCameraController;
         FillInputAction();
     }
@@ -47,7 +49,7 @@ public class HookMover : IMovable
             _targetCameraController.MoveCameraPosition(last, 4);
         }
         _rigidbody2D.AddForce(new Vector2(_direction.x,0)*_swingSpeed.x,ForceMode2D.Impulse);
-        if (_springJoint2D.distance<10)
+        if (_springJoint2D.distance<_hookMaxDistance)
         {
             _springJoint2D.distance += -1*_direction.y * _swingSpeed.y;
         }

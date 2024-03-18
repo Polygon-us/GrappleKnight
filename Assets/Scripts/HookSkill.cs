@@ -75,7 +75,8 @@ public class HookSkill : ISkill
                     _rope.SetActive(true);
                     _springJoint2D.enabled = true;
                     _hookEnd.position = hit.point;
-                    _springJoint2D.distance = Vector3.Distance(_hookBegin.position,_hookEnd.position);
+                    Vector3 beginPosition = Vector3.Lerp(_hookBegin.position, _hookEnd.position, 0.1f);
+                    _springJoint2D.distance = Vector3.Distance(beginPosition,_hookEnd.position);
                     _onHook = true;
                 }
                 else

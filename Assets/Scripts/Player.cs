@@ -54,6 +54,7 @@ public class Player : MonoBehaviour
 
     private TargetCameraController2 _targetCameraController;
 
+    private ScopeMover _scopeMover;
     private void Awake()
     {
         //ChangeSkill();
@@ -80,6 +81,8 @@ public class Player : MonoBehaviour
         _springJoint2D = GetComponent<SpringJoint2D>();
         _playerLife = GetComponent<ILife>();
         _playerLife.Configure(_maxLife);
+        _scopeMover = GetComponentInChildren<ScopeMover>();
+        _scopeMover.Configure(_hookBegin,_hookMaxDistance);
     }
 
     private void FillSkillManager()
@@ -91,7 +94,7 @@ public class Player : MonoBehaviour
     }
      private void FillMovementManager()
      {
-         IMovable currentMovable = new HookMover(_rigidbody2D, _springJoint2D, _swingSpeed,_targetCameraController);
+         IMovable currentMovable = new HookMover(_rigidbody2D, _springJoint2D, _swingSpeed,_hookMaxDistance,_targetCameraController);
         _playerMovementManager.AddMovable(PlayerMovementEnum.HookMovement,currentMovable);
         _inputManager.SubscribePerformedAction(PlayerInputEnum.Movement,
             currentMovable.GetAction(PlayerInputEnum.Movement));
