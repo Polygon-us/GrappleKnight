@@ -33,7 +33,8 @@ public class VerifyPlataform : MonoBehaviour
     public void IfNotDetectPlatform() 
     {
         if (!_platformDetector)
-        {   
+        {
+            
             RotateDireccion();
         }
     }

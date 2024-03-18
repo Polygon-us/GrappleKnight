@@ -47,6 +47,7 @@ public class EnemyPatrolState : IState
         {
             if (_transform.position.x > pointA.position.x && _transform.position.x < pointB.position.x)
             {
+
                 enemyStateEnum = EnemyStateEnum.Hunt;
                 return false;
             }
@@ -55,12 +56,14 @@ public class EnemyPatrolState : IState
         {
             SetTargetPoint((targetPoint == pointA) ? pointB : pointA);
             isWaiting = true;
+           
         }
         if (MoveToTargetPoint())
         {
             isWaiting = false;
             enemyStateEnum = EnemyStateEnum.Idle;
             return false;
+          
         }
         enemyStateEnum = EnemyStateEnum.Idle;
         return true;
@@ -80,23 +83,44 @@ public class EnemyPatrolState : IState
     {
         if (other.CompareTag("Player") && (_transform.position.x > pointA.position.x && _transform.position.x < pointB.position.x))
         {
-            _isPlayerDetected = true;
+            if (other.transform.position.x < _transform.position.x) 
+            {
+                _transform.rotation = Quaternion.Euler(0, 180, 0);
+            }
+            else
+            {
+                _transform.rotation = Quaternion.Euler(0, 0, 0);
+            }
+            if ((_transform.position.x > pointA.position.x && _transform.position.x < pointB.position.x))
+            {
+                _isPlayerDetected = true;
+
+            }
         }
     } 
  
     void SetTargetPoint(Transform newTargetPoint)
     {
         targetPoint = newTargetPoint;
+        if (targetPoint == pointA)
+        {
+            _transform.rotation = Quaternion.Euler(0,180,0);
+        }
+        else if (targetPoint == pointB)
+        {
+            _transform.rotation = Quaternion.Euler(0,0,0);
+        }
     }
 
     bool MoveToTargetPoint()
     {
         if (!_isPlayerDetected)
         {
+            
             Vector2 moveDirection = (targetPoint.position - _transform.position).normalized;
 
             float distanceToTarget = Vector2.Distance(_transform.position, targetPoint.position);
-
+            //Debug.Log($"DIstanceToTarget: {distanceToTarget}");
             float currentSpeed = (distanceToTarget > slowdownDistance) ? walkHorizontalSpeed :
                 Mathf.Lerp(0, walkHorizontalSpeed, distanceToTarget / slowdownDistance);
             _enemyRigidbody.velocity = moveDirection * currentSpeed;

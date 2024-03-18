@@ -20,6 +20,7 @@ public class EnemyHuntState : IState
     private bool _isOnCollision = false;
     
     private float _walkSpeed = 5f;
+    private float _walkSpeedHunting = 7f;
 
     private Vector2 playerDirection;
 
@@ -51,7 +52,7 @@ public class EnemyHuntState : IState
 
                 Vector2 moveDirection = new Vector2(playerDirection.x, 0f).normalized;
 
-                _enemyRigidbody.velocity = moveDirection * _walkSpeed *2;
+                _enemyRigidbody.velocity = moveDirection * _walkSpeedHunting;
                 return false;
             }
         }
