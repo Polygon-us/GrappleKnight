@@ -27,21 +27,27 @@ public class ScopeMover : MonoBehaviour
         _hookMaxDistance = hookMaxDistance;
         transform.parent = null;
         
-        Debug.DrawRay(_hookBegin.position,Vector3.right*_hookMaxDistance,Color.red,60);
-        Debug.DrawRay(_hookBegin.position, Vector3.left * _hookMaxDistance, Color.red, 60);
-        Debug.DrawRay(_hookBegin.position, Vector3.up * _hookMaxDistance, Color.red, 60);
-        Debug.DrawRay(_hookBegin.position, Vector3.down * _hookMaxDistance, Color.red, 60);
+        // Debug.DrawRay(_hookBegin.position,Vector3.right*_hookMaxDistance,Color.red,60);
+        // Debug.DrawRay(_hookBegin.position, Vector3.left * _hookMaxDistance, Color.red, 60);
+        // Debug.DrawRay(_hookBegin.position, Vector3.up * _hookMaxDistance, Color.red, 60);
+        // Debug.DrawRay(_hookBegin.position, Vector3.down * _hookMaxDistance, Color.red, 60);
     }
     private void Update()
     {
         newPosition = _mousePosition.position.ReadValue();
         newPosition = _mainCamera.ScreenToWorldPoint(newPosition);
         newPosition.z = 0;
-
-        
         _createPosition = newPosition - _hookBegin.position;
-        
-        _outPoint = _createPosition.normalized*_hookMaxDistance +_hookBegin.position;
+        float distance = (_hookBegin.position.x-newPosition.x) * (_hookBegin.position.x-newPosition.x) +
+                         (_hookBegin.position.y-newPosition.y) * (_hookBegin.position.y-newPosition.y);
+        if (distance<=_hookMaxDistance*_hookMaxDistance)
+        {
+            _outPoint = newPosition;
+        }
+        else
+        {
+            _outPoint = _createPosition.normalized*_hookMaxDistance +_hookBegin.position;
+        }
         transform.position = _outPoint;
     }
 }
