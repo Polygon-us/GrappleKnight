@@ -13,4 +13,6 @@ public class Door : MonoBehaviour
     {
         _animator.SetTrigger("OpenDoor");
     }
+
+
 }

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4271675254705716991}
   - component: {fileID: 5551533094642290642}
+  - component: {fileID: 4115738874830326483}
   - component: {fileID: 5447547800480019670}
   - component: {fileID: 3243469495412686911}
   - component: {fileID: 5684666071558915170}
@@ -57,6 +58,21 @@ MonoBehaviour:
   _rigidbody: {fileID: 5780500968002021185}
   _persecutorCollider: {fileID: 4594710864811455308}
   _percentDamage: 0
+--- !u!114 &4115738874830326483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232163250241807239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11774e5bc61409c44be1442db65a40aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _floorMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!212 &5447547800480019670
 SpriteRenderer:
   m_ObjectHideFlags: 0

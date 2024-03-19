@@ -7,9 +7,9 @@ public class BoomerangCollisionForce : MonoBehaviour
 {
     [SerializeField]private float _knockback = 1f;
 
-    [SerializeField] private Rigidbody2D _enemyRigidbody;
+    private Rigidbody2D _enemyRigidbody;
 
-    [SerializeField] private SpriteRenderer _damageColor;
+    private SpriteRenderer _damageColor;
 
     private Vector3 _diagonalForce;
 
@@ -28,23 +28,20 @@ public class BoomerangCollisionForce : MonoBehaviour
         
         if (collision.gameObject.CompareTag("Enemy"))
         {
+           _enemyRigidbody = collision.transform.GetComponent<Rigidbody2D>();
             _damageColor = collision.transform.GetComponent<SpriteRenderer>();
-            _diagonalForce = new Vector3(-1f, 1f, 0f).normalized * _knockback;
-            _enemyRigidbody.AddForce(_diagonalForce, ForceMode2D.Impulse);
+            collision.transform.GetComponent<EnemyStateController>().ChangeCurrentState(EnemyStateEnum.Idle);
             StartCoroutine(DamageIndicator());
         }
     }
-    private void OnCollisionExit2D()
-    {
-
-        StopCoroutine(DamageIndicator());
-    }
-    
+   
 
     private IEnumerator DamageIndicator()
     {
         _damageColor.color = Color.white;
         yield return new  WaitForSeconds(0.03f);
+        _diagonalForce = new Vector3(-1f, 1f, 0f).normalized * _knockback;
+        _enemyRigidbody.AddForce(_diagonalForce, ForceMode2D.Impulse);
         _damageColor.color = Color.red;
     } 
 }

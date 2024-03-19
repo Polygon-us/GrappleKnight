@@ -8,13 +8,19 @@ public class VerifyPlataform : MonoBehaviour
     [Header("Raycast")]
 
     [SerializeField] private RaycastHit2D _platformDetector;
-    [SerializeField] private float _raycastLegth;
     [SerializeField] private LayerMask _floorMask;
-
+    private float _time;
+    private float _raycastLength = 1.02f;
+    private Vector3 _inicialPosition;
     [Header("References")]
 
-    [SerializeField] private Transform _targetToPlatform;
-   
+     private Transform _enemy;
+
+    private void Start()
+    {
+            _enemy = transform;
+            _inicialPosition = transform.position;
+    }
     private void FixedUpdate()
     {
         DetecPlatform();
@@ -22,26 +28,30 @@ public class VerifyPlataform : MonoBehaviour
     void Update()
     {
         IfNotDetectPlatform();
-
     }
 
     public void DetecPlatform()
     {
-        _platformDetector = Physics2D.Raycast(_targetToPlatform.position, Vector2.down, _raycastLegth, _floorMask);
-        Debug.DrawRay(_targetToPlatform.position, _targetToPlatform.TransformDirection(Vector3.down * _raycastLegth), Color.red);
+        _platformDetector = Physics2D.Raycast(_enemy.position, Vector2.down, _raycastLength, _floorMask);
+        Debug.DrawRay(_enemy.position, Vector2.down * _raycastLength, Color.blue);
     }
     public void IfNotDetectPlatform() 
     {
         if (!_platformDetector)
         {
             
-            RotateDireccion();
+            InitTimeToRespawn();
         }
     }
 
-    public void RotateDireccion () 
+    public void InitTimeToRespawn () 
     {
-        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + 180, 0);
+        _time += Time.deltaTime;
+
+        if (_time > 5f)
+        {
+            _enemy.position = _inicialPosition;
+        }
     }
 
 }

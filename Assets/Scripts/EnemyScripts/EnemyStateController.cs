@@ -103,6 +103,7 @@ public class EnemyStateController : MonoBehaviour
         _collisionEvents.TriggerExitDispatch(other);
     }
 
+    
     public void StopStates()
     {
         _isOnState = false;
