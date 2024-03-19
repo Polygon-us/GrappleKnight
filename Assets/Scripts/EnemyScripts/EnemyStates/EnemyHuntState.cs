@@ -1,13 +1,15 @@
 using System;
 using UnityEngine;
-
+using System.Collections;
+using System.Collections.Generic;
 public class EnemyHuntState : IState
 {
-
     private CollisionEvents _collisionEvents;
     
     private Transform _enemyTransform;
     private Transform _playerTransform;
+
+    private SpriteRenderer _damageColor;
 
     private Rigidbody2D _enemyRigidbody;
 
@@ -19,9 +21,11 @@ public class EnemyHuntState : IState
     private bool _isHuntingMode;
     private bool _isOnCollision = false;
     
+    [SerializeField] private float _knockback = 10f;
     private float _walkSpeed = 5f;
     private float _walkSpeedHunting = 7f;
 
+    private Vector3 _diagonalForce;
     private Vector2 playerDirection;
 
     private int _percentDamage;
@@ -55,10 +59,10 @@ public class EnemyHuntState : IState
                 _enemyRigidbody.velocity = moveDirection * _walkSpeedHunting;
                 return false;
             }
-        }
-        else if(!_isOutOfRange)
-        {
-            return false;
+           else if(!_isOutOfRange)
+            {
+                return false;
+            }
         }
         return true;
     }
@@ -101,12 +105,14 @@ public class EnemyHuntState : IState
             _walkSpeed = 0;
             other.rigidbody.velocity = new Vector2(0, other.rigidbody.velocity.y);
             float directionSing = Mathf.Sign(other.transform.position.x - _enemyTransform.position.x);
-            other.rigidbody.AddForce(Vector2.right*directionSing*5,ForceMode2D.Impulse);
+            Vector3 _diagonalForce = new Vector3(1f * directionSing, 1f, 0f).normalized * _knockback;
+            other.rigidbody.AddForce(_diagonalForce,ForceMode2D.Impulse);
             other.transform.GetComponent<ILife>().ReduceLife(_percentDamage);
-            
         }
     }
-    public Action<Collision2D> CollisionAction()
+    
+
+public Action<Collision2D> CollisionAction()
     {
         return CollisionEnter;
     }

@@ -9,9 +9,13 @@ public class VerifyPlataform : MonoBehaviour
 
     [SerializeField] private RaycastHit2D _platformDetector;
     [SerializeField] private LayerMask _floorMask;
+
+    private EnemyStateEnum enemyStateEnum;
+
     private float _time;
     private float _raycastLength = 1.02f;
     private Vector3 _inicialPosition;
+
     [Header("References")]
 
      private Transform _enemy;
@@ -39,8 +43,8 @@ public class VerifyPlataform : MonoBehaviour
     {
         if (!_platformDetector)
         {
-            
             InitTimeToRespawn();
+            enemyStateEnum = EnemyStateEnum.Patrol;
         }
     }
 
@@ -48,10 +52,12 @@ public class VerifyPlataform : MonoBehaviour
     {
         _time += Time.deltaTime;
 
-        if (_time > 5f)
+        if (_time > 3f)
         {
+            _time = 0;
             _enemy.position = _inicialPosition;
         }
+       
     }
 
 }

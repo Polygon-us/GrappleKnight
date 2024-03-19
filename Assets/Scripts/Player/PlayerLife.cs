@@ -11,7 +11,12 @@ public class PlayerLife : MonoBehaviour , ILife
     [SerializeField] private Slider _slider;
 
     private int _maxLife;
-    
+
+    SpriteRenderer _damageColor;
+    private void Awake()
+    {
+        _damageColor = GetComponent<SpriteRenderer>();
+    }
     public void Configure(int maxlife)
     {
         _maxLife = maxlife;
@@ -31,6 +36,7 @@ public class PlayerLife : MonoBehaviour , ILife
         }
         else
         {
+            StartCoroutine(DamageIndicator());
             StartCoroutine(CInvulnerability());
         }
         if (_currentLife <= 0) 
@@ -54,5 +60,12 @@ public class PlayerLife : MonoBehaviour , ILife
         gameObject.layer = LayerMask.NameToLayer("Invulnerability");
         yield return new WaitForSeconds(1);
         gameObject.layer = LayerMask.NameToLayer("Player");
+    }
+
+    private IEnumerator DamageIndicator()
+    {
+        _damageColor.color = Color.red;
+        yield return new WaitForSeconds(0.05f);
+        _damageColor.color = Color.white;
     }
 }

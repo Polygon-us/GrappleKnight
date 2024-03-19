@@ -7,6 +7,8 @@ public class ObjectBoomerang : MonoBehaviour
     private Action _senderAction;
     private Action _receiverAction;
 
+    [SerializeField] private float _shakeForceHook = 1f;
+
     public void Init(Action receiverAction)
     {
         _senderAction = receiverAction;
@@ -26,6 +28,8 @@ public class ObjectBoomerang : MonoBehaviour
         }
         if (other.CompareTag("Enemy"))
         {
+            CinemachineController.Instance.MoveCamera(_shakeForceHook, 5, 0.5f);
+
             Rigidbody2D _enemyRigidbody = other.GetComponent<Rigidbody2D>();
             SpriteRenderer _damageColor = other.GetComponent<SpriteRenderer>();
             other.GetComponent<EnemyStateController>().ChangeCurrentState(EnemyStateEnum.Idle);

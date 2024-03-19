@@ -6,12 +6,12 @@ using UnityEngine;
 public class BoomerangCollisionForce : MonoBehaviour
 {
     [SerializeField]private float _knockback = 1f;
+    private Vector3 _diagonalForce;
 
     private Rigidbody2D _enemyRigidbody;
 
     private SpriteRenderer _damageColor;
 
-    private Vector3 _diagonalForce;
 
     private BoxCollider2D m_CollisionBody;
     void Start()
@@ -28,7 +28,7 @@ public class BoomerangCollisionForce : MonoBehaviour
         
         if (collision.gameObject.CompareTag("Enemy"))
         {
-           _enemyRigidbody = collision.transform.GetComponent<Rigidbody2D>();
+            _enemyRigidbody = collision.transform.GetComponent<Rigidbody2D>();
             _damageColor = collision.transform.GetComponent<SpriteRenderer>();
             collision.transform.GetComponent<EnemyStateController>().ChangeCurrentState(EnemyStateEnum.Idle);
             StartCoroutine(DamageIndicator());
