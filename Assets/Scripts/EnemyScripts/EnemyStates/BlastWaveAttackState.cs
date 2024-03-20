@@ -22,7 +22,7 @@ public class BlastWaveAttackState : IState
     private bool _expandWave = false;
     private bool _onFloor = false;
 
-
+    private int _percentDamage;
 
     private Rigidbody2D _myRigidbody;
     private Rigidbody2D _playerRigidbody;
@@ -34,7 +34,7 @@ public class BlastWaveAttackState : IState
     public BlastWaveAttackState(float jumpHeight, Rigidbody2D myRigidbody, 
          CapsuleCollider2D capsuleCollider2D, Transform wave, Vector3 finalWaveScale,
          float waveDuracion, Rigidbody2D playerRigidbody, BoxCollider2D waveCollider, 
-         float waveImpactForce, Transform playerTransform, float forceDown, float delayBeforeReturn, Vector3 inicialWaveScale)
+         float waveImpactForce, Transform playerTransform, float forceDown, float delayBeforeReturn, Vector3 inicialWaveScale, int percentDamage)
     {
         _jumpHeight = jumpHeight;
         _myRigidbody = myRigidbody;
@@ -49,6 +49,7 @@ public class BlastWaveAttackState : IState
         _forceDown = forceDown;
         _delayBeforeReturn = delayBeforeReturn;
         _inicialWaveScale = inicialWaveScale;
+        _percentDamage = percentDamage;
     }
 
     
@@ -105,7 +106,7 @@ public class BlastWaveAttackState : IState
             {
                 Debug.Log("me golpeo la onda izquierda");
                 _playerRigidbody.AddForce(-Vector2.right * _waveImpactForce);
-                _playerTransform.GetComponent<ILife>().ReduceLife(1);
+                _playerTransform.GetComponent<ILife>().ReduceLife(_percentDamage);
 
 
             }
@@ -115,7 +116,7 @@ public class BlastWaveAttackState : IState
                 Debug.Log($"me golpeo la onda: {_playerRigidbody}");
 
                 _playerRigidbody.AddForce(Vector2.right * _waveImpactForce);
-                _playerTransform.GetComponent<ILife>().ReduceLife(1);
+                _playerTransform.GetComponent<ILife>().ReduceLife(_percentDamage);
             }
         }
     }

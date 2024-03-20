@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class VerifyPlataform : MonoBehaviour
+public class TeleportEnemy : MonoBehaviour
 {
 
 
@@ -9,6 +9,7 @@ public class VerifyPlataform : MonoBehaviour
 
     [SerializeField] private RaycastHit2D _platformDetector;
     [SerializeField] private LayerMask _floorMask;
+
 
     private EnemyStateEnum enemyStateEnum;
 
@@ -44,7 +45,6 @@ public class VerifyPlataform : MonoBehaviour
         if (!_platformDetector)
         {
             InitTimeToRespawn();
-            enemyStateEnum = EnemyStateEnum.Patrol;
         }
     }
 

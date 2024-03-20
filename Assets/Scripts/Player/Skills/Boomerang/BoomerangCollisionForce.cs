@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BoomerangCollisionForce : MonoBehaviour
 {
-    [SerializeField]private float _knockback = 1f;
+    [SerializeField]private float _knockback = 20f;
     private Vector3 _diagonalForce;
 
     private Rigidbody2D _enemyRigidbody;

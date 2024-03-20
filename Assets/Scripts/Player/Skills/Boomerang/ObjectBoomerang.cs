@@ -34,7 +34,7 @@ public class ObjectBoomerang : MonoBehaviour
             SpriteRenderer _damageColor = other.GetComponent<SpriteRenderer>();
             other.GetComponent<EnemyStateController>().ChangeCurrentState(EnemyStateEnum.Idle);
             float forceSign = Mathf.Sign(other.transform.position.x-transform.position.x);
-            Vector3 _diagonalForce = new Vector3(1f * forceSign, 1f, 0f).normalized * 10;
+            Vector3 _diagonalForce = new Vector3(1f * forceSign, 1f, 0f).normalized * 60;
             _enemyRigidbody.AddForce(_diagonalForce, ForceMode2D.Impulse);
             StartCoroutine(DamageIndicator(_damageColor));
         }
