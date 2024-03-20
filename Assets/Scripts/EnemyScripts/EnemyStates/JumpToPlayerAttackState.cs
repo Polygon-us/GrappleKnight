@@ -21,8 +21,10 @@ public class JumpToPlayerAttackState : IState
     private bool _isAvailableHurtPlayer;
 
     private bool _isOnState;
+
+    private CollisionEvents _collisionEvents;
     public JumpToPlayerAttackState(Rigidbody2D rigidbody2D, float jumpHeight, Transform bossTransform ,
-        Transform playerTransform, int percenteDamage)
+        Transform playerTransform, int percentDamage, CollisionEvents collisionEvents)
     {
         _rigidbody2D = rigidbody2D;
         _jumpHeight = jumpHeight;
@@ -31,11 +33,13 @@ public class JumpToPlayerAttackState : IState
         _bossCollider2D = _bossTransform.GetComponent<Collider2D>().bounds.extents.y;
         _playerCollider2D = _playerTransform.GetComponent<Collider2D>().bounds.extents.y;
         _playerCollider2D += _playerTransform.position.y;
-        _percentDamage = percenteDamage;
+        _percentDamage = percentDamage;
+        _collisionEvents = collisionEvents;
     }
 
     public void StartState()
     {
+        _collisionEvents.SubscribeTriggerStay(TriggerStay);
         _bossTransform.gameObject.layer = LayerMask.NameToLayer("Boss");
         _currentTime = 0;
         _isOnState = true;
@@ -53,17 +57,20 @@ public class JumpToPlayerAttackState : IState
        
        _isAvailableHurtPlayer = true;
 
+       _bossTransform.gameObject.layer = LayerMask.NameToLayer("Invulnerability");
     }
     public bool DoState(out EnemyStateEnum enemyStateEnum)
     {
-        if (_currentTime >= _timeOfJump/2 && _bossTransform.position.y - _bossCollider2D <= _playerCollider2D)
-        {
-            _bossTransform.gameObject.layer = LayerMask.NameToLayer("Invulnerability");
-        }
+        // if (_currentTime >= _timeOfJump/2 && _bossTransform.position.y - _bossCollider2D <= _playerCollider2D)
+        // {
+        //     Debug.Log("invuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuulnerability");
+        //    
+        // }
         _currentTime += Time.fixedDeltaTime;
         if (!_isOnState)
         {
             _currentTime = 0;
+            _collisionEvents.UnsubscribeTriggerStay(TriggerStay);
             enemyStateEnum = EnemyStateEnum.Idle;
             return false;
         }
@@ -72,20 +79,19 @@ public class JumpToPlayerAttackState : IState
 
     }
 
-    private void CollisionEnter(Collision2D other)
+    private void TriggerStay(Collider2D other)
     {
         if (_isAvailableHurtPlayer)
         {
             if (other.transform == _playerTransform)
             {
-                //_isAvailableHurtPlayer = false;
-                //other.gameObject.layer = LayerMask.NameToLayer("Invulnerability");
+                _isAvailableHurtPlayer = false;
+                _isOnState = false;
+                other.GetComponent<ILife>().ReduceLife(_percentDamage);
+                other.GetComponent<Rigidbody2D>().AddForce(Vector2.down*20,ForceMode2D.Impulse);
             }
-
             if (other.gameObject.layer == LayerMask.NameToLayer("Floor") && _currentTime >= _timeOfJump)
             {
-                _currentTime = 0;
-                
                 Collider2D[] colliders = Physics2D.OverlapCircleAll(_bossTransform.transform.position, 2);
                 foreach (Collider2D item in colliders)
                 {
@@ -98,7 +104,14 @@ public class JumpToPlayerAttackState : IState
                 _isOnState = false;
             }
         }
-        _bossTransform.gameObject.layer = LayerMask.NameToLayer("Boss");
+    }
+    private void CollisionEnter(Collision2D other)
+    {
+        if (_currentTime>=0.01f)
+        {
+            _currentTime = 0;
+            _bossTransform.gameObject.layer = LayerMask.NameToLayer("Boss");
+        }
     }
     public Action<Collision2D> CollisionAction()
     {

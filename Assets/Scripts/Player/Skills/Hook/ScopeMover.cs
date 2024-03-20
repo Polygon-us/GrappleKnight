@@ -26,11 +26,6 @@ public class ScopeMover : MonoBehaviour
         _hookBegin = hookBegin;
         _hookMaxDistance = hookMaxDistance;
         transform.parent = null;
-        
-        // Debug.DrawRay(_hookBegin.position,Vector3.right*_hookMaxDistance,Color.red,60);
-        // Debug.DrawRay(_hookBegin.position, Vector3.left * _hookMaxDistance, Color.red, 60);
-        // Debug.DrawRay(_hookBegin.position, Vector3.up * _hookMaxDistance, Color.red, 60);
-        // Debug.DrawRay(_hookBegin.position, Vector3.down * _hookMaxDistance, Color.red, 60);
     }
     private void Update()
     {

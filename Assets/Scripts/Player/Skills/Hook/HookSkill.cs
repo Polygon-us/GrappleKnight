@@ -64,11 +64,11 @@ public class HookSkill : ISkill
         if (angle<=_endAngle || angle>=_startAngle)
         {
             RaycastHit2D hit = Physics2D.Raycast(_hookBegin.position, createPosition, 
-                10000,_hookMask);
+                _hookMaxDistance,_hookMask);
             if (hit.collider != null)
             {
-                if (hit.distance <= _hookMaxDistance)
-                {
+                // if (hit.distance <= _hookMaxDistance)
+                // {
                     CinemachineController.Instance.MoveCamera(_shakeForceHook, 5,0.5f);
                     _hookEnd.parent = null;
                     _hookEnd.gameObject.SetActive(true);
@@ -78,13 +78,23 @@ public class HookSkill : ISkill
                     Vector3 beginPosition = Vector3.Lerp(_hookBegin.position, _hookEnd.position, 0.1f);
                     _springJoint2D.distance = Vector3.Distance(beginPosition,_hookEnd.position);
                     _onHook = true;
+                //}
+                
+            }
+            else
+            {
+                _rope.SetActive(true);
+                float distance = (_hookBegin.position.x-newPosition.x) * (_hookBegin.position.x-newPosition.x) +
+                                 (_hookBegin.position.y-newPosition.y) * (_hookBegin.position.y-newPosition.y);
+                if (distance<=_hookMaxDistance*_hookMaxDistance)
+                {
+                    _outPoint = newPosition;
                 }
                 else
                 {
-                    _rope.SetActive(true);
                     _outPoint = createPosition.normalized*_hookMaxDistance+_hookBegin.position;
                 }
-                
+
             }
         }
     }

@@ -59,10 +59,10 @@ public class EnemyHuntState : IState
                 _enemyRigidbody.velocity = moveDirection * _walkSpeedHunting;
                 return false;
             }
-           else if(!_isOutOfRange)
-            {
-                return false;
-            }
+            // if(!_isOutOfRange)
+            // {
+            //     return false;
+            // }
         }
         return true;
     }
@@ -80,7 +80,8 @@ public class EnemyHuntState : IState
     {
         if (other.CompareTag("Player"))
         {
-            _isOutOfRange = true;
+            _walkSpeed = 0;
+            //_isOutOfRange = true;
         }
     }
 

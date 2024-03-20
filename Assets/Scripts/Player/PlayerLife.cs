@@ -36,14 +36,14 @@ public class PlayerLife : MonoBehaviour , ILife
         }
         else
         {
-            StartCoroutine(DamageIndicator());
             StartCoroutine(CInvulnerability());
+            StartCoroutine(DamageIndicator());
         }
         if (_currentLife <= 0) 
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
-        Debug.Log(_currentLife);
+        //Debug.Log(_currentLife);
     }
     
     public void Activate()
