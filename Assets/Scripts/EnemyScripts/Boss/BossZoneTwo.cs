@@ -5,7 +5,7 @@ public class BossZoneTwo : MonoBehaviour
 {
     [SerializeField] private UnityEvent _unityEvent;
 
-    [SerializeField]private bool _isOnTrigger;
+    private bool _isOnTrigger;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
