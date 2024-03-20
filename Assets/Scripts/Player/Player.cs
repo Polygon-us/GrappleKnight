@@ -45,6 +45,7 @@ public class Player : MonoBehaviour
     
     private SpringJoint2D _springJoint2D;
     private Rigidbody2D _rigidbody2D;
+
     
     private SkillManager _skillManager;
     private PlayerSkillController _playerSkillController;

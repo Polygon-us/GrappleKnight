@@ -63,8 +63,8 @@ public class Boss : MonoBehaviour
     {
         _enemyStateManager.FillStatesContainer(EnemyStateEnum.BlastWave, new BlastWaveAttackState(_jumpHeight, _rigidbody2D,
             _capsuleCollider2D, _wave, _finalWaveScale, _waveDuracion, _playerRigidbody, _waveCollider,
-            _waveImpactForce, _playerTransform, _forceDown, _delayBeforeReturn, _inicialWaveScale));
-        
+            _waveImpactForce, _playerTransform, _forceDown, _delayBeforeReturn, _inicialWaveScale,_percentDamage));
+
         _enemyStateManager.FillStatesContainer(EnemyStateEnum.JumpAttack, new JumpToPlayerAttackState(_rigidbody2D,
             _jumpHeight, transform, _playerTransform, _percentDamage, _collisionEvents));
         

@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using Unity.Mathematics;
 public class EnemyPatrolState : IState
 {
     [Header("EnemyPatrolState")]
@@ -47,7 +48,7 @@ public class EnemyPatrolState : IState
         {
             if (_transform.position.x > pointA.position.x && _transform.position.x < pointB.position.x)
             {
-
+                _enemyRigidbody.velocity = Vector3.zero;
                 enemyStateEnum = EnemyStateEnum.Hunt;
                 return false;
             }
@@ -102,6 +103,7 @@ public class EnemyPatrolState : IState
     void SetTargetPoint(Transform newTargetPoint)
     {
         targetPoint = newTargetPoint;
+        Debug.Log(targetPoint);
         if (targetPoint == pointA)
         {
             _transform.rotation = Quaternion.Euler(0,180,0);
@@ -117,16 +119,16 @@ public class EnemyPatrolState : IState
         if (!_isPlayerDetected)
         {
             
-            Vector2 moveDirection = (targetPoint.position - _transform.position).normalized;
-
+            Vector2 moveDirection = (targetPoint.position - _transform.position).normalized; 
             float distanceToTarget = Vector2.Distance(_transform.position, targetPoint.position);
-            //Debug.Log($"DIstanceToTarget: {distanceToTarget}");
             float currentSpeed = (distanceToTarget > slowdownDistance) ? walkHorizontalSpeed :
                 Mathf.Lerp(0, walkHorizontalSpeed, distanceToTarget / slowdownDistance);
             _enemyRigidbody.velocity = moveDirection * currentSpeed;
+           
             
             if (distanceToTarget < minDistance)
             {
+                
                 return true;
             }
         }

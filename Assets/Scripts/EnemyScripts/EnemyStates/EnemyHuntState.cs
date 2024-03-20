@@ -59,11 +59,8 @@ public class EnemyHuntState : IState
                 _enemyRigidbody.velocity = moveDirection * _walkSpeedHunting;
                 return false;
             }
-            // if(!_isOutOfRange)
-            // {
-            //     return false;
-            // }
         }
+       
         return true;
     }
 

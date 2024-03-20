@@ -27,7 +27,7 @@ public class PlayerMover : MonoBehaviour, IMovable
     private RaycastHit2D _checkFloor;
     
     
-    private Rigidbody2D _myRigidbody;
+    private Rigidbody2D _floorTouching;
     private Transform _playerTransform;
 
     private bool _isJumpOnAir;
@@ -51,7 +51,7 @@ public class PlayerMover : MonoBehaviour, IMovable
         float raycastLength ,LayerMask checkFloorMask, float maxAirAcceleration, Vector2 moveAxis, TargetCameraController2 targetCameraController)
     {
         _playerTransform = playerTransform;
-        _myRigidbody = myRigidbody;
+        _floorTouching = myRigidbody;
         _maxSpeed = maxSpeed;
         _maxAcceleration = maxAcceleration;
         _jumpHeight = jumpHeight;
@@ -59,7 +59,7 @@ public class PlayerMover : MonoBehaviour, IMovable
         _checkFloorMask = checkFloorMask;
         _maxAirAcceleration = maxAirAcceleration;
         _moveAxis = moveAxis;
-        _jumpSpeed = Mathf.Sqrt(_jumpHeight * (Physics2D.gravity.y * _myRigidbody.gravityScale) * -2) * _myRigidbody.mass;
+        _jumpSpeed = Mathf.Sqrt(_jumpHeight * (Physics2D.gravity.y * _floorTouching.gravityScale) * -2) * _floorTouching.mass;
         _targetCameraController = targetCameraController;
         FillInputAction();
     }
@@ -102,7 +102,7 @@ public class PlayerMover : MonoBehaviour, IMovable
                 _targetCameraController.MoveCameraPosition(lastMove,8);
             }
             _desiredVelocity = new Vector2(_moveAxis.x, 0f) * Mathf.Max(_maxSpeed , 0f);
-            _velocity = _myRigidbody.velocity;
+            _velocity = _floorTouching.velocity;
 
             _acceleration = _onGround ? _maxAcceleration : _maxAirAcceleration;
 
@@ -111,7 +111,7 @@ public class PlayerMover : MonoBehaviour, IMovable
             _velocity.x = Mathf.MoveTowards(_velocity.x, _desiredVelocity.x, _maxSpeedChange);
             
 
-            _myRigidbody.velocity = _velocity;
+            _floorTouching.velocity = _velocity;
             _isStop = false;
         }
         else
@@ -121,7 +121,7 @@ public class PlayerMover : MonoBehaviour, IMovable
                 if (OnGround())
                 {
                      _onGround = true;
-                    _myRigidbody.velocity = new Vector2(0, _myRigidbody.velocity.y);
+                    _floorTouching.velocity = new Vector2(0, _floorTouching.velocity.y);
                     _isStop = true;
                 }
                 else
@@ -137,7 +137,7 @@ public class PlayerMover : MonoBehaviour, IMovable
         if (OnGround() )
         {
             
-                _myRigidbody.AddForce(Vector2.up * _jumpSpeed, ForceMode2D.Impulse);
+                _floorTouching.AddForce(Vector2.up * _jumpSpeed, ForceMode2D.Impulse);
             return;
         }
         _currentLastJump = 0;
@@ -148,14 +148,14 @@ public class PlayerMover : MonoBehaviour, IMovable
 
         if (OnGround() && _currentLastJump <= _maxTimeLastJump )
         {
-                _myRigidbody.velocity = new Vector2(_myRigidbody.velocity.x, 0);
-            _myRigidbody.AddForce(Vector2.up * _jumpSpeed, ForceMode2D.Impulse);
+                _floorTouching.velocity = new Vector2(_floorTouching.velocity.x, 0);
+            _floorTouching.AddForce(Vector2.up * _jumpSpeed, ForceMode2D.Impulse);
         }
         
     }
     private bool OnGround()
     {   
-        if (_myRigidbody.IsTouchingLayers(LayerMask.GetMask("Floor")))
+        if (_floorTouching.IsTouchingLayers(LayerMask.GetMask("Floor")))
         {
             return true;
         }
