@@ -6,7 +6,7 @@ public class EnemyPatrolState : IState
 {
     [Header("EnemyPatrolState")]
     [SerializeField] private float waitTime = 1f;
-    [SerializeField] private float slowdownDistance = 1f; 
+    [SerializeField] private float slowdownDistance = 0.5f; 
      private float minDistance = 0.3f; 
 
     [Space]
@@ -103,7 +103,6 @@ public class EnemyPatrolState : IState
     void SetTargetPoint(Transform newTargetPoint)
     {
         targetPoint = newTargetPoint;
-        Debug.Log(targetPoint);
         if (targetPoint == pointA)
         {
             _transform.rotation = Quaternion.Euler(0,180,0);
@@ -118,17 +117,19 @@ public class EnemyPatrolState : IState
     {
         if (!_isPlayerDetected)
         {
+            float moveDirection = Mathf.Sign(targetPoint.position.x - _transform.position.x);
             
-            Vector2 moveDirection = (targetPoint.position - _transform.position).normalized; 
-            float distanceToTarget = Vector2.Distance(_transform.position, targetPoint.position);
+            float distanceToTarget =
+                (_transform.position.x - targetPoint.position.x) * (_transform.position.x - targetPoint.position.x) +
+                (_transform.position.y - targetPoint.position.y) - (_transform.position.y - targetPoint.position.y);
+            
             float currentSpeed = (distanceToTarget > slowdownDistance) ? walkHorizontalSpeed :
                 Mathf.Lerp(0, walkHorizontalSpeed, distanceToTarget / slowdownDistance);
-            _enemyRigidbody.velocity = moveDirection * currentSpeed;
-           
             
-            if (distanceToTarget < minDistance)
+            _enemyRigidbody.velocity = new Vector2(moveDirection*currentSpeed, _enemyRigidbody.velocity.y );
+            
+            if (distanceToTarget < minDistance*minDistance)
             {
-                
                 return true;
             }
         }

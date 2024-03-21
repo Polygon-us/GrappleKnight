@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
     [Header("Life")] 
     [SerializeField] private int _maxLife;
     
-
+    
     private InputManager _inputManager;
 
     private ILife _playerLife;

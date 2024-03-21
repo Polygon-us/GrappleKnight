@@ -61,11 +61,6 @@ public class JumpToPlayerAttackState : IState
     }
     public bool DoState(out EnemyStateEnum enemyStateEnum)
     {
-        // if (_currentTime >= _timeOfJump/2 && _bossTransform.position.y - _bossCollider2D <= _playerCollider2D)
-        // {
-        //     Debug.Log("invuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuulnerability");
-        //    
-        // }
         Debug.Log("Jump");
         _currentTime += Time.fixedDeltaTime;
         if (!_isOnState)
@@ -87,7 +82,7 @@ public class JumpToPlayerAttackState : IState
             if (other.transform == _playerTransform)
             {
                 _isAvailableHurtPlayer = false;
-                _isOnState = false;
+                //_isOnState = false;
                 other.GetComponent<ILife>().ReduceLife(_percentDamage);
                 other.GetComponent<Rigidbody2D>().AddForce(Vector2.down*20,ForceMode2D.Impulse);
             }
@@ -102,7 +97,7 @@ public class JumpToPlayerAttackState : IState
                     }
                 }
                 _isAvailableHurtPlayer = false;
-                _isOnState = false;
+                //_isOnState = false;
             }
         }
     }

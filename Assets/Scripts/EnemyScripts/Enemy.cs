@@ -20,19 +20,24 @@ public class Enemy : MonoBehaviour
     private bool _isHuntingMode;
 
     private EnemyLife _enemyLife;
+    private EnemyTeleporter _enemyTeleporter;
     private EnemyStateManager _enemyStateManager;
     private EnemyStateController _enemyStateController;
     private CollisionEvents _collisionEvents;
 
+    
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _enemyStateController = GetComponent<EnemyStateController>();
-
+        
         _enemyLife = new EnemyLife(gameObject,_maxLife);
         _enemyStateManager = new EnemyStateManager();
         _collisionEvents = new CollisionEvents();
         _enemyStateController.Configure(_enemyStateManager, _collisionEvents);
+
+        _enemyTeleporter = GetComponent<EnemyTeleporter>();
+        _enemyTeleporter.Configure(_pointA);
 
         AddStates();
         InitialState();
