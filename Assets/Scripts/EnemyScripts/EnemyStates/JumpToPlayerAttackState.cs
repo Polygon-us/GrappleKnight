@@ -66,6 +66,7 @@ public class JumpToPlayerAttackState : IState
         //     Debug.Log("invuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuulnerability");
         //    
         // }
+        Debug.Log("Jump");
         _currentTime += Time.fixedDeltaTime;
         if (!_isOnState)
         {
@@ -107,9 +108,10 @@ public class JumpToPlayerAttackState : IState
     }
     private void CollisionEnter(Collision2D other)
     {
-        if (_currentTime>=0.01f)
+        if (_currentTime>=0.1f)
         {
             _currentTime = 0;
+            _isOnState = false;
             _bossTransform.gameObject.layer = LayerMask.NameToLayer("Boss");
         }
     }
