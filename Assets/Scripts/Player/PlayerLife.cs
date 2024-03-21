@@ -7,10 +7,23 @@ using UnityEngine.UI;
 
 public class PlayerLife : MonoBehaviour , ILife
 {
-    private int _currentLife;
     [SerializeField] private Slider _slider;
 
+    private int _currentLife;
     private int _maxLife;
+
+    private int CurrentLife
+    {  
+        get 
+        { 
+            return _currentLife;
+        } 
+        set 
+        {
+            _currentLife = value;
+            _slider.value = value * _maxLife / 100;
+        } 
+    }
 
     SpriteRenderer _damageColor;
     private void Awake()
@@ -19,29 +32,25 @@ public class PlayerLife : MonoBehaviour , ILife
     }
     public void Configure(int maxlife)
     {
+        _slider.maxValue = maxlife;
         _maxLife = maxlife;
         _currentLife = maxlife;
-       _slider.maxValue = _currentLife;
     }
     
     public void ReduceLife(int amount)
     {
-        amount = amount * _maxLife / 100;
-        _currentLife -= amount;
-        _slider.value = _currentLife;
+        CurrentLife -= amount;
         
-        if (_currentLife<=0)
+        
+        if (CurrentLife <= 0)
         {
-            Deactivate();
+            GetComponent<PlayerRespawnPosition>().RespawnLastPosition();
+            CurrentLife = _maxLife;
         }
         else
         {
             StartCoroutine(CInvulnerability());
             StartCoroutine(DamageIndicator());
-        }
-        if (_currentLife <= 0) 
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
         //Debug.Log(_currentLife);
     }
