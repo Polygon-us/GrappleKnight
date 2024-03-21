@@ -9,11 +9,11 @@ public class ShowText : MonoBehaviour
     [SerializeField] private string message;
 
 
-    private BoxCollider2D m_BoxCollider;
+    private BoxCollider2D _boxCollider;
 
     private void Awake()
     {
-        m_BoxCollider = GetComponent<BoxCollider2D>();
+        _boxCollider = GetComponent<BoxCollider2D>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
