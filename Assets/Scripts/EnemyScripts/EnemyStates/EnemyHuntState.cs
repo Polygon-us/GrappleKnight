@@ -46,7 +46,7 @@ public class EnemyHuntState : IState
         _percentDamage = percentDamage;
     }
 
-    private bool HuntPlayer()
+    private void HuntPlayer()
     {
         if (_enemyTransform.position.x > _pointA.position.x && _enemyTransform.position.x < _pointB.position.x)
         {
@@ -57,11 +57,12 @@ public class EnemyHuntState : IState
                 Vector2 moveDirection = new Vector2(playerDirection.x, 0f).normalized;
 
                 _enemyRigidbody.velocity = moveDirection * _walkSpeedHunting;
-                return false;
             }
         }
-       
-        return true;
+        else
+        {
+            _enemyRigidbody.velocity = new Vector2(0, _enemyRigidbody.velocity.y);
+        }
     }
 
     public void StartState()
@@ -77,19 +78,18 @@ public class EnemyHuntState : IState
     {
         if (other.CompareTag("Player"))
         {
-            _walkSpeed = 0;
-            //_isOutOfRange = true;
+            _isOutOfRange = true;
         }
     }
 
     public bool DoState(out EnemyStateEnum enemyStateEnum)
     {
-        if (HuntPlayer())
+        if (_isOutOfRange)
         {
             enemyStateEnum = EnemyStateEnum.Idle;
             return false;
         }
-            
+        HuntPlayer();    
         enemyStateEnum = EnemyStateEnum.Hunt;
         return true;
     }
@@ -100,6 +100,7 @@ public class EnemyHuntState : IState
         if (other.transform.CompareTag("Player") && !_isOnCollision )
         {
             _isOnCollision = true;
+            _isOutOfRange = true;
             _walkSpeed = 0;
             other.rigidbody.velocity = new Vector2(0, other.rigidbody.velocity.y);
             float directionSing = Mathf.Sign(other.transform.position.x - _enemyTransform.position.x);
