@@ -5,28 +5,30 @@ using UnityEngine;
 
 public class TargetCameraController2 : MonoBehaviour
 {
+    [SerializeField] private float _maxSpeed;
+    [SerializeField] private CinemachineVirtualCamera _myCamera;
+    
     [SerializeField] private AnimationCurve _curve;
-    [SerializeField] private float smoothTime = 0.4f;
+   // [SerializeField] private float smoothTime = 0.4f;
     private float _negativeOrPositive;
+    private float _curentTime;
 
     private Vector3 _targetOffset;
     private Vector3 _currentOffset;
     private Vector3 _mediumTargetOffset;
+
     private Vector2 targetVelocity = new Vector2(1,0);
     private Vector2 mediumVelocity = Vector2.zero;
 
-    [SerializeField] private float _maxSpeed;
-    [SerializeField] private CinemachineVirtualCamera _myCamera;
     private CinemachineFramingTransposer transposer;
 
     private bool _OnMove;
-    private float _curentTime;
+    
     private void Awake()
     {
         transposer = _myCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
         transposer.m_TrackedObjectOffset = new Vector3(0,0,0);
     }
-
 
     private void Update()
     {

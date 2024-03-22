@@ -3,23 +3,29 @@ using UnityEngine;
 public class PlayerClimbing : MonoBehaviour
 {
     [Header("isClimbing")]
-
     [SerializeField] private float climbingSpeed = 5f;
-     public bool isClimbing = false;
+
     [SerializeField] private LayerMask checkLimitStair;
+        
     [SerializeField] private CapsuleCollider2D _myCollider;
+
     [SerializeField] private PlatformEffector2D _platformEffector;
 
+    public bool isClimbing = false;
 
     private float _inicialGravity;
+
     private RaycastHit2D _checkStairLimit;
+
+    private Vector2 _velocityOnClimb;
     private Vector2 verticalMovement;
 
     [Header("References")]
-
-    private Transform _myTransform;
     [SerializeField] private Rigidbody2D _myrygidbody;
     [SerializeField] private BoxCollider2D _boxColliderStairStop;
+    
+    private Transform _myTransform;
+
     private void Start()
     {
         _myrygidbody = GetComponent<Rigidbody2D>();
@@ -31,10 +37,6 @@ public class PlayerClimbing : MonoBehaviour
     {
         Climbing();
         VerticalMovement();
-        
-    }
-    void Update()
-    {
     }
   
     private void VerticalMovement()
@@ -55,9 +57,11 @@ public class PlayerClimbing : MonoBehaviour
     }
     public void Climbing()
     {
+        _velocityOnClimb = new Vector2(_myrygidbody.velocity.x, 0);
         if ((verticalMovement.y != 0 || isClimbing) && (_myCollider.IsTouchingLayers(LayerMask.GetMask("Stair"))))
         {
             _myrygidbody.gravityScale = 0;
+            _myrygidbody.velocity = _velocityOnClimb;
             isClimbing = true;
         }
         else
@@ -68,6 +72,7 @@ public class PlayerClimbing : MonoBehaviour
         if ((verticalMovement.y < 0) && (_myCollider.IsTouchingLayers(LayerMask.GetMask("StairStop"))))
         {
             _myrygidbody.gravityScale = 0;
+            _myrygidbody.velocity = Vector2.zero;
             isClimbing = true;
             _boxColliderStairStop.enabled = false;
         }

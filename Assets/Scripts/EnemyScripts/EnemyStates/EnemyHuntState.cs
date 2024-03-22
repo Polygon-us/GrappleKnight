@@ -20,17 +20,17 @@ public class EnemyHuntState : IState
     
     private bool _isHuntingMode;
     private bool _isOnCollision = false;
+    private bool _isOutOfRange;
     
-    [SerializeField] private float _knockback = 10f;
+    private float _knockback = 10f;
     private float _walkSpeed = 5f;
-    private float _walkSpeedHunting = 7f;
+    private float _walkSpeedHunting = 6f;
 
     private Vector3 _diagonalForce;
     private Vector2 playerDirection;
 
     private int _percentDamage;
     
-    private bool _isOutOfRange;
     public EnemyHuntState(BoxCollider2D persecutorCollider, Rigidbody2D enemyRigidbody, Transform enemyTransform, 
         Transform playerTransform, bool isHuntingMode,Transform pointA, Transform pointB, CollisionEvents collisionEvents,
         int percentDamage)
@@ -75,7 +75,6 @@ public class EnemyHuntState : IState
         _isOnCollision = false;
         _isOutOfRange = false;
         _collisionEvents.SubscribeTriggerExit(TriggerExit);
-        
     }
 
     private void TriggerExit(Collider2D other)
@@ -124,5 +123,4 @@ public Action<Collision2D> CollisionAction()
     {
         return null;
     }
-    
 }

@@ -3,6 +3,7 @@ using UnityEngine;
 public class EnemyLife
 {
     private int _currentLife;
+
     private GameObject _enemyGameObject;
 
     public EnemyLife(GameObject enemyGameObject, int maxlife)
@@ -22,8 +23,6 @@ public class EnemyLife
         {
             return true;
         }
-        
-        //Debug.Log(_currentLife);
         return false;
     }
     

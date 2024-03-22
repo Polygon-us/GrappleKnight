@@ -3,10 +3,11 @@ using UnityEngine;
 
 public class BossIdleState : IState
 {
-    private bool initStates = false;
+    //private bool initStates = false;
 
     private float _waitTime;
     private float _currentTime;
+
     private EnemyStateEnum _nextEnemyStateEnum;
 
     //private BoxCollider2D _activationZoneCollider;
@@ -35,7 +36,6 @@ public class BossIdleState : IState
                 enemyStateEnum = _nextEnemyStateEnum;
                 return false;
             }
-
         //}
         _currentTime += Time.deltaTime;
         enemyStateEnum = _nextEnemyStateEnum;

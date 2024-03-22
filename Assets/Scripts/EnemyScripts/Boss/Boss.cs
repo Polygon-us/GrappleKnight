@@ -10,27 +10,28 @@ public class Boss : MonoBehaviour
     //salto
     [SerializeField] private float _jumpHeight;
     [SerializeField] private float _forceDown = 20f;
-    //onda
     [SerializeField] private float _waveDuracion = 0.5f;
     [SerializeField] private float _waveImpactForce = 3f;
     [SerializeField] private float _delayBeforeReturn = 0.1f;
-    [SerializeField] private Vector3 _finalWaveScale = new Vector3(16, 0.1f);
-    [SerializeField] private Vector3 _inicialWaveScale = new Vector3(1, 0.1f);
-    //vida
-    [SerializeField] private int _maxLife;
+    [SerializeField]private float _chargeVelocity;
 
+    [SerializeField] private int _maxLife;
+    [SerializeField]private int _chargeMaxNumber;
+    [SerializeField] [Range(1, 100)] private int _percentDamage;
+    
+    [SerializeField] private Vector3 _inicialWaveScale = new Vector3(1, 0.1f);
+    [SerializeField] private Vector3 _finalWaveScale = new Vector3(16, 0.1f);
+
+    private bool _isFigthing = false;
 
     [SerializeField] private Transform _playerTransform;
     [SerializeField] private Transform _wave;
+
     [SerializeField] private Rigidbody2D _playerRigidbody;
+
     [SerializeField] private BoxCollider2D _waveCollider;
     [SerializeField] private BoxCollider2D activationZoneCollider;
 
-    [SerializeField]private int _chargeMaxNumber;
-    [SerializeField]private float _chargeVelocity;
-
-    [SerializeField] [Range(1, 100)] private int _percentDamage;
-    
     private CapsuleCollider2D _capsuleCollider2D;
     private Rigidbody2D _rigidbody2D;
     
@@ -39,25 +40,19 @@ public class Boss : MonoBehaviour
     private EnemyStateController _enemyStateController;
     private CollisionEvents _collisionEvents;
 
-
-
-
     private void Awake()
     {
+        //RespawnTrigger.OnCollision += Message;
         _enemyStateManager = new EnemyStateManager();
         _enemyStateController = GetComponent<EnemyStateController>();
         _collisionEvents = new CollisionEvents();
         _enemyStateController.Configure(_enemyStateManager, _collisionEvents);
-
         
         _enemyLife = new EnemyLife(gameObject,_maxLife);
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _capsuleCollider2D = GetComponent<CapsuleCollider2D>();
         
-        
         AddStates();
-        //InitialState();
-        //BeginStates();
     }
     private void AddStates()
     {
@@ -77,10 +72,10 @@ public class Boss : MonoBehaviour
     {
         _enemyStateController.ChangeCurrentState(EnemyStateEnum.Idle);
     }
-    // public void BeginStates()
-    // {
-    //     _enemyStateController.StartStates();
-    // }
+    //private void Message(Vector3 vec)
+    //{
+    //    Debug.Log("Hola Amiguitos, como estan?");
+    //}
     private void EndStates()
     {
         _enemyStateController.StopStates();
@@ -99,5 +94,6 @@ public class Boss : MonoBehaviour
     private void OnDestroy()
     {
         ReduceEnemyLife(_maxLife);
+        //RespawnTrigger.OnCollision -= Message;
     }
 }

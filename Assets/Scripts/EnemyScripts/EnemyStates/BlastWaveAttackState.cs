@@ -8,14 +8,14 @@ public class BlastWaveAttackState : IState
     private float _waveDuracion = 0.5f;
     private float _delayBeforeReturn = 0.1f;
     private float _waveImpactForce;
+    private float _transitionTimer = 0f;
+    private float _currentTime;
+    private float _timeOfJump;
 
     private Vector3 _inicialWaveScale = new Vector3(1, 0.1f);
     private Vector3 _finalWaveScale = new Vector3(16, 0.1f);
     
 
-    private float _transitionTimer = 0f;
-    private float _currentTime;
-    private float _timeOfJump;
 
     private bool _reversed = false;
     private bool _jumping = false;
@@ -26,8 +26,10 @@ public class BlastWaveAttackState : IState
 
     private Rigidbody2D _myRigidbody;
     private Rigidbody2D _playerRigidbody;
+
     private CapsuleCollider2D _myCapsuleCollider2D;
     private BoxCollider2D _waveCollider;
+
     private Transform _wave;
     private Transform _playerTransform;
 
@@ -104,7 +106,6 @@ public class BlastWaveAttackState : IState
         {
             if (_wave.position.x > _playerTransform.position.x)
             {
-                Debug.Log("me golpeo la onda izquierda");
                 _playerRigidbody.AddForce(-Vector2.right * _waveImpactForce);
                 _playerTransform.GetComponent<ILife>().ReduceLife(_percentDamage);
 
@@ -113,7 +114,6 @@ public class BlastWaveAttackState : IState
 
             else if (_wave.position.x < _playerTransform.position.x)
             {
-                Debug.Log($"me golpeo la onda: {_playerRigidbody}");
 
                 _playerRigidbody.AddForce(Vector2.right * _waveImpactForce);
                 _playerTransform.GetComponent<ILife>().ReduceLife(_percentDamage);
@@ -195,3 +195,12 @@ public class BlastWaveAttackState : IState
     
 }
 
+//private void Message(Vector3 si)
+//{
+
+//    if (_bossZoneTwo._isOnTrigger == true && _playerLife.CurrentLife <= 0)
+//    {
+//        Debug.Log("Mori");
+//        EndStates();
+//    }
+//}

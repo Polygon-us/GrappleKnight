@@ -15,38 +15,36 @@ public class PlayerMover : MonoBehaviour, IMovable
     private float _maxAirAcceleration;
     private float _maxSpeedChange, _acceleration;
     private float mover;
+    private float _maxTimeLastJump = 0.2f;
+    private float _currentLastJump = 1;
+    private float lastMove;
+
     private Vector2 _direction;
     private Vector2 _desiredVelocity;
     private Vector2 _velocity;
     private Vector2 _moveAxis;
 
+    private bool _isStop;
     private bool _onGround;
+    private bool _isJumpOnAir;
+    private bool _isOnMove;
     
     private LayerMask _checkFloorMask;
     
     private RaycastHit2D _checkFloor;
     
-    
     private Rigidbody2D _floorTouching;
     private Transform _playerTransform;
-
-    private bool _isJumpOnAir;
-    private bool _isOnMove;
-    private bool _isStop;
-    
-    private float _currentLastJump = 1;
-    private float _maxTimeLastJump = 0.2f;
     
     private InputAction _inputAxisMovement;
     public PlayerClimbing _playerClimbing;
+    private TargetCameraController2 _targetCameraController;
     
     public Action<InputAction> OnInputMoveChange;
 
     private Dictionary<PlayerInputEnum, Action<InputAction.CallbackContext>> _inputActions = 
         new Dictionary<PlayerInputEnum, Action<InputAction.CallbackContext>>();
-    private float lastMove;
 
-    private TargetCameraController2 _targetCameraController;
     public PlayerMover(Transform playerTransform,Rigidbody2D myRigidbody,float maxSpeed, float maxAcceleration, float jumpHeight,
         float raycastLength ,LayerMask checkFloorMask, float maxAirAcceleration, Vector2 moveAxis, TargetCameraController2 targetCameraController)
     {
@@ -92,10 +90,8 @@ public class PlayerMover : MonoBehaviour, IMovable
     }
     private void HorizontalMovement()
     {
-        
         if (_moveAxis != Vector2.zero )
         {
-           
             if(_moveAxis.x != lastMove)
             {
                 lastMove = _moveAxis.x;
@@ -106,11 +102,9 @@ public class PlayerMover : MonoBehaviour, IMovable
 
             _acceleration = _onGround ? _maxAcceleration : _maxAirAcceleration;
 
-
             _maxSpeedChange = _acceleration * Time.deltaTime;
             _velocity.x = Mathf.MoveTowards(_velocity.x, _desiredVelocity.x, _maxSpeedChange);
             
-
             _floorTouching.velocity = _velocity;
             _isStop = false;
         }
@@ -136,7 +130,6 @@ public class PlayerMover : MonoBehaviour, IMovable
     {
         if (OnGround() )
         {
-            
                 _floorTouching.AddForce(Vector2.up * _jumpSpeed, ForceMode2D.Impulse);
             return;
         }
@@ -177,5 +170,4 @@ public class PlayerMover : MonoBehaviour, IMovable
         _inputAxisMovement = callbackContext.action;
         OnInputMoveChange?.Invoke(_inputAxisMovement);
     }
-    
 }

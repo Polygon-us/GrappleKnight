@@ -4,23 +4,21 @@ using UnityEngine;
 public class JumpToPlayerAttackState : IState
 {
     private Rigidbody2D _rigidbody2D;
-    private float _jumpHeight;
 
 
     private Transform _bossTransform;
     private Transform _playerTransform;
 
+    private float _jumpHeight;
     private float _bossCollider2D;
     private float _playerCollider2D;
-
     private float _currentTime;
     private float _timeOfJump;
 
-    private int _percentDamage;
-    
     private bool _isAvailableHurtPlayer;
-
     private bool _isOnState;
+
+    private int _percentDamage;
 
     private CollisionEvents _collisionEvents;
     public JumpToPlayerAttackState(Rigidbody2D rigidbody2D, float jumpHeight, Transform bossTransform ,
@@ -61,7 +59,6 @@ public class JumpToPlayerAttackState : IState
     }
     public bool DoState(out EnemyStateEnum enemyStateEnum)
     {
-        Debug.Log("Jump");
         _currentTime += Time.fixedDeltaTime;
         if (!_isOnState)
         {
@@ -72,7 +69,6 @@ public class JumpToPlayerAttackState : IState
         }
         enemyStateEnum = EnemyStateEnum.Idle;
         return true;
-
     }
 
     private void TriggerStay(Collider2D other)
@@ -119,5 +115,4 @@ public class JumpToPlayerAttackState : IState
     {
         return null;
     }
-    
 }

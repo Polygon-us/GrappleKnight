@@ -5,6 +5,8 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField]private int _maxLife;
+    [SerializeField] [Range(1, 100)] private int _percentDamage;
+
 
     [SerializeField] private Transform _pointA;
     [SerializeField] private Transform _pointB;
@@ -14,9 +16,6 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private BoxCollider2D _persecutorCollider;
 
-    [Header("Damage")] 
-    [SerializeField] [Range(1, 100)] private int _percentDamage;
-
     private bool _isHuntingMode;
 
     private EnemyLife _enemyLife;
@@ -24,7 +23,6 @@ public class Enemy : MonoBehaviour
     private EnemyStateManager _enemyStateManager;
     private EnemyStateController _enemyStateController;
     private CollisionEvents _collisionEvents;
-
     
     private void Awake()
     {
@@ -55,7 +53,6 @@ public class Enemy : MonoBehaviour
     private void InitialState()
     {
         _enemyStateController.ChangeCurrentState(EnemyStateEnum.Patrol);
-
     }
     private void BeginStates()
     {
@@ -73,5 +70,4 @@ public class Enemy : MonoBehaviour
             _enemyLife.DeactivateEnemy();
         }
     }
-    
 }

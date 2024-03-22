@@ -9,10 +9,12 @@ public class PlayerLife : MonoBehaviour , ILife
 {
     [SerializeField] private Slider _slider;
 
-    private int _currentLife;
+    private Rigidbody2D _rigidbody;
+    
+    public int _currentLife;
     private int _maxLife;
 
-    private int CurrentLife
+    public int CurrentLife
     {  
         get 
         { 
@@ -29,6 +31,7 @@ public class PlayerLife : MonoBehaviour , ILife
     private void Awake()
     {
         _damageColor = GetComponent<SpriteRenderer>();
+        _rigidbody = GetComponent<Rigidbody2D>();
     }
     public void Configure(int maxlife)
     {
@@ -41,18 +44,17 @@ public class PlayerLife : MonoBehaviour , ILife
     {
         CurrentLife -= amount;
         
-        
         if (CurrentLife <= 0)
         {
             GetComponent<PlayerRespawnPosition>().RespawnLastPosition();
             CurrentLife = _maxLife;
+            _rigidbody.velocity = Vector3.zero;
         }
         else
         {
             StartCoroutine(CInvulnerability());
             StartCoroutine(DamageIndicator());
         }
-        //Debug.Log(_currentLife);
     }
     
     public void Activate()

@@ -4,23 +4,20 @@ using System;
 using Unity.Mathematics;
 public class EnemyPatrolState : IState
 {
-    [Header("EnemyPatrolState")]
-    [SerializeField] private float waitTime = 1f;
+    //[SerializeField] private float waitTime = 1f;
     [SerializeField] private float slowdownDistance = 0.5f; 
-     private float minDistance = 0.3f; 
-
-    [Space]
-    [Header("Movement")]
     [SerializeField] private float walkHorizontalSpeed = 4f;
+
+    private float minDistance = 0.3f; 
+
     private bool isWaiting = false;
 
-    [Space]
-    [Header("References")]
     private Transform pointA;
     private Transform pointB;
-    private Rigidbody2D _enemyRigidbody;
     private Transform _transform;
     private Transform targetPoint;
+    
+    private Rigidbody2D _enemyRigidbody;
 
     private CollisionEvents _collisionEvents;
 
@@ -57,14 +54,12 @@ public class EnemyPatrolState : IState
         {
             SetTargetPoint((targetPoint == pointA) ? pointB : pointA);
             isWaiting = true;
-           
         }
         if (MoveToTargetPoint())
         {
             isWaiting = false;
             enemyStateEnum = EnemyStateEnum.Idle;
             return false;
-          
         }
         enemyStateEnum = EnemyStateEnum.Idle;
         return true;
@@ -135,7 +130,6 @@ public class EnemyPatrolState : IState
         }
         return false;
     }
-    
 }
 
 
