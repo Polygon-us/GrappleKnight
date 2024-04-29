@@ -16,7 +16,7 @@ public class InputManager
 
    // private Action<InputAction, Action<InputAction.CallbackContext>>[] _unsubscribeActionsContainer =
    //    new Action<InputAction, Action<InputAction.CallbackContext>>[3]; 
-   
+
    public InputManager(PlayerInputAction playerInputAction)
    {
       _playerInputAction = playerInputAction;
@@ -30,14 +30,9 @@ public class InputManager
       _inputActionsContainer.Add(PlayerInputEnum.ThrowLeftSkill,_playerInputAction.PlayerSkillActionMap.ThrowLeftSkill);
       _inputActionsContainer.Add(PlayerInputEnum.Movement,_playerInputAction.PlayerMovement.Movement);
       _inputActionsContainer.Add(PlayerInputEnum.Jump,_playerInputAction.PlayerMovement.Jump);
+      
    }
-   
-   public void Configure()
-   {
-      // _unsubscribeActionsContainer[0] = UnsubscribeStartedAction;
-      // _unsubscribeActionsContainer[1] = UnsubscribePerformedAction;
-      // _unsubscribeActionsContainer[2] = UnsubscribeCanceledAction;
-   }
+
 
    private void EnableInputAction(PlayerInputEnum playerInputEnum)
    {
@@ -118,6 +113,8 @@ public class InputManager
          }
          item.Disable();
       }
+   
+      
    }
    
    

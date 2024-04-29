@@ -58,6 +58,7 @@ public class Player : MonoBehaviour
     private ScopeMover _scopeMover;
     private void Awake()
     {
+        
         //ChangeSkill();
         _targetCameraController = GetComponentInChildren<TargetCameraController2>();
         AssignModules();
@@ -105,6 +106,8 @@ public class Player : MonoBehaviour
         currentMovable = mover;
         mover.OnInputMoveChange += OnPressVertical;
 
+        InputManagerTwo.skillsMap.ThorwRightSkill.performed += MessageTwo;
+        
         _playerMovementManager.AddMovable(PlayerMovementEnum.PlayerMovement, currentMovable);
         _inputManager.SubscribePerformedAction(PlayerInputEnum.Movement,
             currentMovable.GetAction(PlayerInputEnum.Movement));
@@ -123,8 +126,15 @@ public class Player : MonoBehaviour
         _inputManager.SubscribeCanceledAction(PlayerInputEnum.ThrowRightSkill,CancelSkill);
         _inputManager.SubscribeCanceledAction(PlayerInputEnum.ThrowLeftSkill,CancelSkill);
     }
+     
+     private void MessageTwo(InputAction.CallbackContext obj)
+     {
+         Debug.Log("kjdhfñksdjhfkhjfksdhfkshdfkshdfkl");
+     }
 
-    private void OnPressVertical(InputAction action)
+
+    
+     private void OnPressVertical(InputAction action)
     {
         if (action.activeControl.IsPressed())
         {

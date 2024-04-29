@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMover : MonoBehaviour, IMovable
+public class PlayerMover : IMovable
 {
 
     private float _jumpHeight;
