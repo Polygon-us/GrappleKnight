@@ -38,8 +38,6 @@ public class Player : MonoBehaviour
     [Header("Life")] 
     [SerializeField] private int _maxLife;
     
-    
-    private InputManager _inputManager;
 
     private ILife _playerLife;
     
@@ -58,8 +56,6 @@ public class Player : MonoBehaviour
     private ScopeMover _scopeMover;
     private void Awake()
     {
-        
-        //ChangeSkill();
         _targetCameraController = GetComponentInChildren<TargetCameraController2>();
         AssignModules();
         FillSkillManager();
@@ -76,8 +72,6 @@ public class Player : MonoBehaviour
         _playerMovementController = GetComponent<PlayerMovementController>();
         _playerMovementManager = new PlayerMovementManager();
         _rigidbody2D = GetComponent<Rigidbody2D>();
-        _inputManager = new InputManager(new PlayerInputAction());
-        //_inputManager.Configure();
         _skillManager = new SkillManager();
         _playerSkillController = GetComponent<PlayerSkillController>();
         _springJoint2D = GetComponent<SpringJoint2D>();
@@ -98,51 +92,22 @@ public class Player : MonoBehaviour
      {
          IMovable currentMovable = new HookMover(_rigidbody2D, _springJoint2D, _swingSpeed,_hookMaxDistance,_targetCameraController);
         _playerMovementManager.AddMovable(PlayerMovementEnum.HookMovement,currentMovable);
-        _inputManager.SubscribePerformedAction(PlayerInputEnum.Movement,
-            currentMovable.GetAction(PlayerInputEnum.Movement));
+        
+        InputManagerTwo.movementMap.Movement.performed += currentMovable.GetAction(PlayerInputEnum.Movement);
         
         PlayerMover mover = new PlayerMover(transform, _rigidbody2D, _maxSpeed, _maxAcceleration, _jumpHeight,
             _raycastLength, _checkFloorMask, _maxAirAcceleration, _moveAxis, _targetCameraController);
         currentMovable = mover;
-        mover.OnInputMoveChange += OnPressVertical;
-
-        InputManagerTwo.skillsMap.ThorwRightSkill.performed += MessageTwo;
         
         _playerMovementManager.AddMovable(PlayerMovementEnum.PlayerMovement, currentMovable);
-        _inputManager.SubscribePerformedAction(PlayerInputEnum.Movement,
-            currentMovable.GetAction(PlayerInputEnum.Movement));
-        _inputManager.SubscribePerformedAction(PlayerInputEnum.Jump,
-            currentMovable.GetAction(PlayerInputEnum.Jump));
-
-        //currentMovable = new PlayerClimbingMover(_climbingSpeed, transform, _rigidbody2D);
-        //_playerMovementManager.AddMovable(PlayerMovementEnum.ClimbingMovement, currentMovable);
-        //_inputManager.SubscribePerformedAction(PlayerInputEnum.Movement,
-        //    currentMovable.OnGetAction(PlayerInputEnum.Movement));
-
-
-        //_inputManager.SubscribePerformedAction(PlayerInputEnum.ChangeSkill,ChangeSkill);
-        _inputManager.SubscribeStartedAction(PlayerInputEnum.ThrowRightSkill,ThrowRightSkill);
-        _inputManager.SubscribeStartedAction(PlayerInputEnum.ThrowLeftSkill,ThrowLeftSkill);
-        _inputManager.SubscribeCanceledAction(PlayerInputEnum.ThrowRightSkill,CancelSkill);
-        _inputManager.SubscribeCanceledAction(PlayerInputEnum.ThrowLeftSkill,CancelSkill);
+        
+        InputManagerTwo.skillsMap.ThorwRightSkill.started += ThrowRightSkill;
+        InputManagerTwo.skillsMap.ThrowLeftSkill.started += ThrowLeftSkill;
+        InputManagerTwo.skillsMap.ThorwRightSkill.canceled += CancelSkill;
+        InputManagerTwo.skillsMap.ThrowLeftSkill.canceled += CancelSkill;
     }
      
-     private void MessageTwo(InputAction.CallbackContext obj)
-     {
-         Debug.Log("kjdhfñksdjhfkhjfksdhfkshdfkshdfkl");
-     }
-
-
     
-     private void OnPressVertical(InputAction action)
-    {
-        if (action.activeControl.IsPressed())
-        {
-             //_targetCameraController.SetPosBySide(action.activeControl.name == "d");
-            
-        }
-    }
-
     private void ChangeSkill(InputAction.CallbackContext callbackContext)
     {
         _playerSkillController.ChangeCurrentSkill(_skillManager.GetNextLeftSkill(
@@ -189,7 +154,6 @@ public class Player : MonoBehaviour
     
     private void OnDestroy()
     {
-        _inputManager.UnsubscribeActions();
         _skillManager.UnsubscribeActions();
     }
 }

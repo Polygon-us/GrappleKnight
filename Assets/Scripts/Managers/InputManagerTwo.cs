@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class InputManagerTwo : MonoBehaviour
 {
@@ -18,9 +17,9 @@ public class InputManagerTwo : MonoBehaviour
     {
         skillsMap = _playerInputAction.PlayerSkillActionMap;
         movementMap = _playerInputAction.PlayerMovement;
-        
-       skillsMap.Enable();
-       movementMap.Enable();
+
+        skillsMap.Enable();
+        movementMap.Enable();
     }
     
 }

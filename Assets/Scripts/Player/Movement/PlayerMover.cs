@@ -64,8 +64,11 @@ public class PlayerMover : IMovable
    
     private void FillInputAction()
     {
-        _inputActions.Add(PlayerInputEnum.Movement,HorizontalInput);
-        _inputActions.Add(PlayerInputEnum.Jump,Jump);
+        InputManagerTwo.movementMap.Movement.performed += HorizontalInput;
+        InputManagerTwo.movementMap.Jump.performed += Jump;
+        
+        // _inputActions.Add(PlayerInputEnum.Movement,HorizontalInput);
+        // _inputActions.Add(PlayerInputEnum.Jump,Jump);
     }
 
     public void DoMove()
