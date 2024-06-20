@@ -1,8 +1,5 @@
 using Cinemachine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class CinemachineController : MonoBehaviour
 {
@@ -26,6 +23,7 @@ public class CinemachineController : MonoBehaviour
     {
         Execute();
     }
+
    public void MoveCamera(float intensity, float frecuency, float time)
     {
         _cinemachineShake.m_AmplitudeGain = intensity;
