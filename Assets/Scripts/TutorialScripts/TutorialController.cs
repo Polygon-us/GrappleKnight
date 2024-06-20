@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class TutorialController : MonoBehaviour
 {
+    
     [SerializeField] private TMP_Text messageField;
 
     [SerializeField] private RectTransform messageRect;
