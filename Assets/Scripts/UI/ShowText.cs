@@ -20,6 +20,7 @@ public class ShowText : MonoBehaviour
     {
         if (collision.CompareTag("Player") || collision.IsTouchingLayers(LayerMask.GetMask("Player")))
         {
+            Debug.Log("Tutorial");
             OnCollision?.Invoke(message);
         }
     }

@@ -14,9 +14,10 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 horizontalMovement;
 
  
-    private Rigidbody2D _myrigidbody;
+    public Rigidbody2D _myrigidbody;
     private PlayerInput _moveAction;
     private float input;
+
     private void Start()
     {
         _myrigidbody = GetComponent<Rigidbody2D>();

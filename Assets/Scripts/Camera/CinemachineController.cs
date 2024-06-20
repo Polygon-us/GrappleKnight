@@ -3,15 +3,17 @@ using UnityEngine;
 
 public class CinemachineController : MonoBehaviour
 {
-    public static CinemachineController Instance;
-    
+    [Header("Cam Parameters")]
     private float _initialIntensity;
     private float _timeMovement;
     private float _totalTimeMovement;
-    
+
+    [Header("References")]
     private CinemachineVirtualCamera _myCamera;
     private CinemachineBasicMultiChannelPerlin _cinemachineShake;
     
+    public static CinemachineController Instance;
+
     void Awake()
     {
         Instance = this;

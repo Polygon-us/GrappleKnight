@@ -7,23 +7,25 @@ using UnityEngine.UI;
 
 public class PlayerLife : MonoBehaviour , ILife
 {
-    [SerializeField] private Slider _slider;
+    [SerializeField] private Slider slider;
+    [SerializeField] private PlayerFreezer freezer;
 
     private Rigidbody2D _rigidbody;
     
-    public int _currentLife;
     private int _maxLife;
+
+    public int currentLife;
 
     public int CurrentLife
     {  
         get 
         { 
-            return _currentLife;
+            return currentLife;
         } 
         set 
         {
-            _currentLife = value;
-            _slider.value = value * _maxLife / 100;
+            currentLife = value;
+            slider.value = value * _maxLife / 100;
         } 
     }
 
@@ -33,11 +35,12 @@ public class PlayerLife : MonoBehaviour , ILife
         _damageColor = GetComponent<SpriteRenderer>();
         _rigidbody = GetComponent<Rigidbody2D>();
     }
+
     public void Configure(int maxlife)
     {
-        _slider.maxValue = maxlife;
+        slider.maxValue = maxlife;
         _maxLife = maxlife;
-        _currentLife = maxlife;
+        currentLife = maxlife;
     }
     
     public void ReduceLife(int amount)
@@ -47,6 +50,10 @@ public class PlayerLife : MonoBehaviour , ILife
         if (CurrentLife <= 0)
         {
             GetComponent<PlayerRespawnPosition>().RespawnLastPosition();
+
+            //if the player dead reset variable freeze to freeze player when he comes in to the boss zone
+            freezer.freeze = true;
+
             CurrentLife = _maxLife;
             _rigidbody.velocity = Vector3.zero;
         }

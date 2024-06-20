@@ -9,6 +9,7 @@ public class PlayerMovementController : MonoBehaviour
     private IMovable _queueMovement;
 
     private bool _isReadyToMove;
+
     private void FixedUpdate()
     {
         if (_isReadyToMove)
@@ -21,10 +22,12 @@ public class PlayerMovementController : MonoBehaviour
     {
         _lastMovement = _currentMovement;
     }
+
     public void ChangeCurrentMovement(IMovable movement)
     {
         _currentMovement = movement;
     }
+
     public void ChangeCurrentMovement(bool isSkillOn)
     {
         if (_queueMovement!=null)
@@ -44,7 +47,6 @@ public class PlayerMovementController : MonoBehaviour
             _currentMovement = _lastMovement;
         }
     }
-
     
     public void QueueMovement(IMovable movement)
     {

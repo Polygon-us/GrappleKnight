@@ -61,6 +61,7 @@ public class EnemyStateController : MonoBehaviour
             _onTriggerEnter += _onTriggerReceiver;
         }
     }
+
     public void UnsubscribeCollisionAction()
     {
         if (_onCollisionReceiver != null)
@@ -74,6 +75,7 @@ public class EnemyStateController : MonoBehaviour
             _onTriggerReceiver = null;
         }
     }
+
     public void StartStates()
     {
         _isOnState = true;
@@ -102,11 +104,9 @@ public class EnemyStateController : MonoBehaviour
     {
         _collisionEvents.TriggerExitDispatch(other);
     }
-
     
     public void StopStates()
     {
         _isOnState = false;
     }
-    
 }

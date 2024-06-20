@@ -38,7 +38,7 @@ public class TutorialController : MonoBehaviour
                 messageRect.anchoredPosition = position;
             }
 
-            tween = LeanTween.moveY(messageField.gameObject, 600, 1f).setEase(LeanTweenType.easeOutBounce).uniqueId;
+            tween = LeanTween.moveY(messageField.gameObject, 200, 1f).setEase(LeanTweenType.easeOutBounce).uniqueId;
         }
     }
 }

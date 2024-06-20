@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Events;
 
 public class BossZoneTwo : MonoBehaviour
@@ -7,10 +8,13 @@ public class BossZoneTwo : MonoBehaviour
 
     public bool _isOnTrigger;
 
+    public event Action onPlayerEnter;
+
     public bool IsOnTrigger
     {
        set { _isOnTrigger = value; }
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -18,6 +22,7 @@ public class BossZoneTwo : MonoBehaviour
             if (!_isOnTrigger)
             {
                 _isOnTrigger = true;
+                onPlayerEnter?.Invoke();
                 _unityEvent.Invoke();
             }
         }
