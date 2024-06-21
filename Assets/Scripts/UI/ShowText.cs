@@ -21,7 +21,6 @@ public class ShowText : MonoBehaviour
         {
             if (entry == false) 
             {
-                Debug.Log("Tutorial");
                 OnCollision?.Invoke(message);
                 entry = true;
             }
