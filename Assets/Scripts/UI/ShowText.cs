@@ -3,13 +3,12 @@ using UnityEngine;
 
 public class ShowText : MonoBehaviour
 {
-    public static event Action<string> OnCollision;
-
-
     [SerializeField] private string message;
 
+    private bool entry;
 
     private BoxCollider2D _boxCollider;
+    public static event Action<string> OnCollision;
 
     private void Awake()
     {
@@ -20,11 +19,14 @@ public class ShowText : MonoBehaviour
     {
         if (collision.CompareTag("Player") || collision.IsTouchingLayers(LayerMask.GetMask("Player")))
         {
-            Debug.Log("Tutorial");
-            OnCollision?.Invoke(message);
+            if (entry == false) 
+            {
+                Debug.Log("Tutorial");
+                OnCollision?.Invoke(message);
+                entry = true;
+            }
         }
     }
-
 
     private void OnTriggerExit2D(Collider2D collision)
     {
