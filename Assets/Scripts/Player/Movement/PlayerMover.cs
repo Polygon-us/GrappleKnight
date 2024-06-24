@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerMover : IMovable
 {
-
     private float _jumpHeight;
     private float _jumpSpeed;
     private float _raycastLength;
@@ -28,25 +27,29 @@ public class PlayerMover : IMovable
     private bool _onGround;
     private bool _isJumpOnAir;
     private bool _isOnMove;
-    
+
     private LayerMask _checkFloorMask;
-    
+
     private RaycastHit2D _checkFloor;
-    
+
     private Rigidbody2D _floorTouching;
     private Transform _playerTransform;
-    
+
     private InputAction _inputAxisMovement;
     public PlayerClimbing _playerClimbing;
     private TargetCameraController2 _targetCameraController;
-    
+
     public Action<InputAction> OnInputMoveChange;
 
-    private Dictionary<PlayerInputEnum, Action<InputAction.CallbackContext>> _inputActions = 
+    private Dictionary<PlayerInputEnum, Action<InputAction.CallbackContext>> _inputActions =
         new Dictionary<PlayerInputEnum, Action<InputAction.CallbackContext>>();
 
-    public PlayerMover(Transform playerTransform,Rigidbody2D myRigidbody,float maxSpeed, float maxAcceleration, float jumpHeight,
-        float raycastLength ,LayerMask checkFloorMask, float maxAirAcceleration, Vector2 moveAxis, TargetCameraController2 targetCameraController)
+    // Añadir referencias al Animator y SpriteRenderer
+    private Animator _animator;
+    private SpriteRenderer _spriteRenderer;
+
+    public PlayerMover(Transform playerTransform, Rigidbody2D myRigidbody, float maxSpeed, float maxAcceleration, float jumpHeight,
+        float raycastLength, LayerMask checkFloorMask, float maxAirAcceleration, Vector2 moveAxis, TargetCameraController2 targetCameraController, SpriteRenderer spriteRenderer)
     {
         _playerTransform = playerTransform;
         _floorTouching = myRigidbody;
@@ -59,14 +62,18 @@ public class PlayerMover : IMovable
         _moveAxis = moveAxis;
         _jumpSpeed = Mathf.Sqrt(_jumpHeight * (Physics2D.gravity.y * _floorTouching.gravityScale) * -2) * _floorTouching.mass;
         _targetCameraController = targetCameraController;
+
+        // Obtener referencias a los componentes Animator y SpriteRenderer
+        _animator = playerTransform.GetComponentInChildren<Animator>();
+        _spriteRenderer = spriteRenderer;
         FillInputAction();
     }
-   
+
     private void FillInputAction()
     {
         InputManagerTwo.movementMap.Movement.performed += HorizontalInput;
         InputManagerTwo.movementMap.Jump.performed += Jump;
-        
+
         // _inputActions.Add(PlayerInputEnum.Movement,HorizontalInput);
         // _inputActions.Add(PlayerInputEnum.Jump,Jump);
     }
@@ -76,7 +83,7 @@ public class PlayerMover : IMovable
         if (_inputAxisMovement != null && _inputAxisMovement.inProgress)
         {
             _moveAxis = _inputAxisMovement.ReadValue<Vector2>();
-             mover = _moveAxis.x;
+            mover = _moveAxis.x;
         }
         else
         {
@@ -91,25 +98,39 @@ public class PlayerMover : IMovable
         Action<InputAction.CallbackContext> inputAction = _inputActions[playerInputEnum];
         return inputAction;
     }
+
     private void HorizontalMovement()
     {
-        if (_moveAxis != Vector2.zero )
+        if (_moveAxis != Vector2.zero)
         {
-            if(_moveAxis.x != lastMove)
+            if (_moveAxis.x != lastMove)
             {
                 lastMove = _moveAxis.x;
-                _targetCameraController.MoveCameraPosition(lastMove,8);
+                _targetCameraController.MoveCameraPosition(lastMove, 8);
             }
-            _desiredVelocity = new Vector2(_moveAxis.x, 0f) * Mathf.Max(_maxSpeed , 0f);
+            _desiredVelocity = new Vector2(_moveAxis.x, 0f) * Mathf.Max(_maxSpeed, 0f);
             _velocity = _floorTouching.velocity;
 
             _acceleration = _onGround ? _maxAcceleration : _maxAirAcceleration;
 
             _maxSpeedChange = _acceleration * Time.deltaTime;
             _velocity.x = Mathf.MoveTowards(_velocity.x, _desiredVelocity.x, _maxSpeedChange);
-            
+
             _floorTouching.velocity = _velocity;
             _isStop = false;
+
+            // Actualizar la velocidad en el Animator
+            _animator.SetFloat("Speed", Mathf.Abs(_velocity.x));
+
+            // Flipping del sprite según la dirección del movimiento
+            if (_velocity.x > 0.01f)
+            {
+                _spriteRenderer.flipX = false;
+            }
+            else if (_velocity.x < -0.01f)
+            {
+                _spriteRenderer.flipX = true;
+            }
         }
         else
         {
@@ -117,9 +138,12 @@ public class PlayerMover : IMovable
             {
                 if (OnGround())
                 {
-                     _onGround = true;
+                    _onGround = true;
                     _floorTouching.velocity = new Vector2(0, _floorTouching.velocity.y);
                     _isStop = true;
+
+                    // Detener la animación de caminar
+                    _animator.SetFloat("Speed", 0f);
                 }
                 else
                 {
@@ -131,26 +155,27 @@ public class PlayerMover : IMovable
 
     private void Jump(InputAction.CallbackContext callbackContext)
     {
-        if (OnGround() )
+        if (OnGround())
         {
-                _floorTouching.AddForce(Vector2.up * _jumpSpeed, ForceMode2D.Impulse);
+            _floorTouching.AddForce(Vector2.up * _jumpSpeed, ForceMode2D.Impulse);
             return;
         }
         _currentLastJump = 0;
-    } 
+    }
+
     private void Jump()
     {
         _currentLastJump += Time.deltaTime;
 
-        if (OnGround() && _currentLastJump <= _maxTimeLastJump )
+        if (OnGround() && _currentLastJump <= _maxTimeLastJump)
         {
-                _floorTouching.velocity = new Vector2(_floorTouching.velocity.x, 0);
+            _floorTouching.velocity = new Vector2(_floorTouching.velocity.x, 0);
             _floorTouching.AddForce(Vector2.up * _jumpSpeed, ForceMode2D.Impulse);
         }
-        
     }
+
     private bool OnGround()
-    {   
+    {
         if (_floorTouching.IsTouchingLayers(LayerMask.GetMask("Floor")))
         {
             return true;
@@ -161,13 +186,11 @@ public class PlayerMover : IMovable
         //Debug.DrawRay(_playerTransform.position, -_playerTransform.up*_raycastLength, Color.red);
         //if (_checkFloor.collider != null)
         //{
-
         //    return true;
         //}
-
         //return false;
     }
-    
+
     private void HorizontalInput(InputAction.CallbackContext callbackContext)
     {
         _inputAxisMovement = callbackContext.action;

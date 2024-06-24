@@ -44,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
         Vector2 velocityChange = targetVelocity - _myrigidbody.velocity;
 
         _myrigidbody.AddForce(velocityChange * inertiaMultiplier, ForceMode2D.Force);
+
     }
 
     public void CaptureMovementInput()

@@ -37,7 +37,9 @@ public class Player : MonoBehaviour
 
     [Header("Life")] 
     [SerializeField] private int _maxLife;
-    
+
+    [Header("Animations")]
+    [SerializeField] SpriteRenderer spriteRenderer;
 
     private ILife _playerLife;
     
@@ -96,7 +98,7 @@ public class Player : MonoBehaviour
         InputManagerTwo.movementMap.Movement.performed += currentMovable.GetAction(PlayerInputEnum.Movement);
         
         PlayerMover mover = new PlayerMover(transform, _rigidbody2D, _maxSpeed, _maxAcceleration, _jumpHeight,
-            _raycastLength, _checkFloorMask, _maxAirAcceleration, _moveAxis, _targetCameraController);
+            _raycastLength, _checkFloorMask, _maxAirAcceleration, _moveAxis, _targetCameraController, spriteRenderer);
         currentMovable = mover;
         
         _playerMovementManager.AddMovable(PlayerMovementEnum.PlayerMovement, currentMovable);
