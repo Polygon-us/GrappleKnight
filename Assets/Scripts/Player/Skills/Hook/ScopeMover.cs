@@ -27,6 +27,7 @@ public class ScopeMover : MonoBehaviour
         _hookMaxDistance = hookMaxDistance;
         transform.parent = null;
     }
+
     private void Update()
     {
         newPosition = _mousePosition.position.ReadValue();
@@ -35,14 +36,15 @@ public class ScopeMover : MonoBehaviour
         _createPosition = newPosition - _hookBegin.position;
         float distance = (_hookBegin.position.x-newPosition.x) * (_hookBegin.position.x-newPosition.x) +
                          (_hookBegin.position.y-newPosition.y) * (_hookBegin.position.y-newPosition.y);
-        if (distance<=_hookMaxDistance*_hookMaxDistance)
-        {
+
+        //if (distance<=_hookMaxDistance*_hookMaxDistance)
+        //{
             _outPoint = newPosition;
-        }
-        else
-        {
-            _outPoint = _createPosition.normalized*_hookMaxDistance +_hookBegin.position;
-        }
+        //}
+        //else
+        //{
+            //_outPoint = _createPosition.normalized*_hookMaxDistance +_hookBegin.position;
+        //}
         transform.position = _outPoint;
     }
 }

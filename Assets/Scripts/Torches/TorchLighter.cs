@@ -14,5 +14,4 @@ public class TorchLighter : MonoBehaviour
             torch.enabled = true;
         }
     }
-
 }
