@@ -7,6 +7,7 @@ public class PlayerSkillController : MonoBehaviour
     
     private bool _isSkillReady;
     private bool _queueStartSkill;
+
     private void Update()
     {
         if (_isSkillReady)
@@ -46,6 +47,7 @@ public class PlayerSkillController : MonoBehaviour
     {
         _currentSkill.UndoSkill();
     }
+
     public void ChangeCurrentSkill(ISkill skill)
     {
         if (!_isSkillReady)
@@ -57,5 +59,4 @@ public class PlayerSkillController : MonoBehaviour
             _queueSkill = skill;
         }
     }
-   
 }
