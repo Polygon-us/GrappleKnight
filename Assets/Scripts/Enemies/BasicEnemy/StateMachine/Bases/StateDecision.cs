@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Enemies.BasicEnemy.StateMachine.Bases
 {
-    public class StateDecision : MonoBehaviour
+    public abstract class StateDecision : ScriptableObject
     {
         public delegate void DecisionDelegate(StateDecision decision);
         public event DecisionDelegate OnConditionChanged;
@@ -12,11 +12,14 @@ namespace Enemies.BasicEnemy.StateMachine.Bases
         public bool StateCondition
         {
             get => _condition;
-            private set
+            protected set
             {
                 _condition = value;
                 OnConditionChanged?.Invoke(this);
             }
         }
+        
+        public abstract void InitDecision(StateMachine machineReference);
+        public abstract void UpdateDecision();
     }
 }

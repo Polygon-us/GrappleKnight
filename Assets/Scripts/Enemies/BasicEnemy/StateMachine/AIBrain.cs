@@ -10,9 +10,13 @@ namespace Enemies.BasicEnemy.StateMachine
         [SerializeField] private List<AIState> states = new List<AIState>();
 
         public Action<string> _OnChangeStateRequired;
+
+        public EnemyController ReferenceController { get; private set; }
         
-        private void Awake()
+        public void InitMachine(EnemyController enemyController)
         {
+            ReferenceController = enemyController;
+            
             _OnChangeStateRequired += ParseStateChange;
             
             foreach (AIState element in states)

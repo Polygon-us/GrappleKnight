@@ -23,9 +23,21 @@ namespace Enemies.BasicEnemy.StateMachine
         {
             base.Enter();
             
+            if(!_aiBrain) return;
+            
+            foreach (StateAction element in actions)
+            {
+                if(element) 
+                    element.InitAction(_aiBrain);
+            }
+            
             foreach (Transition element in transitions)
             {
-                element.decision.OnConditionChanged += CheckDecision;
+                if (element.decision)
+                {
+                    element.decision.OnConditionChanged += CheckDecision;
+                    element.decision.InitDecision(_aiBrain);
+                }
             }
         }
 
@@ -33,7 +45,14 @@ namespace Enemies.BasicEnemy.StateMachine
         {
             foreach (StateAction element in actions)
             {
-                element.UpdateAction();
+                if(element) 
+                    element.UpdateAction();
+            }
+            
+            foreach (Transition element in transitions)
+            {
+                if(element.decision) 
+                    element.decision.UpdateDecision();
             }
         }
 
