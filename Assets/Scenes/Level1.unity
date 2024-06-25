@@ -9895,7 +9895,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &309810244
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11368,7 +11368,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 21.570377, y: 80.54203, z: -10}
+  m_LocalPosition: {x: 24.52261, y: 80.543236, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -57016,7 +57016,7 @@ Transform:
   m_GameObject: {fileID: 1166572076}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.5741615, y: 0.1281128, z: 0}
+  m_LocalPosition: {x: 1.6219292, y: 0.12690735, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -58090,20 +58090,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _jumpHeight: 5
   _forceDown: 30
-  _waveDuracion: 1
-  _waveImpactForce: 2000
-  _delayBeforeReturn: 0.1
-  _chargeVelocity: 20
-  _maxLife: 300
-  _chargeMaxNumber: 3
-  _percentDamage: 10
   _inicialWaveScale: {x: 1, y: 0.1, z: 0}
   _finalWaveScale: {x: 30, y: 0.1, z: 0}
-  _playerTransform: {fileID: 2043213919}
-  _wave: {fileID: 180078473}
-  _playerRigidbody: {fileID: 2043213920}
+  _delayBeforeReturn: 0.1
+  _waveImpactForce: 2000
+  _waveDuracion: 1
+  _chargeVelocity: 20
   _waveCollider: {fileID: 180078475}
+  _wave: {fileID: 180078473}
+  _percentDamage: 10
+  _chargeMaxNumber: 3
+  _maxLife: 300
   activationZoneCollider: {fileID: 0}
+  _playerRigidbody: {fileID: 2043213920}
+  _playerTransform: {fileID: 2043213919}
 --- !u!50 &1254930478
 Rigidbody2D:
   serializedVersion: 4
@@ -63650,15 +63650,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2588934348749089970, guid: 7748d68948ec45d41bae8aa85280c528, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4805144021972744667, guid: 7748d68948ec45d41bae8aa85280c528, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.609729
+      value: -3.35
       objectReference: {fileID: 0}
     - target: {fileID: 4805144021972744667, guid: 7748d68948ec45d41bae8aa85280c528, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.986669
+      value: 2.82
       objectReference: {fileID: 0}
     - target: {fileID: 4805144021972744667, guid: 7748d68948ec45d41bae8aa85280c528, type: 3}
       propertyPath: m_LocalPosition.z

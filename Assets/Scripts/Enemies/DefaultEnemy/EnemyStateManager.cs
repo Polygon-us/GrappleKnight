@@ -22,7 +22,6 @@ public class EnemyStateManager
 
     public IState GetNextState(EnemyStateEnum enemyStateEnum)
     {
-        //Debug.Log("NextState");
         return _enemyStatesContainer[enemyStateEnum];
     }
 }
