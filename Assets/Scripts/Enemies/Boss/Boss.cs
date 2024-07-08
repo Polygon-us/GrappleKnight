@@ -2,43 +2,38 @@ using System;
 using UnityEngine;
 public class Boss : MonoBehaviour
 {
-    //[SerializeField] private EnemiesScriptableObjectTemplate configBoss;
-    
-
-    //Variables de configuracion del boss
-
-    //salto
+    [Header("Jump Configuration")] 
     [SerializeField] private float _jumpHeight;
     [SerializeField] private float _forceDown = 20f;
-    [SerializeField] private float _waveDuracion = 0.5f;
-    [SerializeField] private float _waveImpactForce = 3f;
-    [SerializeField] private float _delayBeforeReturn = 0.1f;
-    [SerializeField]private float _chargeVelocity;
 
-    [SerializeField] private int _maxLife;
-    [SerializeField]private int _chargeMaxNumber;
-    [SerializeField] [Range(1, 100)] private int _percentDamage;
-    
+    [Header("Wave Configuration")] 
     [SerializeField] private Vector3 _inicialWaveScale = new Vector3(1, 0.1f);
     [SerializeField] private Vector3 _finalWaveScale = new Vector3(16, 0.1f);
-
-    private bool _isFigthing = false;
-
-    [SerializeField] private Transform _playerTransform;
+    [SerializeField] private float _delayBeforeReturn = 0.1f;
+    [SerializeField] private float _waveImpactForce = 3f;
+    [SerializeField] private float _waveDuracion = 0.5f;
+    [SerializeField]private float _chargeVelocity;
+    [SerializeField] private BoxCollider2D _waveCollider;
     [SerializeField] private Transform _wave;
 
-    [SerializeField] private Rigidbody2D _playerRigidbody;
+    [Header("Life Configuration")] 
+    [SerializeField] [Range(1, 100)] private int _percentDamage;
+    [SerializeField]private int _chargeMaxNumber;
+    [SerializeField] private int _maxLife;
 
-    [SerializeField] private BoxCollider2D _waveCollider;
+    [Header("Player References")] 
     [SerializeField] private BoxCollider2D activationZoneCollider;
+    [SerializeField] private Rigidbody2D _playerRigidbody;
+    [SerializeField] private Transform _playerTransform;
 
-    private CapsuleCollider2D _capsuleCollider2D;
-    private Rigidbody2D _rigidbody2D;
-    
-    private EnemyLife _enemyLife;
-    private EnemyStateManager _enemyStateManager;
     private EnemyStateController _enemyStateController;
+    private CapsuleCollider2D _capsuleCollider2D;
+    private EnemyStateManager _enemyStateManager;
     private CollisionEvents _collisionEvents;
+    private Rigidbody2D _rigidbody2D;
+    private EnemyLife _enemyLife;
+    
+    private bool _isFigthing = false;
 
     private void Awake()
     {
@@ -54,6 +49,7 @@ public class Boss : MonoBehaviour
         
         AddStates();
     }
+
     private void AddStates()
     {
         _enemyStateManager.FillStatesContainer(EnemyStateEnum.BlastWave, new BlastWaveAttackState(_jumpHeight, _rigidbody2D,
@@ -68,14 +64,12 @@ public class Boss : MonoBehaviour
         
         _enemyStateManager.FillStatesContainer(EnemyStateEnum.Idle, new BossIdleState(1,EnemyStateEnum.Random));
     }
+
     public void InitialState()
     {
         _enemyStateController.ChangeCurrentState(EnemyStateEnum.Idle);
     }
-    //private void Message(Vector3 vec)
-    //{
-    //    Debug.Log("Hola Amiguitos, como estan?");
-    //}
+ 
     private void EndStates()
     {
         _enemyStateController.StopStates();
