@@ -11368,7 +11368,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22.646183, y: 80.54247, z: -10}
+  m_LocalPosition: {x: -38.66867, y: -20.42238, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -57122,7 +57122,7 @@ Transform:
   m_GameObject: {fileID: 1166572076}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.966164, y: 0.12767029, z: 0}
+  m_LocalPosition: {x: -10.468979, y: 0.002521515, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -58196,20 +58196,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _jumpHeight: 5
   _forceDown: 30
-  _waveDuracion: 1
-  _waveImpactForce: 2000
-  _delayBeforeReturn: 0.1
-  _chargeVelocity: 20
-  _maxLife: 300
-  _chargeMaxNumber: 3
-  _percentDamage: 10
   _inicialWaveScale: {x: 1, y: 0.1, z: 0}
   _finalWaveScale: {x: 30, y: 0.1, z: 0}
-  _playerTransform: {fileID: 2043213919}
-  _wave: {fileID: 180078473}
-  _playerRigidbody: {fileID: 2043213920}
+  _delayBeforeReturn: 0.1
+  _waveImpactForce: 2000
+  _waveDuracion: 1
+  _chargeVelocity: 20
   _waveCollider: {fileID: 180078475}
+  _wave: {fileID: 180078473}
+  _percentDamage: 10
+  _chargeMaxNumber: 3
+  _maxLife: 300
   activationZoneCollider: {fileID: 0}
+  _playerRigidbody: {fileID: 2043213920}
+  _playerTransform: {fileID: 2043213919}
 --- !u!50 &1254930478
 Rigidbody2D:
   serializedVersion: 4
@@ -63454,7 +63454,7 @@ Transform:
   m_GameObject: {fileID: 2043213916}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 23.15, y: -7.91, z: 0.08973696}
+  m_LocalPosition: {x: -57.6, y: -109, z: 0.08973696}
   m_LocalScale: {x: 0.7482, y: 0.75, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
