@@ -5,8 +5,6 @@ using UnityEngine.InputSystem;
 
 public class HookMover : IMovable
 {
-    
-    
     private Rigidbody2D _rigidbody2D;
     private SpringJoint2D _springJoint2D;
 
@@ -22,9 +20,13 @@ public class HookMover : IMovable
     private float last;
     private float _hookMaxDistance;
 
+    private bool _movementEnabled = true;
+    private RigidbodyConstraints2D _originalConstraints;
+
     public HookMover(Rigidbody2D rigidbody2D, SpringJoint2D springJoint2D, Vector2 swingSpeed, float hookMaxDistance, TargetCameraController2 targetCameraController)
     {
         _rigidbody2D = rigidbody2D;
+        _originalConstraints = rigidbody2D.constraints;
         _springJoint2D = springJoint2D;
         _swingSpeed = swingSpeed;
         _hookMaxDistance = hookMaxDistance;
@@ -35,6 +37,8 @@ public class HookMover : IMovable
 
     public void DoMove()
     {
+        if (!_movementEnabled) return;
+        
         if (_inputAxisMovement != null && _inputAxisMovement.inProgress)
         {
             _direction = _inputAxisMovement.ReadValue<Vector2>();
@@ -61,6 +65,14 @@ public class HookMover : IMovable
             }
         }
     }
+
+    public void EnableMovement(bool canMove)
+    {
+        _movementEnabled = canMove;
+        
+        _rigidbody2D.constraints = canMove ? _originalConstraints : RigidbodyConstraints2D.FreezeAll;
+    }
+
     public void HorizontalAndVerticalInput(InputAction.CallbackContext callbackContext)
     {
         _inputAxisMovement = callbackContext.action;

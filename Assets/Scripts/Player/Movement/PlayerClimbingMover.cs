@@ -27,11 +27,16 @@ public class PlayerClimbingMover : IMovable
     private BoxCollider2D _boxColliderStairStop;
 
     private InputAction _inputAxisMovement;
+
+    private bool _movementEnabled = true;
+    private RigidbodyConstraints2D _originalConstraints;
+    
     public PlayerClimbingMover(float climbingSpeed, Transform myTransform, Rigidbody2D myrigidbody)
     {
         _climbingSpeed = climbingSpeed;
         _myTransform = myTransform;
        _myrygidbody = myrigidbody;
+       _originalConstraints = myrigidbody.constraints;
     }
 
     private void VerticalMovement()
@@ -77,6 +82,8 @@ public class PlayerClimbingMover : IMovable
 
     public void DoMove()
     {
+        if(!_movementEnabled) return;
+        
         if (_inputAxisMovement != null && _inputAxisMovement.inProgress)
         {
             _verticalMovement = _inputAxisMovement.ReadValue<Vector2>();
@@ -88,6 +95,14 @@ public class PlayerClimbingMover : IMovable
         Climbing();
         VerticalMovement();
     }
+
+    public void EnableMovement(bool canMove)
+    {
+        _movementEnabled = canMove;
+        
+        _myrygidbody.constraints = canMove ? _originalConstraints : RigidbodyConstraints2D.FreezeAll;
+    }
+
     private void VerticalInput(InputAction.CallbackContext callbackContext)
     {
         _inputAxisMovement = callbackContext.action;

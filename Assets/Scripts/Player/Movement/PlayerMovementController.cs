@@ -53,8 +53,13 @@ public class PlayerMovementController : MonoBehaviour
         _queueMovement = movement;
     }
 
-    public void StarMovement()
+    public void InitMovement()
     {
         _isReadyToMove = true;
+    }
+    
+    public void MovementEnable(bool canMove = true)
+    {
+        _currentMovement.EnableMovement(canMove);
     }
 }

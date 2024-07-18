@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -17,6 +18,11 @@ public class TutorialController : MonoBehaviour
         ShowText.OnCollision += OnCollisionHandler;
 
         position = messageRect.anchoredPosition;
+    }
+
+    private void OnDestroy()
+    {
+        ShowText.OnCollision -= OnCollisionHandler;
     }
 
     private void OnCollisionHandler(string message)

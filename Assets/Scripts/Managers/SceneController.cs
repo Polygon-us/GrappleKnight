@@ -8,6 +8,8 @@ public class SceneController : MonoBehaviour
     private string lastScene;
     private Dictionary<SceneName, Action> _methodsContainer = new();
 
+    public event Action OnLvlStarted;
+
     public void AddAction(SceneName sceneName, Action action)
     {
         _methodsContainer.Add(sceneName,action);
@@ -20,6 +22,10 @@ public class SceneController : MonoBehaviour
         }
 
         SceneManager.LoadSceneAsync(sceneName.ToString(), LoadSceneMode.Additive);
+
+        int buildindex = SceneManager.GetSceneByName(sceneName.ToString()).buildIndex;
+        
+        if(buildindex > 1) OnLvlStarted?.Invoke();
         
         lastScene = sceneName.ToString();
     }

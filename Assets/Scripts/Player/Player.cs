@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
@@ -20,12 +18,9 @@ public class Player : MonoBehaviour
     [SerializeField] private float _boomerangMaxDistance = 8;
     [SerializeField] private float _boomerangSpeed = 2f;
     
-    
     [Header("Movement")]
-
     [SerializeField]private float _jumpHeight = 3f;
     [SerializeField]private float _raycastLength = 1.01f;
-  
     [SerializeField]private LayerMask _checkFloorMask;
     [SerializeField, Range(0f, 100f)] public float _maxSpeed = 10f;
     [SerializeField, Range(0f, 1000f)] public float _maxAcceleration = 18f;
@@ -35,7 +30,7 @@ public class Player : MonoBehaviour
     //[Header("Climbing")]
     //[SerializeField] private float _climbingSpeed;
 
-    [Header("Life")] 
+    [Header("Life")]
     [SerializeField] private int _maxLife;
 
     [Header("Animations")]
@@ -65,10 +60,18 @@ public class Player : MonoBehaviour
         _playerMovementController.ChangeCurrentMovement(
             _playerMovementManager.GetMovable(PlayerMovementEnum.PlayerMovement));
         _playerMovementController.FirstLastMovement();
-        _playerMovementController.StarMovement();
+        _playerMovementController.InitMovement();
 
+        GameManager.OnGamePause += StopPlayer;
     }
 
+    private void StopPlayer(bool stop)
+    {
+        print($"Paused: {stop}");
+        
+        _playerMovementController.MovementEnable(!stop);
+    }
+    
     private void AssignModules()
     {
         _playerMovementController = GetComponent<PlayerMovementController>();
@@ -157,5 +160,6 @@ public class Player : MonoBehaviour
     private void OnDestroy()
     {
         _skillManager.UnsubscribeActions();
+        GameManager.OnGamePause -= StopPlayer;
     }
 }

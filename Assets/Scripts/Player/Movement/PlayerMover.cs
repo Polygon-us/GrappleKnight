@@ -15,7 +15,6 @@ public class PlayerMover : IMovable
     private float _maxSpeedChange, _acceleration;
     private float mover;
     private float _maxTimeLastJump = 0.2f;
-    private float _currentLastJump = 1;
     private float lastMove;
 
     private Vector2 _direction;
@@ -48,11 +47,15 @@ public class PlayerMover : IMovable
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
 
+    private bool _movementEnabled = true;
+    private RigidbodyConstraints2D _originalConstraints;
+
     public PlayerMover(Transform playerTransform, Rigidbody2D myRigidbody, float maxSpeed, float maxAcceleration, float jumpHeight,
         float raycastLength, LayerMask checkFloorMask, float maxAirAcceleration, Vector2 moveAxis, TargetCameraController2 targetCameraController, SpriteRenderer spriteRenderer)
     {
         _playerTransform = playerTransform;
         _floorTouching = myRigidbody;
+        _originalConstraints = myRigidbody.constraints;
         _maxSpeed = maxSpeed;
         _maxAcceleration = maxAcceleration;
         _jumpHeight = jumpHeight;
@@ -80,6 +83,12 @@ public class PlayerMover : IMovable
 
     public void DoMove()
     {
+        if (!_movementEnabled)
+        {
+            _animator.SetFloat("Speed", 0f);
+            return;
+        }
+        
         if (_inputAxisMovement != null && _inputAxisMovement.inProgress)
         {
             _moveAxis = _inputAxisMovement.ReadValue<Vector2>();
@@ -90,9 +99,15 @@ public class PlayerMover : IMovable
             _moveAxis = Vector2.zero;
         }
         HorizontalMovement();
-        Jump();
     }
 
+    public void EnableMovement(bool canMove = true)
+    {
+        _movementEnabled = canMove;
+
+        _floorTouching.constraints = canMove ? _originalConstraints : RigidbodyConstraints2D.FreezeAll;
+    }
+    
     public Action<InputAction.CallbackContext> GetAction(PlayerInputEnum playerInputEnum)
     {
         Action<InputAction.CallbackContext> inputAction = _inputActions[playerInputEnum];
@@ -155,21 +170,10 @@ public class PlayerMover : IMovable
 
     private void Jump(InputAction.CallbackContext callbackContext)
     {
+        if (!_movementEnabled) return;
+        
         if (OnGround())
         {
-            _floorTouching.AddForce(Vector2.up * _jumpSpeed, ForceMode2D.Impulse);
-            return;
-        }
-        _currentLastJump = 0;
-    }
-
-    private void Jump()
-    {
-        _currentLastJump += Time.deltaTime;
-
-        if (OnGround() && _currentLastJump <= _maxTimeLastJump)
-        {
-            _floorTouching.velocity = new Vector2(_floorTouching.velocity.x, 0);
             _floorTouching.AddForce(Vector2.up * _jumpSpeed, ForceMode2D.Impulse);
         }
     }
